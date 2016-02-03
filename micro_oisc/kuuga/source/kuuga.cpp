@@ -1,3 +1,5 @@
+//*(ram + 0xA8001000/sizeof(int)) = 47;
+
 #include "kuuga.h"
 
 uint32 fetch(int * pc, volatile int * ram);
@@ -14,9 +16,11 @@ int kuuga(volatile int * ram, int * pc) {
 	#pragma HLS INTERFACE ap_none register     port=pc
 	#pragma HLS RESOURCE core=AXI4LiteS    variable=pc metadata="-bus_bundle AXILiteS"
 
-	//*(ram + 0xA8001000/sizeof(int)) = 47;
+	// Fetch in the instruction from memory
 	uint32 inst = fetch(pc, ram);
-	*(ram + *pc/sizeof(int)) = inst+(uint32)2;
+	//while (inst != )
+	// Execute the instruction directly, no decode is required as there is only
+	// one instruction
 	return 0;
 }
 
