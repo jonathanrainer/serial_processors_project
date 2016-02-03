@@ -4,5 +4,6 @@
 *.log
 impl/
 syn/
+csim/
 .autopilot/
 .apc/
