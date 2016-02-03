@@ -1,0 +1,28 @@
+##
+# Xilinx Platform Studio
+##
+/implementation
+/synthesis
+/report
+/blockdiagram
+/revup
+/SDK
+/hdl
+__xps
+*.log
+*.svf
+*.scr
+*.cmd
+*.bak
+*~
+*.elf
+*.ace
+*.make
+platgen.opt
+*.gui
+XpsGuiSessionLock
+
+##
+# Bluespec
+##
+*.bo

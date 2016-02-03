@@ -1,0 +1,19 @@
+##
+# General OS X
+##
+.DS_Store
+.fuse_hidden*
+
+##
+# General Windows
+##
+[Tt]humbs.db
+
+*.swp
+
+##
+# Extra Ignores for Procedural Code
+##
+atlys_support/
+VLAB/
+

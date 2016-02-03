@@ -1,0 +1,8 @@
+##
+# Vivado HLS Stuff
+##
+*.log
+impl/
+syn/
+.autopilot/
+.apc/
