@@ -2,6 +2,7 @@
 
 int mutation_test();
 int subleq_test();
+int add_test();
 
 int main()
 {
@@ -22,14 +23,11 @@ int mutation_test()
 
 int subleq_test()
 {
-	int mem[4*sizeof(int)] =
-	{	0x0200C000,0x00000000,0x00000000,0x00000000,
-		0x00000001,0x00000000,0x00000000,0x00000000,
-		0x00000004,0x00000000,0x00000000,0x00000000,
-		0x00000005,0x00000000,0x00000000,0x00000000};
+	int mem[4] =
+	{	0x00803004, 0x00000001, 0x00000004, 0x00000005};
 	int pc = 0;
 	kuuga(mem, &pc);
-	if(mem[12] == 0x00000001)
+	if(mem[3] == 0x00000001)
 	{
 		return 0;
 	}
@@ -38,5 +36,16 @@ int subleq_test()
 
 int add_test()
 {
+	int mem[8] =
+		{	0x00401010, 0x4F55AA32, 0x00000004, 0x00000005,
+			0x00C01014, 0x00402018, 0x0040101C, 0x00000001
+		};
+	int pc = 0;
+	kuuga(mem, &pc);
+	if(mem[2] == 0x00000009)
+	{
+		return 0;
+	}
+	return 1;
 
 }
