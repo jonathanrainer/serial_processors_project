@@ -1,12 +1,14 @@
-//*(ram + 0xA8001000/sizeof(int)) = 47;
+//  *(ram + 0xA8001000/sizeof(int)) = 47;
+//	*(ram + base_addr) = base_addr;
+//	*(ram + base_addr + 1) = pc;
 
 #include "kuuga.h"
 
-uint32 fetch(int * pc, volatile int * ram);
-void subleq(int * pc, volatile int * ram, uint10 a, uint10 b, uint10 c);
+void subleq(int * pc, volatile int * ram, int base_addr,
+		uint10 a, uint10 b, uint10 c);
 //void print_memory(volatile int * ram);
 
-int kuuga(volatile int * ram, int * pc) {
+int kuuga(volatile int * ram, int base_addr) {
 	// AXI4 Master Interface
 	#pragma HLS INTERFACE ap_bus port=ram bundle=MAXI
 	#pragma HLS RESOURCE core=AXI4M variable=ram
@@ -14,43 +16,43 @@ int kuuga(volatile int * ram, int * pc) {
 	// AXI4 LITE
 	#pragma HLS RESOURCE core=AXI4LiteS variable=return metadata="-bus_bundle AXILiteS"
 
-	#pragma HLS INTERFACE ap_none register     port=pc
-	#pragma HLS RESOURCE core=AXI4LiteS    variable=pc metadata="-bus_bundle AXILiteS"
+	#pragma HLS INTERFACE ap_none register     port=base_addr
+	#pragma HLS RESOURCE core=AXI4LiteS    variable=base_addr metadata="-bus_bundle AXILiteS"
 
-	uint32 inst = fetch(pc, ram);
+	uint32 pc = 0;
+	int inst = *(ram + base_addr);
+
 	// Execute until the halt bit is set.
 	while ((inst & 0x00000001) <= 0)
 	{
 		uint10 a = ((inst & 0xFFC00000) >> 22);
 		uint10 b = ((inst & 0x003FF000) >> 12);
 		uint10 c = ((inst & 0x00000FFC) >> 2);
-		subleq(pc, ram, a, b, c);
-		inst = fetch(pc, ram);
+		*(ram + base_addr+2) = a;
+		*(ram + base_addr+3) = b;
+		*(ram + base_addr+4) = c;
+//		//subleq(&pc, ram, base_addr, a, b, c);
+		pc++;
+		inst = *(ram + base_addr + pc);
 	}
-	// Execute the instruction directly, no decode is required as there is only
-	// one instruction
 	return 0;
 }
 
-uint32 fetch(int * pc, volatile int * ram)
+void subleq(int * pc, volatile int * ram, int base_addr,
+		uint10 a, uint10 b,uint10 c)
 {
-	return *(ram + (*pc));
-}
-
-void subleq(int * pc, volatile int * ram, uint10 a, uint10 b,uint10 c)
-{
-	int32 m_a = ram[(int) a];
-	int32 m_b = ram[(int) b];
+	int32 m_a = *(ram + base_addr + (int) a);
+	int32 m_b = *(ram + base_addr + (int) b);
 	int32 check = m_b - m_a;
 	if(check <= 0)
 	{
-		*pc = c;
+		*pc = base_addr+c;
 	}
 	else
 	{
 		*pc = *pc+1;
 	}
-	ram[(int) b] = check;
+	*(ram + base_addr + (int) b) = check;
 	return;
 }
 
