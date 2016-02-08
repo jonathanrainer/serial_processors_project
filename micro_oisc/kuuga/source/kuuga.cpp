@@ -79,8 +79,6 @@ uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag)
 	return result;
 }
 
-
-
 //void print_memory(volatile int * ram)
 //{
 //	printf("Memory: [\n");
