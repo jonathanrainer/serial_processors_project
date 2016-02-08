@@ -19,39 +19,40 @@ int kuuga(volatile int * ram, int base_addr) {
 	uint32 inst = *(ram + base_addr);
 
 	// Execute until the halt bit is set.
-	while (bit_serial_and(inst, 1) <= 0)
+	while (bit_serial_and(inst, 0x00000001) <= 0)
 	{
 		uint10 a = (bit_serial_and(inst, 0xFFC00000) >> 22);
 		uint10 b = (bit_serial_and(inst, 0x003FF000) >> 12);
 		uint10 c = (bit_serial_and(inst, 0x00000FFC) >> 2);
-		subleq(&pc, ram, base_addr, a, b, c);
+		pc = subleq(pc, ram, base_addr, a, b, c);
 		inst = *(ram + base_addr + pc);
 	}
 	return 0;
 }
 
-void subleq(uint32 * pc, volatile int * ram, int base_addr,
+uint32 subleq(uint32 pc, volatile int * ram, int base_addr,
 		uint10 a, uint10 b,uint10 c)
 {
 	int32 m_a = *(ram + bit_serial_add(base_addr, a, false));
 	int32 m_b = *(ram + bit_serial_add(base_addr, b, false));
 	int32 check = bit_serial_add(m_b, m_a, true);
+	uint32 new_pc = 0x00000000;
 	if(check <= 0)
 	{
-		*pc = bit_serial_add(base_addr,c,false);
+		new_pc = bit_serial_add(base_addr,c,false);
 	}
 	else
 	{
-		*pc = bit_serial_add(*pc,1,false);
+		new_pc = bit_serial_add(pc,1,false);
 	}
 	*(ram + bit_serial_add(base_addr, b, false)) = check;
-	return;
+	return new_pc;
 }
 
 uint32 bit_serial_and(uint32 arg1, uint32 arg2)
 {
 	uint32 result = 0x00000000;
-	for (int i = 0; i < 31; i++)
+	and_loop:for (int i = 0; i < 31; i++)
 	{
 		uint1 bit_1 = arg1.bit(i);
 		uint1 bit_2 = arg2.bit(i);
