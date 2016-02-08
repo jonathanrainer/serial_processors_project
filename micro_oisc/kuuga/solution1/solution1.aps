@@ -9,7 +9,7 @@
         <schedule model="kuuga"/>
     </config>
     <UIConfigurations>
-        <UIAutosynConf hideTrivialOp="true" isBasedOnBoard="false" isSolutionDirty="false" isStopAskAgain="false" showDetailDesignViewer="false">
+        <UIAutosynConf hideTrivialOp="true" isBasedOnBoard="false" isSolutionDirty="true" isStopAskAgain="false" showDetailDesignViewer="false">
             <Platform>xilinx/spartan6/spartan6</Platform>
             <Platform>xilinx/spartan6/spartan6_fpv6</Platform>
             <customLibs/>
@@ -45,7 +45,7 @@
         <Format formatName="sysgen"/>
         <Format formatName="sysgen_ise"/>
         <Format formatName="syn_dcp"/>
-        <Format formatName="pcore" use_netlist="none" version="1.00.a"/>
+        <Format formatName="pcore" use_netlist="none"/>
     </ExportDesign>
     <Simulation>
         <SimFlow askAgain="true" dumpTrace="none" name="cosim" optimizeCompile="false" reduce_diskspace="false" setup="false" toolName="Auto">

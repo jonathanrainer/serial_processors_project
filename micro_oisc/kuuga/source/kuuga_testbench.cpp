@@ -3,10 +3,13 @@
 int mutation_test();
 int subleq_test();
 int add_test();
+int serial_and_test();
+int serial_add_test();
 
 int main()
 {
-	return mutation_test() | subleq_test() | add_test();
+	return mutation_test() | subleq_test() | add_test() | serial_and_test()
+			| serial_add_test();
 }
 
 int mutation_test()
@@ -50,5 +53,27 @@ int add_test()
 		return 0;
 	}
 	return 1;
+}
 
+int serial_and_test()
+{
+	uint32 result1 = bit_serial_and(0x00010001, 0x00010000);
+	uint32 result2 = bit_serial_and(0xADD32F10, 0x44E53CD1);
+	uint32 result3 = bit_serial_and(0x10101010, 0x10110001);
+	if (result1 == 0x00010000 && result2 == 0x04C12C10 && result3 == 0x10100000)
+	{
+		return 0;
+	}
+	return 1;
+}
+
+int serial_add_test()
+{
+	uint32 result1 = bit_serial_add(0x0000000A, 0x00000005, false);
+	uint32 result2 = bit_serial_add(0x0000000F, 0x00000005, true);
+	if (result1 == 0x0000000F && result2 == 0x0000000A)
+	{
+		return 0;
+	}
+	return 1;
 }

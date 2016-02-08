@@ -4,10 +4,6 @@
 
 #include "kuuga.h"
 
-void subleq(uint32 * pc, volatile int * ram, int base_addr,
-		uint10 a, uint10 b, uint10 c);
-//void print_memory(volatile int * ram);
-
 int kuuga(volatile int * ram, int base_addr) {
 	// AXI4 Master Interface
 	#pragma HLS INTERFACE ap_bus port=ram bundle=MAXI
@@ -23,11 +19,11 @@ int kuuga(volatile int * ram, int base_addr) {
 	uint32 inst = *(ram + base_addr);
 
 	// Execute until the halt bit is set.
-	while ((inst & 0x00000001) <= 0)
+	while (bit_serial_and(inst, 1) <= 0)
 	{
-		uint10 a = ((inst & 0xFFC00000) >> 22);
-		uint10 b = ((inst & 0x003FF000) >> 12);
-		uint10 c = ((inst & 0x00000FFC) >> 2);
+		uint10 a = (bit_serial_and(inst, 0xFFC00000) >> 22);
+		uint10 b = (bit_serial_and(inst, 0x003FF000) >> 12);
+		uint10 c = (bit_serial_and(inst, 0x00000FFC) >> 2);
 		subleq(&pc, ram, base_addr, a, b, c);
 		inst = *(ram + base_addr + pc);
 	}
@@ -37,20 +33,53 @@ int kuuga(volatile int * ram, int base_addr) {
 void subleq(uint32 * pc, volatile int * ram, int base_addr,
 		uint10 a, uint10 b,uint10 c)
 {
-	int32 m_a = *(ram + base_addr + (int) a);
-	int32 m_b = *(ram + base_addr + (int) b);
-	int32 check = m_b - m_a;
+	int32 m_a = *(ram + bit_serial_add(base_addr, a, false));
+	int32 m_b = *(ram + bit_serial_add(base_addr, b, false));
+	int32 check = bit_serial_add(m_b, m_a, true);
 	if(check <= 0)
 	{
-		*pc = base_addr+c;
+		*pc = bit_serial_add(base_addr,c,false);
 	}
 	else
 	{
-		*pc = *pc+1;
+		*pc = bit_serial_add(*pc,1,false);
 	}
-	*(ram + base_addr + (int) b) = check;
+	*(ram + bit_serial_add(base_addr, b, false)) = check;
 	return;
 }
+
+uint32 bit_serial_and(uint32 arg1, uint32 arg2)
+{
+	uint32 result = 0x00000000;
+	for (int i = 0; i < 31; i++)
+	{
+		uint1 bit_1 = arg1.bit(i);
+		uint1 bit_2 = arg2.bit(i);
+		result.bit(i) = (bit_1 & bit_2);
+	}
+	return result;
+}
+
+uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag)
+{
+	uint32 new_arg2 = arg2;
+	if(sub_flag)
+	{
+		new_arg2 = ~arg2 + 0x00000001;
+	}
+	uint32 result = 0x00000000;
+	uint1 carry = 0x0;
+	for (int i = 0; i < 31; i++)
+	{
+		uint1 bit_1 = arg1.bit(i);
+		uint1 bit_2 = new_arg2.bit(i);
+		result.bit(i) = (bit_1 ^ bit_2 ^ carry);
+		carry = (bit_1 & bit_2) | (carry & (bit_1 ^ bit_2));
+	}
+	return result;
+}
+
+
 
 //void print_memory(volatile int * ram)
 //{
