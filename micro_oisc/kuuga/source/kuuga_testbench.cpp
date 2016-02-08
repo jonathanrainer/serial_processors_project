@@ -12,9 +12,8 @@ int main()
 int mutation_test()
 {
 	int mem[1] = {0x0ABBCFF1};
-	int pc = 0;
 	int base_addr = 0;
-	kuuga(mem, pc, base_addr, 0);
+	kuuga(mem, base_addr);
 	if(mem[0] == 0x0ABBCFF1)
 	{
 		return 0;
@@ -29,7 +28,7 @@ int subleq_test()
 			0x00803004, 0x00000001, 0x00000004, 0x00000005};
 	int pc = 0;
 	int base_addr = 4;
-	kuuga(mem, pc, base_addr, 0);
+	kuuga(mem, base_addr);
 	if(mem[7] == 0x00000001)
 	{
 		return 0;
@@ -45,7 +44,7 @@ int add_test()
 		};
 	int pc = 0;
 	int base_addr = 0;
-	kuuga(mem, pc, base_addr, 0);
+	kuuga(mem, base_addr);
 	if(mem[2] == 0x00000009)
 	{
 		return 0;

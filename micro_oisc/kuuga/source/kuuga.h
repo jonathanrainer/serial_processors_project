@@ -12,7 +12,7 @@
 	typedef ap_uint<10> uint10;
 
 	// Prototypes
-	int kuuga(volatile int * ram, int base_addrs);
+	int kuuga(volatile int * ram, int base_addr);
 
 
 #endif

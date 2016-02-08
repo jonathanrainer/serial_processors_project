@@ -4,7 +4,7 @@
 
 #include "kuuga.h"
 
-void subleq(int * pc, volatile int * ram, int base_addr,
+void subleq(uint32 * pc, volatile int * ram, int base_addr,
 		uint10 a, uint10 b, uint10 c);
 //void print_memory(volatile int * ram);
 
@@ -20,7 +20,7 @@ int kuuga(volatile int * ram, int base_addr) {
 	#pragma HLS RESOURCE core=AXI4LiteS    variable=base_addr metadata="-bus_bundle AXILiteS"
 
 	uint32 pc = 0;
-	int inst = *(ram + base_addr);
+	uint32 inst = *(ram + base_addr);
 
 	// Execute until the halt bit is set.
 	while ((inst & 0x00000001) <= 0)
@@ -28,17 +28,13 @@ int kuuga(volatile int * ram, int base_addr) {
 		uint10 a = ((inst & 0xFFC00000) >> 22);
 		uint10 b = ((inst & 0x003FF000) >> 12);
 		uint10 c = ((inst & 0x00000FFC) >> 2);
-		*(ram + base_addr+2) = a;
-		*(ram + base_addr+3) = b;
-		*(ram + base_addr+4) = c;
-//		//subleq(&pc, ram, base_addr, a, b, c);
-		pc++;
+		subleq(&pc, ram, base_addr, a, b, c);
 		inst = *(ram + base_addr + pc);
 	}
 	return 0;
 }
 
-void subleq(int * pc, volatile int * ram, int base_addr,
+void subleq(uint32 * pc, volatile int * ram, int base_addr,
 		uint10 a, uint10 b,uint10 c)
 {
 	int32 m_a = *(ram + base_addr + (int) a);
