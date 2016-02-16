@@ -17,3 +17,8 @@
 atlys_support/
 VLAB/
 
+##
+# Extra Ignores for Greendroid Code that shouldn't be put online
+##
+greendroid_code/
+
