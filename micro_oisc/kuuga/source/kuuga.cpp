@@ -4,6 +4,8 @@
 
 #include "kuuga.h"
 
+uint32 registers[2] = {0,0};
+
 int kuuga(volatile int * ram, int base_addr) {
 	// AXI4 Master Interface
 	#pragma HLS INTERFACE ap_bus port=ram bundle=MAXI
@@ -33,9 +35,9 @@ int kuuga(volatile int * ram, int base_addr) {
 uint32 subleq(uint32 pc, volatile int * ram, int base_addr,
 		uint10 a, uint10 b,uint10 c)
 {
-	int32 m_a = *(ram + bit_serial_add(base_addr, a, false));
-	int32 m_b = *(ram + bit_serial_add(base_addr, b, false));
-	int32 check = bit_serial_add(m_b, m_a, true);
+	registers[0] = *(ram + bit_serial_add(base_addr, a, false));
+	registers[1] = *(ram + bit_serial_add(base_addr, b, false));
+	int32 check = bit_serial_add(registers[1], registers[0], true);
 	uint32 new_pc = 0x00000000;
 	if(check <= 0)
 	{
@@ -70,7 +72,7 @@ uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag)
 	}
 	uint32 result = 0x00000000;
 	uint1 carry = 0x0;
-	for (int i = 0; i < 31; i++)
+	add_loop:for (int i = 0; i < 31; i++)
 	{
 		uint1 bit_1 = arg1.bit(i);
 		uint1 bit_2 = new_arg2.bit(i);

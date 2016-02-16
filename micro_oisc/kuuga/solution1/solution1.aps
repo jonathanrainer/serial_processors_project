@@ -2,9 +2,6 @@
     <downStreamTool>
         <DownStreamTool name=""/>
     </downStreamTool>
-    <clockList>
-        <clock name="default" period="20"/>
-    </clockList>
     <config>
         <schedule model="kuuga"/>
     </config>
@@ -67,5 +64,8 @@
         <library name="DefaultPlatform" value="xilinx/spartan6/spartan6"/>
         <library name="DefaultPlatform" value="xilinx/spartan6/spartan6_fpv6"/>
     </libraryList>
+    <clockList>
+        <clock name="default" default="false" period="20"/>
+    </clockList>
 </solution>
 
