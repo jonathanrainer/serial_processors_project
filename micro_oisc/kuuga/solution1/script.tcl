@@ -5,12 +5,12 @@
 ############################################################
 open_project kuuga
 set_top kuuga
-add_files kuuga/source/kuuga.cpp
 add_files kuuga/source/kuuga.h
+add_files kuuga/source/kuuga.cpp
 add_files -tb kuuga/source/kuuga_testbench.cpp
 open_solution "solution1"
 set_part {xc6slx45csg324-3}
-create_clock -period 20 -name default
+create_clock -period 2.25 -name default
 source "./kuuga/solution1/directives.tcl"
 csim_design -ldflags {-B"/usr/lib/x86_64-linux-gnu/"}
 csynth_design
