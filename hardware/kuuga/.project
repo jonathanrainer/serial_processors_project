@@ -29,47 +29,47 @@
 		<link>
 			<name>source</name>
 			<type>2</type>
-			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc/kuuga/.apc/.src</location>
+			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/kuuga/.apc/.src</location>
 		</link>
 		<link>
 			<name>testbench</name>
 			<type>2</type>
-			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc/kuuga/.apc/.tb</location>
+			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/kuuga/.apc/.tb</location>
 		</link>
 		<link>
 			<name>solution1/constraints</name>
 			<type>2</type>
-			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc/kuuga/solution1/.tcls</location>
+			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/kuuga/solution1/.tcls</location>
 		</link>
 		<link>
 			<name>source/kuuga.cpp</name>
 			<type>1</type>
-			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc/kuuga/source/kuuga.cpp</location>
+			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/kuuga/source/kuuga.cpp</location>
 		</link>
 		<link>
 			<name>source/kuuga.h</name>
 			<type>1</type>
-			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc/kuuga/source/kuuga.h</location>
+			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/kuuga/source/kuuga.h</location>
 		</link>
 		<link>
 			<name>testbench/kuuga_testbench.cpp</name>
 			<type>1</type>
-			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc/kuuga/source/kuuga_testbench.cpp</location>
+			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/kuuga/source/kuuga_testbench.cpp</location>
 		</link>
 		<link>
 			<name>solution1/constraints/.xml.directive</name>
 			<type>1</type>
-			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc/kuuga/solution1/solution1.directive</location>
+			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/kuuga/solution1/solution1.directive</location>
 		</link>
 		<link>
 			<name>solution1/constraints/directives.tcl</name>
 			<type>1</type>
-			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc/kuuga/solution1/directives.tcl</location>
+			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/kuuga/solution1/directives.tcl</location>
 		</link>
 		<link>
 			<name>solution1/constraints/script.tcl</name>
 			<type>1</type>
-			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc/kuuga/solution1/script.tcl</location>
+			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/kuuga/solution1/script.tcl</location>
 		</link>
 	</linkedResources>
 </projectDescription>
