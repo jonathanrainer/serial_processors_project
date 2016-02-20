@@ -4,6 +4,8 @@
 ## Copyright (C) 2015 Xilinx Inc. All rights reserved.
 ############################################################
 open_project agito
+add_files agito/source/agito.cpp
+add_files agito/source/agito.h
 open_solution "solution1"
 set_part {xc6slx45csg324-3}
 create_clock -period 20 -name default
