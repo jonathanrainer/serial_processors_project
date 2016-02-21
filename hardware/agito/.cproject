@@ -28,7 +28,6 @@
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/systemc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/auto_cc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include"/>
-									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/hardware"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/ap_sysc"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/etc"/>
 								</option>
@@ -46,7 +45,6 @@
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/systemc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/auto_cc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include"/>
-									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/hardware"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/ap_sysc"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/etc"/>
 								</option>
@@ -62,14 +60,14 @@
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/systemc/lib"/>
 								</option>
 								<option id="gnu.c.link.option.libs.1334168589" name="Libraries (-l)" superClass="gnu.c.link.option.libs"/>
-								<option id="gnu.c.link.option.ldflags.1796147567" name="Linker flags" superClass="gnu.c.link.option.ldflags"/>
+								<option id="gnu.c.link.option.ldflags.1796147567" name="Linker flags" superClass="gnu.c.link.option.ldflags" value="-B&quot;/usr/lib/x86_64-linux-gnu/&quot;" valueType="string"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.489852210" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.paths.1125548586" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/systemc/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.490296963" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs"/>
-								<option id="gnu.cpp.link.option.flags.1113217688" name="Linker flags" superClass="gnu.cpp.link.option.flags"/>
+								<option id="gnu.cpp.link.option.flags.1113217688" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-B&quot;/usr/lib/x86_64-linux-gnu/&quot;" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.2022564286" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -114,7 +112,6 @@
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/systemc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/auto_cc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include"/>
-									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/hardware"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/ap_sysc"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/etc"/>
 								</option>
@@ -127,7 +124,6 @@
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/systemc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/auto_cc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include"/>
-									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/hardware"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/ap_sysc"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/etc"/>
 								</option>
@@ -138,14 +134,14 @@
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/systemc/lib"/>
 								</option>
 								<option id="gnu.c.link.option.libs.1906892548" name="Libraries (-l)" superClass="gnu.c.link.option.libs"/>
-								<option id="gnu.c.link.option.ldflags.1198193890" name="Linker flags" superClass="gnu.c.link.option.ldflags"/>
+								<option id="gnu.c.link.option.ldflags.1198193890" name="Linker flags" superClass="gnu.c.link.option.ldflags" value="-B&quot;/usr/lib/x86_64-linux-gnu/&quot;" valueType="string"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.1447774899" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
 								<option id="gnu.cpp.link.option.paths.933626484" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/systemc/lib"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.1961870796" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs"/>
-								<option id="gnu.cpp.link.option.flags.511955784" name="Linker flags" superClass="gnu.cpp.link.option.flags"/>
+								<option id="gnu.cpp.link.option.flags.511955784" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-B&quot;/usr/lib/x86_64-linux-gnu/&quot;" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.393811438" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
