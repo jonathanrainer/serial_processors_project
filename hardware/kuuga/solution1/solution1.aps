@@ -2,9 +2,6 @@
     <downStreamTool>
         <DownStreamTool name=""/>
     </downStreamTool>
-    <clockList>
-        <clock default="false" name="default" period="2.25"/>
-    </clockList>
     <config>
         <schedule model="kuuga"/>
     </config>
@@ -44,7 +41,7 @@
         <Format formatName="sysgen"/>
         <Format formatName="sysgen_ise"/>
         <Format formatName="syn_dcp"/>
-        <Format formatName="pcore" use_netlist="none" version="1.00.a"/>
+        <Format formatName="pcore" use_netlist="none"/>
     </ExportDesign>
     <Simulation>
         <SimFlow askAgain="true" dumpTrace="none" name="cosim" optimizeCompile="false" reduce_diskspace="false" setup="false" toolName="Auto">
@@ -66,5 +63,8 @@
         <library name="DefaultPlatform" value="xilinx/spartan6/spartan6"/>
         <library value="xilinx/spartan6/spartan6_fpv6" name="DefaultPlatform"/>
     </libraryList>
+    <clockList>
+        <clock default="false" name="default" uncertainty="0.01ns" period="2.12"/>
+    </clockList>
 </solution>
 
