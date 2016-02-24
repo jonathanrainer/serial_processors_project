@@ -1,0 +1,7 @@
+## 
+# Vivado HLS
+##
+vivado_hls.app
+.settings/
+.apc/
+.vivado_hls_log_all.xml
