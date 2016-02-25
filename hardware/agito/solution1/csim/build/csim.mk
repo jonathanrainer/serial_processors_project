@@ -77,7 +77,7 @@ all: $(TARGET)
 
 $(ObjDir)/agito_testbench.o: ../../../source/agito_testbench.cpp $(ObjDir)/.dir
 	$(Echo) "   Compiling ../../../source/agito_testbench.cpp in $(BuildMode) mode" $(AVE_DIR_DLOG)
-	$(Verb)  $(CC) -c -MMD   $(IFLAG) $(DFLAG)  $< -o $@ ; \
+	$(Verb)  $(CC) -c -MMD    $(IFLAG) $(DFLAG)  $< -o $@ ; \
 
 -include $(ObjDir)/agito_testbench.d
 

@@ -26,7 +26,7 @@ int agito(volatile int * ram, int base_addr) {
   while (!halt_flag)
   {
       uint32 inst = *(ram + bit_serial_add(memory_start, pc));
-      uint5 opcode = inst.getHiBits(5);
+      uint5 opcode = (inst && 0xF8000000) >> 27;
 
       switch (opcode)
       {
@@ -34,11 +34,11 @@ int agito(volatile int * ram, int base_addr) {
 	  halt_flag = true;
 	  break;
 	case 0x1:
-	  load_direct(inst.getLoBits(27), ram);
+	  load_direct((inst && 0x07FFFFFF), ram);
 	  pc++;
 	  break;
 	case 0x2:
-	  load_register_offset(inst.getLoBits(27), ram);
+	  load_register_offset((inst && 0x07FFFFFF), ram);
 	  pc++;
 	  break;
 	case 0x3:
@@ -53,16 +53,22 @@ int agito(volatile int * ram, int base_addr) {
 
 void load_direct(uint27 operands, volatile int * ram)
 {
-  registers[operands.getHiBits(9)] =
-      *(ram + bit_serial_add(memory_start, (uint32) operands.getLoBits(18)));
+  registers[((operands && 0x07F10000) >> 19)] =
+      *(ram + bit_serial_add(memory_start, operands && 0x0007FFFF));
 }
 
 void load_register_offset(uint27 operands, volatile int * ram)
 {
   uint32 memory_location = bit_serial_add(
-      registers[operands.getLoBits(18).getHiBits(9)], operands.getLoBits(9));
-  registers[operands.getHiBits(9)] =
+      registers[(operands && 0x3FE00) >> 9], operands && 0x1FF);
+  registers[(operands && 0x7FC0000) >> 18] =
         *(ram + bit_serial_add(memory_start, memory_location));
+}
+
+void store_direct(uint27 operands, volatile int * ram)
+{
+  *(ram + bit_serial_add(memory_start, operands && 0x0007FFFF)) =
+      registers[((operands && 0x7FFFE00) >> 9)];
 }
 
 uint32 bit_serial_add(uint32 arg1, uint32 arg2)

@@ -2,6 +2,9 @@
     <downStreamTool>
         <DownStreamTool name=""/>
     </downStreamTool>
+    <clockList>
+        <clock default="false" name="default" period="20"/>
+    </clockList>
     <config/>
     <UIConfigurations>
         <UIAutosynConf hideTrivialOp="true" isBasedOnBoard="false" isSolutionDirty="false" isStopAskAgain="true" showDetailDesignViewer="false">
@@ -62,8 +65,5 @@
         <library name="DefaultPlatform" value="xilinx/spartan6/spartan6"/>
         <library name="DefaultPlatform" value="xilinx/spartan6/spartan6_fpv6"/>
     </libraryList>
-    <clockList>
-        <clock name="default" default="false" period="20"/>
-    </clockList>
 </solution>
 

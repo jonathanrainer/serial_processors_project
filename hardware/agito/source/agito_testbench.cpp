@@ -49,9 +49,9 @@ int main()
 
 bool load_direct_test()
 {
-  int mem[4] = {0x080C0002, 0x00000000, 0x22FF22FF, 0xFFEEDDCC};
+  int mem[5] = {0x08040003, 0x18000802, 0x00000000, 0x22FF22FF, 0xFFEEDDCC};
   agito(mem, 0x0);
-  return true;
+  return mem[3] == 0x22FF22FF;
 }
 
 bool load_register_offset_test()
