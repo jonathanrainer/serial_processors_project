@@ -4,7 +4,7 @@ import argparse
 import abc
 
 
-class InstructionBase(object):
+class AgitoInstructionBase(object):
 	__metaclass__ = abc.ABCMeta
 	
 	@abc.abstractmethod
@@ -17,7 +17,7 @@ class InstructionBase(object):
 			output += format(int(element, base=16), format_string)
 		return format(int(output, base=2), '#010X') 
 
-class OneOperandInstruction(InstructionBase):
+class OneOperandInstruction(AgitoInstructionBase):
 	__metaclass__ = abc.ABCMeta
 
 	@abc.abstractproperty
@@ -31,6 +31,45 @@ class OneOperandInstruction(InstructionBase):
 	def create_instruction(self, instruction_elements):
 		return self.create_hex_representation([(self.opcode,"05b"),("0", "027b")])
 
+class TwoOperandInstruction(AgitoInstructionBase):
+	__metaclass__ = abc.ABCMeta
+
+	@abc.abstractproperty
+	def name(self):
+		return 
+
+	@abc.abstractproperty
+	def opcode(self):
+		return	
+
+	@abc.abstractproperty
+	def short_long_flag(self):
+		return
+
+	def create_instruction(self, instruction_elements):
+		format_strings = ["018b", "09b"]
+		if self.short_long_flag:
+			format_strings.reverse()
+		return self.create_hex_representation(
+			[(self.opcode,"05b"), (instruction_elements[0], format_strings[0]),
+						 (instruction_elements[1], format_strings[1])]) 
+
+class ThreeOperandInstruction(AgitoInstructionBase):
+	__metaclass__ = abc.ABCMeta
+
+	@abc.abstractproperty
+	def name(self):
+		return 
+
+	@abc.abstractproperty
+	def opcode(self):
+		return	
+	
+	def create_instruction(self, instruction_elements):
+		pairs = [(self.opcode, "05b")]
+		pairs.extend([(x, "09b") for x in instruction_elements])
+		return self.create_hex_representation(pairs)  
+
 class Halt(OneOperandInstruction):
 
 	@property
@@ -41,7 +80,7 @@ class Halt(OneOperandInstruction):
 	def opcode(self):
 		return "0"
 
-class Load(InstructionBase):
+class Load(TwoOperandInstruction):
 
 	@property
 	def name(self):
@@ -51,13 +90,12 @@ class Load(InstructionBase):
 	def opcode(self):
 		return "1"
 
-	def create_instruction(self, instruction_elements):	
-		return self.create_hex_representation(
-			[(self.opcode,"05b"), (instruction_elements[0], "09b"), (instruction_elements[1], "018b")])
+	@property
+	def short_long_flag(self):
+		return True
 
 
-
-class LoadRegisterOffset(InstructionBase):
+class LoadRegisterOffset(ThreeOperandInstruction):
 
 	@property
 	def name(self):
@@ -65,14 +103,9 @@ class LoadRegisterOffset(InstructionBase):
 
 	@property
 	def opcode(self):
-		return "2"
-	
-	def create_instruction(self, instruction_elements):
-		pairs = [(self.opcode, "05b")]
-		pairs.extend([(x, "09b") for x in instruction_elements])
-		return self.create_hex_representation(pairs)  
+		return "2"  
 
-class Store(InstructionBase):
+class Store(TwoOperandInstruction):
 
 	@property
 	def name(self):
@@ -82,13 +115,11 @@ class Store(InstructionBase):
 	def opcode(self):
 		return "3"
 
-	def create_instruction(self, instruction_elements):	
-		return self.create_hex_representation(
-			[(self.opcode,"05b"), (instruction_elements[0], "018b"), (instruction_elements[1], "09b")])
+	@property
+	def short_long_flag(self):
+		return False
 
-
-
-class StoreRegisterOffset(InstructionBase):
+class StoreRegisterOffset(ThreeOperandInstruction):
 
 	@property
 	def name(self):
@@ -97,16 +128,10 @@ class StoreRegisterOffset(InstructionBase):
 	@property
 	def opcode(self):
 		return "4"
-	
-	def create_instruction(self, instruction_elements):
-		pairs = [(self.opcode, "05b")]
-		pairs.extend([(x, "09b") for x in instruction_elements])
-		return self.create_hex_representation(pairs)  
-	
-	
+
 class Assembler(object):
 	
-	unflattened_list = [y.__subclasses__() for y in InstructionBase.__subclasses__()]
+	unflattened_list = [y.__subclasses__() for y in AgitoInstructionBase.__subclasses__()]
 	flattened_list = [item for sublist in unflattened_list for item in sublist]
 
 	name_map = {sc().name: sc() for sc in flattened_list}
