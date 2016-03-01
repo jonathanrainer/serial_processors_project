@@ -6,14 +6,6 @@ import abc
 
 class InstructionBase(object):
 	__metaclass__ = abc.ABCMeta
-
-	@abc.abstractproperty
-	def name(self):
-		return 
-
-	@abc.abstractproperty
-	def opcode(self):
-		return
 	
 	@abc.abstractmethod
 	def create_instruction(self, instruction_elements):
@@ -25,7 +17,21 @@ class InstructionBase(object):
 			output += format(int(element, base=16), format_string)
 		return format(int(output, base=2), '#010X') 
 
-class Halt(InstructionBase):
+class OneOperandInstruction(InstructionBase):
+	__metaclass__ = abc.ABCMeta
+
+	@abc.abstractproperty
+	def name(self):
+		return 
+
+	@abc.abstractproperty
+	def opcode(self):
+		return	
+
+	def create_instruction(self, instruction_elements):
+		return self.create_hex_representation([(self.opcode,"05b"),("0", "027b")])
+
+class Halt(OneOperandInstruction):
 
 	@property
 	def name(self): 
@@ -34,9 +40,6 @@ class Halt(InstructionBase):
 	@property
 	def opcode(self):
 		return "0"
-
-	def create_instruction(self, instruction_elements):
-		return self.create_hex_representation([("0", "032b")])
 
 class Load(InstructionBase):
 
@@ -102,8 +105,11 @@ class StoreRegisterOffset(InstructionBase):
 	
 	
 class Assembler(object):
+	
+	unflattened_list = [y.__subclasses__() for y in InstructionBase.__subclasses__()]
+	flattened_list = [item for sublist in unflattened_list for item in sublist]
 
-	name_map = {sc().name: sc() for sc in InstructionBase.__subclasses__()}
+	name_map = {sc().name: sc() for sc in flattened_list}
 
 	def parse(self, raw_string):
 		instruction_elements = re.split(' ', raw_string)

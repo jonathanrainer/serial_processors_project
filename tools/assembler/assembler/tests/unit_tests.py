@@ -26,7 +26,16 @@ class AssemblerUnitTests(unittest.TestCase):
 
 	def test_parse_store_register_offset(self):
 		output = self.a.parse("STORERO R8 #42 R4")
-		self.assertEqual(output, "0X20208404")		
+		self.assertEqual(output, "0X20208404")
+
+	def test_parse_add_constant(self):
+		output = self.a.parse("ADDC R7 R2 #77")
+		self.assertEqual(output, "0X281C0477")
+
+	def test_parse_add_register(self):
+		output = self.a.parse("ADD R1 R2 R3")
+		self.assertEqual(output, "0X30040403")
+				
 
 if __name__ == '__main__':
 	unittest.main()
