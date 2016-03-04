@@ -4,21 +4,13 @@
 
 #include "kuuga.h"
 
+uint32 memory[MEM_SIZE]={0,0,0,0,0,0,0,0};
 bool zero_flag = false;
 
-int kuuga(volatile int * ram, int base_addr) {
-	// AXI4 Master Interface
-	#pragma HLS INTERFACE ap_bus port=ram bundle=MAXI
-	#pragma HLS RESOURCE core=AXI4M variable=ram
-
-	// AXI4 LITE
-	#pragma HLS RESOURCE core=AXI4LiteS variable=return metadata="-bus_bundle AXILiteS"
-
-	#pragma HLS INTERFACE ap_none register     port=base_addr
-	#pragma HLS RESOURCE core=AXI4LiteS    variable=base_addr metadata="-bus_bundle AXILiteS"
+int kuuga() {
 
 	uint32 pc = 0;
-	uint32 inst = *(ram + base_addr);
+	uint32 inst = memory[0];
 	zero_flag = false;
 
 	// Execute until the halt bit is set.
@@ -27,29 +19,28 @@ int kuuga(volatile int * ram, int base_addr) {
 		uint10 a = (bit_serial_and(inst, 0xFFC00000) >> 22);
 		uint10 b = (bit_serial_and(inst, 0x003FF000) >> 12);
 		uint10 c = (bit_serial_and(inst, 0x00000FFC) >> 2);
-		pc = subleq(pc, ram, base_addr, a, b, c);
-		inst = *(ram + base_addr + pc);
+		pc = subleq(pc, a, b, c);
+		inst = memory[pc];
 	}
 	return 0;
 }
 
-uint32 subleq(uint32 pc, volatile int * ram, int base_addr,
-		uint10 a, uint10 b,uint10 c)
+uint32 subleq(uint32 pc, uint10 a, uint10 b,uint10 c)
 {
-	uint32 m_a = *(ram + bit_serial_add(base_addr, a, false));
-	uint32 m_b = *(ram + bit_serial_add(base_addr, b, false));
+	uint32 m_a = memory[a];
+	uint32 m_b = memory[b];
 	uint32 check = bit_serial_add(m_b, m_a, true);
 	uint32 new_pc = 0x00000000;
 	if(check.bit(31) == 1 || zero_flag)
 	{
-		new_pc = bit_serial_add(base_addr,c,false);
+		new_pc = c;
 	}
 	else
 	{
 		new_pc = bit_serial_add(pc,1,false);
 	}
 	zero_flag = false;
-	*(ram + bit_serial_add(base_addr, b, false)) = check;
+	memory[b] = check;
 	return new_pc;
 }
 
@@ -86,7 +77,7 @@ uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag)
 //void print_memory(volatile int * ram)
 //{
 //	printf("Memory: [\n");
-//	for (int j=0; j < 50; j++)
+//	for (int j=0; j < MEM_SIZE; j++)
 //	{
 //		if (j % 4 == 0 && j != 0)
 //		{

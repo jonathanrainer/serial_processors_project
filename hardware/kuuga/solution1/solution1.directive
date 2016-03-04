@@ -12,6 +12,12 @@
         <directive functionName="bit_serial_and" label="" functionLabel="">
             <pragma name="INLINE"/>
         </directive>
+        <directive functionName="kuuga" label="" functionLabel="">
+            <pragma name="RESOURCE">
+                <option name="variable" value="memory" positionalBoolean="4"/>
+                <option name="core" value="RAM_1P_BRAM"/>
+            </pragma>
+        </directive>
     </sourceFile>
 </AutoPilot:ProjectResources>
 

@@ -13,12 +13,18 @@
 	typedef ap_uint<1> uint1;
 
 	// Prototypes
-	int kuuga(volatile int * ram, int base_addr);
-	uint32 subleq(uint32 pc, volatile int * memstart, int base_addr,
-			uint10 a, uint10 b, uint10 c);
+	int kuuga();
+	uint32 subleq(uint32 pc, uint10 a, uint10 b, uint10 c);
 	uint32 bit_serial_and(uint32 arg1, uint32 arg2);
 	uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag);
-	//void print_memory(volatile int * ram);
+
+	// Defines
+	#define MEM_SIZE 8
+
+	// Globals
+	extern uint32 memory[MEM_SIZE];
+
+
 
 
 #endif
