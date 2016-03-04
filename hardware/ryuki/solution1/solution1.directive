@@ -1,0 +1,11 @@
+<AutoPilot:ProjectResources xmlns:AutoPilot="com.autoesl.autopilot.ui.directiveView">
+    <sourceFile name="">
+        <directive functionName="ryuki" label="" functionLabel="">
+            <pragma name="RESOURCE">
+                <option name="variable" value="memory" positionalBoolean="4"/>
+                <option name="core" value="RAM_2P_BRAM"/>
+            </pragma>
+        </directive>
+    </sourceFile>
+</AutoPilot:ProjectResources>
+

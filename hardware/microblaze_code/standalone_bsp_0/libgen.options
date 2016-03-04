@@ -1,3 +1,0 @@
-PROCESSOR=microblaze_0
-REPOSITORIES=-lp /usr/userfs/j/jr776/w2k/serial_processors_project/hardware/kuuga/solution1/impl
-HWSPEC=../micro_oisc_hw_platform/system.xml
