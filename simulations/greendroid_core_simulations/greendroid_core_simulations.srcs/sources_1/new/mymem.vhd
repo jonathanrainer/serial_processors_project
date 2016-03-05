@@ -37,7 +37,7 @@ PORT (
 
 end mem;
 
-architecture Behavioral of mem is
+architecture Behavioural of mem is
 
 begin
 
@@ -61,4 +61,4 @@ END PROCESS;
 
 
 
-end Behavioral;
+end Behavioural;

@@ -34,101 +34,89 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity rem_testbench is
 end rem_testbench;
 
-architecture Behavioral of rem_testbench is
+architecture Behavioural of rem_testbench is
 
     signal sig_i00, sig_i01, sig_i02, sig_i03, sig_r00, sig_r01, sig_r02, 
-            sig_r03, sig_FP, sig_FPout, sig_M_ADDR, sig_M_DATA, 
-            sig_MDAT : std_logic_vector(31 DOWNTO 0);
-    signal sig_M_RD, sig_M_WR, sig_M_RDY, sig_reset, sig_CLK, sig_MWAIT : std_logic;
+            sig_r03, sig_FP, sig_FPout,sig_MDAT : std_logic_vector(31 DOWNTO 0);
+    signal sig_reset, sig_CLK, sig_MWAIT : std_logic;
     
-    component GreenDroidREMCore is 
+    component coreandmemory is 
          PORT (
-           i00 : IN std_logic_vector(31 DOWNTO 0);
-           i01 : IN std_logic_vector(31 DOWNTO 0);
-           i02 : IN std_logic_vector(31 DOWNTO 0);
-           i03 : IN std_logic_vector(31 DOWNTO 0);
-   
-           r00 : OUT std_logic_vector(31 DOWNTO 0);
-           r01 : OUT std_logic_vector(31 DOWNTO 0);
-           r02 : OUT std_logic_vector(31 DOWNTO 0);
-           r03 : OUT std_logic_vector(31 DOWNTO 0);
-   
-           FP : IN std_logic_vector(31 DOWNTO 0);
-           FPout : OUT std_logic_vector(31 DOWNTO 0);
-           M_ADDR :   OUT std_logic_vector(31 DOWNTO 0);
-           M_DATA : INOUT std_logic_vector(31 DOWNTO 0);
-           M_RD  : INOUT std_logic; 
-           M_WR  : INOUT std_logic; 
-           M_RDY : IN std_logic; 
-           reset : IN std_logic; 
-           CLK  : IN std_logic 
-         ); 
-     end component;
-         
-     component mem is 
-        PORT (
-             M_ADDR :   IN std_logic_vector(31 DOWNTO 0);
-             M_DATA : INOUT std_logic_vector(31 DOWNTO 0);
-             M_RD  : IN std_logic; 
-             M_WR  : IN std_logic; 
-             M_RDY : OUT std_logic;
-              
-            MWAIT : IN std_logic;
-            MDAT  : IN std_logic_vector(31 DOWNTO 0)
-           ); 
+            in0 : IN std_logic_vector(31 DOWNTO 0);
+            in1 : IN std_logic_vector(31 DOWNTO 0);
+            in2 : IN std_logic_vector(31 DOWNTO 0);
+            in3 : IN std_logic_vector(31 DOWNTO 0);
+        
+            out0 : OUT std_logic_vector(31 DOWNTO 0);
+            out1 : OUT std_logic_vector(31 DOWNTO 0);
+            out2 : OUT std_logic_vector(31 DOWNTO 0);
+            out3 : OUT std_logic_vector(31 DOWNTO 0);
+            
+            frame_pointer : IN std_logic_vector(31 DOWNTO 0);
+            frame_pointer_out : OUT std_logic_vector(31 DOWNTO 0);
+            rst : IN std_logic; 
+            clck  : IN std_logic; 
+            
+            mem_wait : IN std_logic;
+            mem_push  : IN std_logic_vector(31 DOWNTO 0)
+            );
      end component;
      
 begin
-    uut: GreendroidREMCore
+    uut: coreandmemory
         port map (
-           i00 => sig_i00,
-           i01 => sig_i01,
-           i02 => sig_i02,
-           i03 => sig_i03,
-           r00 => sig_r00,
-           r01 => sig_r01,
-           r02 => sig_r02,
-           r03 => sig_r03,
+           in0 => sig_i00,
+           in1 => sig_i01,
+           in2 => sig_i02,
+           in3 => sig_i03,
+           out0 => sig_r00,
+           out1 => sig_r01,
+           out2 => sig_r02,
+           out3 => sig_r03,
    
-           FP => sig_FP,
-           FPout => sig_FPout,
-           M_ADDR => sig_M_ADDR,
-           M_DATA => sig_M_DATA,
-           M_RD  => sig_M_RD,
-           M_WR  => sig_M_WR,
-           M_RDY => sig_M_RDY,
-           reset => sig_reset,
-           CLK  => sig_CLK
+           frame_pointer => sig_FP,
+           frame_pointer_out => sig_FPout,
+           rst => sig_reset,
+           clck  => sig_CLK,
+           mem_wait => sig_MWAIT,
+           mem_push => sig_MDAT
            );
-           
-     mymem: mem
-        port map(
-        M_ADDR => sig_M_ADDR,
-        M_DATA => sig_M_DATA,
-        M_RD  => sig_M_RD,
-        M_WR  => sig_M_WR,
-        M_RDY => sig_M_RDY,
-        MWAIT => sig_MWAIT,
-        MDAT  => sig_MDAT
-        );
-        
+     
      clock: process begin
+        wait for 200ns;
         sig_CLK <= '0';
-        wait for 5ns;
+        wait for 50ns;
         sig_CLK <= '1';
-        wait for 5ns;
-     end process clock;
+        wait for 50ns;
+        sig_CLK <= '0';
+        wait for 50ns;
+        sig_CLK <= '1';
+        wait for 50ns;
+        sig_CLK <= '0';
+        wait for 50ns;
+        sig_CLK <= '1';
+        wait for 50ns;
+        sig_CLK <= '0';
+        wait for 50ns;
+        sig_CLK <= '1';
+        wait for 50ns;
+        sig_CLK <= '0';
+        wait;
+        end process clock;
      
      test: process begin
+        sig_reset <= '1';
+        wait for 100ns;
+        sig_reset <= '0';
+        wait for 100ns;
         sig_i00 <= "00000000000000000000000000001100";
         sig_i01 <= "00000000000000000000000000000010";
         sig_i02 <= "00000000000000000000000000000011";
         sig_i03 <= "00000000000000000000000000000100";
         sig_MDAT <= "00000000000000000000000000011111";
-        wait for 5ns;
         wait;
-        end process;
+     end process test;
         
 
 
-end Behavioral;
+end Behavioural;

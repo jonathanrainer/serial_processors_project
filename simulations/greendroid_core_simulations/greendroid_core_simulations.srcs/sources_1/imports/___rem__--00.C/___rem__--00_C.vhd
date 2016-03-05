@@ -27,7 +27,7 @@ FPout : OUT std_logic_vector(31 DOWNTO 0);
       ); 
 END ENTITY; 
 
-ARCHITECTURE Behavioural OF GreenDroidREMCore IS
+ARCHITECTURE Functional OF GreenDroidREMCore IS
   TYPE States IS (ST_INIT,WS_INIT,ST_RESET,ST00,WS00,ST_END);
   SIGNAL Mstate : States;
 BEGIN
