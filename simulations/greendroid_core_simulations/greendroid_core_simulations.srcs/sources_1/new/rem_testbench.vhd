@@ -63,6 +63,7 @@ architecture Behavioural of rem_testbench is
      end component;
      
 begin
+
     uut: coreandmemory
         port map (
            in0 => sig_i00,
@@ -82,25 +83,16 @@ begin
            mem_push => sig_MDAT
            );
      
-     clock: process begin
+     clock: process 
+     constant clock_period:time := 50ns;
+     begin   
         wait for 200ns;
-        sig_CLK <= '0';
-        wait for 50ns;
-        sig_CLK <= '1';
-        wait for 50ns;
-        sig_CLK <= '0';
-        wait for 50ns;
-        sig_CLK <= '1';
-        wait for 50ns;
-        sig_CLK <= '0';
-        wait for 50ns;
-        sig_CLK <= '1';
-        wait for 50ns;
-        sig_CLK <= '0';
-        wait for 50ns;
-        sig_CLK <= '1';
-        wait for 50ns;
-        sig_CLK <= '0';
+        for I in 0 to 10 loop
+            sig_CLK <= '0';
+            wait for clock_period/2;
+            sig_CLK <= '1';
+            wait for clock_period/2;
+        end loop;
         wait;
         end process clock;
      
