@@ -18,6 +18,16 @@
                 <option name="core" value="RAM_1P_BRAM"/>
             </pragma>
         </directive>
+        <directive functionName="kuuga" label="main_loop" functionLabel="">
+            <pragma name="LOOP_TRIPCOUNT">
+                <option name="min" value="1"/>
+                <option name="max" value="30"/>
+                <option name="avg" value="15"/>
+            </pragma>
+        </directive>
+        <directive functionName="kuuga" label="main_loop" functionLabel="">
+            <pragma name="PIPELINE"/>
+        </directive>
     </sourceFile>
 </AutoPilot:ProjectResources>
 

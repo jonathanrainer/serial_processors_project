@@ -5,11 +5,11 @@
 ############################################################
 open_project kuuga
 set_top kuuga
-add_files kuuga/source/kuuga.cpp
 add_files kuuga/source/kuuga.h
+add_files kuuga/source/kuuga.cpp
 add_files -tb kuuga/source/kuuga_testbench.cpp
 open_solution "solution1"
-set_part {xc6slx45csg324-3}
+set_part {xc7vx485tffg1761-2}
 create_clock -period 2.12 -name default
 set_clock_uncertainty 0.01ns
 source "./kuuga/solution1/directives.tcl"

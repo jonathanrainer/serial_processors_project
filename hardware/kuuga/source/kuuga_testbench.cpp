@@ -1,83 +1,111 @@
 #include "kuuga.h"
+#include <map>
+#include <string>
+#include <assert.h>
 
-int mutation_test();
-int subleq_test();
-int add_test();
-int serial_and_test();
-int serial_add_test();
+void setUp();
+bool mutation_test();
+bool subleq_test();
+bool add_test();
+bool serial_and_test();
+bool serial_add_test();
 
 int main()
-{
-	for(int i =0; i<MEM_SIZE; i++)
+ {
+  std::map<std::string, bool (*)(void)> test_funcs;
+  typedef std::map<std::string, bool (*)(void)>::iterator it_type;
+  test_funcs["Mutation Test"] = mutation_test;
+  test_funcs["Subleq Test"] = subleq_test;
+  test_funcs["Add Test"] = add_test;
+  test_funcs["Serial AND Test"] = serial_and_test;
+  test_funcs["Serial ADD Test"] = serial_add_test;
+  int passes = 0;
+  int fails = 0;
+  int tests = 0;
+  printf("########## TEST RESULTS ##########\n");
+  for(it_type iterator = test_funcs.begin(); iterator != test_funcs.end();
+      iterator++)
+    {
+      tests++;
+      setUp();
+      if((*(iterator->second))())
 	{
-	  memory[i] = 0;
+	  printf("Test %d#: %s - Test Passed!\n", tests,
+		 iterator->first.c_str());
+	  passes++;
 	}
-	return subleq_test();
+      else
+	{
+	  printf("Test #d#: %s - Test Failed!\n", tests,
+		 iterator->first.c_str());
+	  fails++;
+	}
+    }
+  printf("########## END RESULTS ##########\n");
+  printf("Summary - Passes: %d/%d - Fails: %d/%d\n", passes, passes+fails,
+	 fails, passes+fails);
+  return 0;
 }
 
-//int mutation_test()
-//{
-//	memory[1] = {0x0ABBCFF1};
-//	kuuga(mem, base_addr);
-//	if(mem[0] == 0x0ABBCFF1)
-//	{
-//		return 0;
-//	}
-//	return 1;
-//}
-
-int subleq_test()
+void setUp()
 {
-	uint32 mem_temp[8] = {
-	     0x00803004, 0x00000001, 0x00000004, 0x00000005,
-	     0x00000000, 0x00000000, 0x00000000, 0x00000000
-	};
-	for(int i=0; i<4; i++)
-	  {
-	    memory[i] = mem_temp[i];
-	  }
+  for(int i = 0; i < MEM_SIZE; i++)
+    {
+      memory[i] = 0;
+    }
+}
+
+void setMemory(uint32 * new_mem, int size)
+{
+  assert(size <= MEM_SIZE);
+  for(int i = 0; i < size; i++)
+    {
+      memory[i] = new_mem[i];
+    }
+  return;
+}
+
+bool mutation_test()
+{
+	uint32 memory_temp[1] = {0x0ABBCFF1};
+	setMemory(memory_temp, 1);
 	kuuga();
-	if(memory[3] == 0x00000001)
-	{
-		return 0;
-	}
-	return 1;
+	return (memory[0] == 0x0ABBCFF1);
 }
 
-//int add_test()
-//{
-//	int mem[8] =
-//		{	0x00401010, 0x4F55AA32, 0xFFFFFFFF, 0x00000005,
-//			0x00C01014, 0x00402018, 0x0040101C, 0x00000001
-//		};
-//	int base_addr = 0;
-//	kuuga(mem, base_addr);
-//	if(mem[2] == 0x00000004)
-//	{
-//		return 0;
-//	}
-//	return 1;
-//}
-//
-//int serial_and_test()
-//{
-//	uint32 result1 = bit_serial_and(0x00010001, 0x00010000);
-//	uint32 result2 = bit_serial_and(0xADD32F10, 0x44E53CD1);
-//	uint32 result3 = bit_serial_and(0x10101010, 0x10110001);
-//	if (result1 == 0x00010000 && result2 == 0x04C12C10 && result3 == 0x10100000)
-//	{
-//		return 0;
-//	}
-//	return 1;
-//}
-//
-//int serial_add_test()
-//{
-//	uint32 result1 = bit_serial_add(0x0000000A, 0x00000005, false);
-//	uint32 result2 = bit_serial_add(0x0000000F, 0x00000005, true);
-//	if (result1 == 0x0000000F && result2 == 0x0000000A)
-//	{
-//		return 0;
-//	}
-//	return 1;
-//}
+bool subleq_test()
+{
+	uint32 mem_temp[4] = {
+	     0x00803004, 0x00000001, 0x00000004, 0x00000005
+	};
+	setMemory(mem_temp, 4);
+	kuuga();
+	return (memory[3] == 0x00000001);
+}
+
+bool add_test()
+{
+	uint32 mem_temp[8] =
+		{	0x00401010, 0x4F55AA32, 0xFFFFFFFF, 0x00000005,
+			0x00C01014, 0x00402018, 0x0040101C, 0x00000001
+		};
+	setMemory(mem_temp, 8);
+	kuuga();
+	return (memory[2] == 0x00000004);
+}
+
+bool serial_and_test()
+{
+	uint32 result1 = bit_serial_and(0x00010001, 0x00010000);
+	uint32 result2 = bit_serial_and(0xADD32F10, 0x44E53CD1);
+	uint32 result3 = bit_serial_and(0x10101010, 0x10110001);
+	return (result1 == 0x00010000 &&
+	    result2 == 0x04C12C10 && result3 == 0x10100000);
+}
+
+bool serial_add_test()
+{
+	uint32 result1 = bit_serial_add(0x0000000A, 0x00000005, false);
+	uint32 result2 = bit_serial_add(0x0000000F, 0x00000005, true);
+	return (result1 == 0x0000000F && result2 == 0x0000000A);
+}

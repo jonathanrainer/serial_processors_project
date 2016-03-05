@@ -4,7 +4,7 @@
 
 #include "kuuga.h"
 
-uint32 memory[MEM_SIZE]={0,0,0,0,0,0,0,0};
+uint32 memory[MEM_SIZE];
 bool zero_flag = false;
 
 int kuuga() {

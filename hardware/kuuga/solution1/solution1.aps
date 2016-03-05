@@ -2,13 +2,15 @@
     <downStreamTool>
         <DownStreamTool name=""/>
     </downStreamTool>
+    <clockList>
+        <clock default="false" name="default" period="2.12" uncertainty="0.01ns"/>
+    </clockList>
     <config>
         <schedule model="kuuga"/>
     </config>
     <UIConfigurations>
-        <UIAutosynConf hideTrivialOp="true" isBasedOnBoard="false" isSolutionDirty="false" isStopAskAgain="false" showDetailDesignViewer="false">
-            <Platform>xilinx/spartan6/spartan6</Platform>
-            <Platform>xilinx/spartan6/spartan6_fpv6</Platform>
+        <UIAutosynConf boardInfo="Virtex-7 VC707 Evaluation Platform (xc7vx485tffg1761-2) " hideTrivialOp="true" isBasedOnBoard="true" isSolutionDirty="true" isStopAskAgain="false" showDetailDesignViewer="false">
+            <Platform>xilinx/virtex7/virtex7</Platform>
             <customLibs/>
         </UIAutosynConf>
         <UIIPPackagerConf AskAgain="true" DescriptionButton="false" LibraryButton="false" RTLLanguage="verilog" UseNetList="none" VendorButton="false" VersionButton="false" evaluateRTL="false" setup="false">
@@ -58,14 +60,11 @@
         <value string="kuuga"/>
     </project>
     <targetInfo>
-        <TargetInfo value="xc6slx45:csg324:-3"/>
+        <TargetInfo value="xc7vx485t:ffg1761:-2"/>
     </targetInfo>
     <libraryList>
-        <library name="DefaultPlatform" value="xilinx/spartan6/spartan6"/>
-        <library name="DefaultPlatform" value="xilinx/spartan6/spartan6_fpv6"/>
+        <library name="DefaultPlatform" value="xilinx/virtex7/virtex7"/>
+        <library value="xilinx/virtex7/virtex7_fpv6" name="DefaultPlatform"/>
     </libraryList>
-    <clockList>
-        <clock default="false" name="default" uncertainty="0.01ns" period="2.12"/>
-    </clockList>
 </solution>
 
