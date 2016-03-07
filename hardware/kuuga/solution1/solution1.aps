@@ -9,7 +9,7 @@
         <schedule model="kuuga"/>
     </config>
     <UIConfigurations>
-        <UIAutosynConf boardInfo="Virtex-7 VC707 Evaluation Platform (xc7vx485tffg1761-2) " hideTrivialOp="true" isBasedOnBoard="true" isSolutionDirty="true" isStopAskAgain="false" showDetailDesignViewer="false">
+        <UIAutosynConf boardInfo="Virtex-7 VC707 Evaluation Platform (xc7vx485tffg1761-2) " hideTrivialOp="true" isBasedOnBoard="true" isSolutionDirty="false" isStopAskAgain="false" showDetailDesignViewer="false">
             <Platform>xilinx/virtex7/virtex7</Platform>
             <customLibs/>
         </UIAutosynConf>
@@ -39,8 +39,8 @@
             </RTLs>
         </UIAutoSimConf>
     </UIConfigurations>
-    <ExportDesign askAgain="true" evaluate="false" formatName="pcore" rtl="verilog">
-        <Format formatName="ip_catalog"/>
+    <ExportDesign askAgain="true" evaluate="false" formatName="ip_catalog" rtl="verilog">
+        <Format formatName="ip_catalog" description="" vendor="" library="" version="1.0" driver_input_dir="" display_name="" taxonomy=""/>
         <Format formatName="sysgen"/>
         <Format formatName="sysgen_ise"/>
         <Format formatName="syn_dcp"/>

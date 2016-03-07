@@ -6,9 +6,6 @@
         <directive functionName="bit_serial_and" label="and_loop" functionLabel="">
             <pragma name="UNROLL"/>
         </directive>
-        <directive functionName="bit_serial_add" label="add_loop" functionLabel="">
-            <pragma name="PIPELINE"/>
-        </directive>
         <directive functionName="bit_serial_and" label="" functionLabel="">
             <pragma name="INLINE"/>
         </directive>
@@ -25,7 +22,10 @@
                 <option name="avg" value="15"/>
             </pragma>
         </directive>
-        <directive functionName="kuuga" label="main_loop" functionLabel="">
+        <directive functionName="kuuga" label="" functionLabel="">
+            <pragma name="PIPELINE"/>
+        </directive>
+        <directive functionName="bit_serial_add" label="add_loop" functionLabel="">
             <pragma name="PIPELINE"/>
         </directive>
     </sourceFile>

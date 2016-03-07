@@ -69,8 +69,8 @@ bool mutation_test()
 {
 	uint32 memory_temp[1] = {0x0ABBCFF1};
 	setMemory(memory_temp, 1);
-	kuuga();
-	return (memory[0] == 0x0ABBCFF1);
+	uint128 result = kuuga(0);
+	return (result == 0x0ABBCFF1);
 }
 
 bool subleq_test()
@@ -79,8 +79,8 @@ bool subleq_test()
 	     0x00803004, 0x00000001, 0x00000004, 0x00000005
 	};
 	setMemory(mem_temp, 4);
-	kuuga();
-	return (memory[3] == 0x00000001);
+	uint32 result = kuuga(3);
+	return (result == 0x00000001);
 }
 
 bool add_test()
@@ -90,8 +90,8 @@ bool add_test()
 			0x00C01014, 0x00402018, 0x0040101C, 0x00000001
 		};
 	setMemory(mem_temp, 8);
-	kuuga();
-	return (memory[2] == 0x00000004);
+	uint32 result = kuuga(2);
+	return (result == 0x00000004);
 }
 
 bool serial_and_test()

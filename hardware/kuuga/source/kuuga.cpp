@@ -4,10 +4,13 @@
 
 #include "kuuga.h"
 
-uint32 memory[MEM_SIZE];
+uint32 memory[MEM_SIZE] = {
+	      0x00401010, 0x4F55AA32, 0xFFFFFFFF, 0x00000005,
+	      0x00C01014, 0x00402018, 0x0040101C, 0x00000001
+};
 bool zero_flag = false;
 
-int kuuga() {
+uint32 kuuga(int output_loc) {
 
 	uint32 pc = 0;
 	uint32 inst = memory[0];
@@ -22,7 +25,7 @@ int kuuga() {
 		pc = subleq(pc, a, b, c);
 		inst = memory[pc];
 	}
-	return 0;
+	return memory[output_loc];
 }
 
 uint32 subleq(uint32 pc, uint10 a, uint10 b,uint10 c)

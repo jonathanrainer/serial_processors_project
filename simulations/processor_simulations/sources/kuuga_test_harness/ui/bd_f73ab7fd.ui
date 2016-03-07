@@ -1,0 +1,20 @@
+{
+   guistr: "# # String gsaved with Nlview 6.5.5  2015-06-26 bk=1.3371 VDI=38 GEI=35 GUI=JA:1.8
+#  -string -flagsOSRD
+preplace port start -pg 1 -y 90 -defaultsOSRD
+preplace port RST -pg 1 -y 210 -defaultsOSRD
+preplace port CLK -pg 1 -y 190 -defaultsOSRD
+preplace port done -pg 1 -y 40 -defaultsOSRD
+preplace portBus result -pg 1 -y 140 -defaultsOSRD
+preplace portBus input_location -pg 1 -y 230 -defaultsOSRD
+preplace inst kuuga_0 -pg 1 -lvl 1 -y 160 -defaultsOSRD
+preplace netloc start_1 1 0 1 NJ
+preplace netloc CLK_1 1 0 1 N
+preplace netloc input_location_1 1 0 1 NJ
+preplace netloc kuuga_0_ap_return 1 1 1 NJ
+preplace netloc kuuga_0_ap_done 1 0 2 30 40 NJ
+preplace netloc RST_1 1 0 1 N
+levelinfo -pg 1 0 400 590 -top 20 -bot 280
+",
+}
+0

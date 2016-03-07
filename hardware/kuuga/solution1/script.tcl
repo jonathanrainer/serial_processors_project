@@ -16,4 +16,4 @@ source "./kuuga/solution1/directives.tcl"
 csim_design -ldflags {-B"/usr/lib/x86_64-linux-gnu/"}
 csynth_design
 cosim_design -ldflags {-B"/usr/lib/x86_64-linux-gnu/"}
-export_design -format pcore -use_netlist none
+export_design -format ip_catalog
