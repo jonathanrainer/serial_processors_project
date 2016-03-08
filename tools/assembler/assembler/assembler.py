@@ -29,7 +29,9 @@ class OneOperandInstruction(AgitoInstructionBase):
 		return	
 
 	def create_instruction(self, instruction_elements):
-		return self.create_hex_representation([(self.opcode,"05b"),("0", "027b")])
+                if self.opcode == "0":
+                    instruction_elements.extend("0")
+		return self.create_hex_representation([(self.opcode,"05b"),(instruction_elements[0], "027b")])
 
 class TwoOperandInstruction(AgitoInstructionBase):
 	__metaclass__ = abc.ABCMeta
@@ -279,7 +281,7 @@ class BranchRegisterOffset(TwoOperandInstruction):
         def short_long_flag(self):
                 return True
 
-class BranchAddress(TwoOperandInstruction):
+class BranchAddress(OneOperandInstruction):
 
         @property
         def name(self):
@@ -291,6 +293,83 @@ class BranchAddress(TwoOperandInstruction):
 
         def short_long_flag(self):
                 return True
+
+
+class ANDRegister(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "AND"
+
+        @property
+        def opcode(self):
+                return "14"
+
+class ANDConstant(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "ANDC"
+
+        @property
+        def opcode(self):
+                return "15"
+
+
+class ORRegister(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "OR"
+
+        @property
+        def opcode(self):
+                return "16"
+
+class ORConstant(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "ORC"
+
+        @property
+        def opcode(self):
+                return "17"
+
+class NOT(TwoOperandInstruction):
+
+        @property
+        def name(self):
+                return "NOT"
+
+        @property
+        def opcode(self):
+                return "18"
+
+        @property
+        def short_long_flag(self):
+                return True
+
+class Divide(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "DIV"
+
+        @property
+        def opcode(self):
+                return "1A"
+
+class Multiply(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "MUL"
+
+        @property
+        def opcode(self):
+                return "19"
+
 
 class Assembler(object):
 	

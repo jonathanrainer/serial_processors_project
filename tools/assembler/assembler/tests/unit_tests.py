@@ -71,7 +71,7 @@ class AssemblerUnitTests(unittest.TestCase):
                 self.parse_test("BRO R7 #55", "0X901C0055")
 
         def test_parse_branch_address(self):
-                self.parse_test("BRA #6754", "0X98006754")
+                self.parse_test("BA #6754", "0X98006754")
 
         def test_parse_and_register(self):
                 self.parse_test("AND R3 R4 R5", "0XA00C0805")
