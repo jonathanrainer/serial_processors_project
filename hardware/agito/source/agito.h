@@ -15,13 +15,16 @@ typedef ap_uint<5> uint5;
 typedef ap_uint<1> uint1;
 
 // Prototypes
-int agito(volatile int * ram, int base_addr);
+uint32 agito(int output_loc);
 void load_direct(uint27 operands, volatile int * ram);
 void load_register_offset(uint27 operands, volatile int * ram);
 uint32 bit_serial_add(uint32 arg1, uint32 arg2);
 //void print_memory(volatile int * ram);
 
+// Defines
+#define MEM_SIZE 8
+
 // Globals
-extern uint32 registers[10];
+extern uint32 memory[MEM_SIZE];
 
 #endif

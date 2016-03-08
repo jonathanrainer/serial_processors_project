@@ -1,33 +1,19 @@
-//  *(ram + 0xA8001000/sizeof(int)) = 47;
-//	*(ram + base_addr) = base_addr;
-//	*(ram + base_addr + 1) = pc;
-
 #include "agito.h"
 
 uint32 registers[10] = {0,0,0,0,0,0,0,0,0,0};
-uint32 memory_start = 0x00000000;
+uint32 memory[MEM_SIZE];
 
-int agito(volatile int * ram, int base_addr) {
-  // AXI4 Master Interface
-  #pragma HLS INTERFACE ap_bus port=ram bundle=MAXI
-  #pragma HLS RESOURCE core=AXI4M variable=ram
-
-  // AXI4 LITE
-  #pragma HLS RESOURCE core=AXI4LiteS variable=return metadata="-bus_bundle AXILiteS"
-
-  #pragma HLS INTERFACE ap_none register     port=base_addr
-  #pragma HLS RESOURCE core=AXI4LiteS    variable=base_addr metadata="-bus_bundle AXILiteS"
+uint32 agito(int output_loc) {
 
   uint32 pc = 0;
   uint1 halt_flag = false;
-  memory_start = base_addr;
+
+  uint32 inst = memory[0];
 
   // Execute until the halt bit is set.
   while (!halt_flag)
   {
-      uint32 inst = *(ram + bit_serial_add(memory_start, pc));
       uint5 opcode = (inst && 0xF8000000) >> 27;
-
       switch (opcode)
       {
 	case 0x0:
@@ -47,6 +33,7 @@ int agito(volatile int * ram, int base_addr) {
 	  printf("Here's the default case\n");
 	  break;
       }
+      inst =
   }
   return 0;
 }
