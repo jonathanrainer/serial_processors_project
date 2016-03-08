@@ -1,61 +1,60 @@
 #include "agito.h"
 
-uint32 registers[10] = {0,0,0,0,0,0,0,0,0,0};
-uint32 memory[MEM_SIZE];
+uint32 registers[REG_NUM] = {0,0,0,0,0,0,0,0,0,0};
+uint32 memory[MEM_SIZE] = {0,0,0,0,0,0,0,0};
 
 uint32 agito(int output_loc) {
 
   uint32 pc = 0;
-  uint1 halt_flag = false;
+  bool halt_flag = false;
 
-  uint32 inst = memory[0];
+  uint32 inst;
 
   // Execute until the halt bit is set.
   while (!halt_flag)
   {
-      uint5 opcode = (inst && 0xF8000000) >> 27;
+      inst = memory[pc];
+      uint5 opcode = (inst & 0xF8000000) >> 27;
+      uint27 operands = (inst & 0x07FFFFFF);
       switch (opcode)
       {
 	case 0x0:
 	  halt_flag = true;
 	  break;
 	case 0x1:
-	  load_direct((inst && 0x07FFFFFF), ram);
+	  load_direct(operands);
 	  pc++;
 	  break;
 	case 0x2:
-	  load_register_offset((inst && 0x07FFFFFF), ram);
+	  load_register_offset(operands);
 	  pc++;
 	  break;
 	case 0x3:
+	  store_direct(operands);
+	  pc++;
 	  break;
 	default :
-	  printf("Here's the default case\n");
 	  break;
       }
-      inst =
   }
   return 0;
 }
 
-void load_direct(uint27 operands, volatile int * ram)
+void load_direct(uint27 operands)
 {
-  registers[((operands && 0x07F10000) >> 19)] =
-      *(ram + bit_serial_add(memory_start, operands && 0x0007FFFF));
+  registers[(operands & 0x07FC0000) >> 18] = memory[operands & 0x0003FFFF];
 }
 
-void load_register_offset(uint27 operands, volatile int * ram)
+void load_register_offset(uint27 operands)
 {
   uint32 memory_location = bit_serial_add(
-      registers[(operands && 0x3FE00) >> 9], operands && 0x1FF);
-  registers[(operands && 0x7FC0000) >> 18] =
-        *(ram + bit_serial_add(memory_start, memory_location));
+      registers[(operands & 0x0003FE00) >> 9], operands & 0x000001FF);
+  registers[(operands & 0x07FC0000) >> 18] = memory[memory_location];
 }
 
-void store_direct(uint27 operands, volatile int * ram)
+void store_direct(uint27 operands)
 {
-  *(ram + bit_serial_add(memory_start, operands && 0x0007FFFF)) =
-      registers[((operands && 0x7FFFE00) >> 9)];
+  memory[(operands & 0x7FFFE00) >> 9] = registers[(operands & 0x000001FF)];
 }
 
 uint32 bit_serial_add(uint32 arg1, uint32 arg2)
@@ -71,17 +70,3 @@ uint32 bit_serial_add(uint32 arg1, uint32 arg2)
     }
   return result;
 }
-
-//void print_memory(volatile int * ram)
-//{
-//	printf("Memory: [\n");
-//	for (int j=0; j < 50; j++)
-//	{
-//		if (j % 4 == 0 && j != 0)
-//		{
-//			printf("\n");
-//		}
-//		printf("0x%08X,", (int) ram[j]);
-//	}
-//	printf("]\n");
-//}

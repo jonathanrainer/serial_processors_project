@@ -142,4 +142,7 @@ class Assembler(object):
 				[x[1:] for x in instruction_elements[1:]])	
 
 if __name__=="__main__":
-	a  = Assembler()
+        parser = argparse.ArgumentParser(description="A tool to process assembly code for Agito/Kuuga processors")
+        parser.add_argument("line")
+        a = Assembler()
+        print(a.parse(parser.parse_args().line))

@@ -37,11 +37,6 @@
 			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/agito/.apc/.tb</location>
 		</link>
 		<link>
-			<name>solution1/constraints</name>
-			<type>2</type>
-			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/agito/solution1/.tcls</location>
-		</link>
-		<link>
 			<name>solution2/constraints</name>
 			<type>2</type>
 			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/agito/solution2/.tcls</location>
@@ -60,16 +55,6 @@
 			<name>testbench/agito_testbench.cpp</name>
 			<type>1</type>
 			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/agito/source/agito_testbench.cpp</location>
-		</link>
-		<link>
-			<name>solution1/constraints/directives.tcl</name>
-			<type>1</type>
-			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/agito/solution1/directives.tcl</location>
-		</link>
-		<link>
-			<name>solution1/constraints/script.tcl</name>
-			<type>1</type>
-			<location>/usr/userfs/j/jr776/w2k/serial_processors_project/hardware/agito/solution1/script.tcl</location>
 		</link>
 		<link>
 			<name>solution2/constraints/.xml.directive</name>

@@ -2,9 +2,11 @@
 #include <map>
 #include <string>
 
-//void setUp();
+void setUp();
+void setMemory(uint32 * new_mem, int size);
 bool load_direct_test();
 bool load_register_offset_test();
+bool store_direct_test();
 
 int main()
 {
@@ -12,23 +14,27 @@ int main()
   typedef std::map<std::string, bool (*)(void)>::iterator it_type;
   test_funcs["Load Direct Test"] = load_direct_test;
   test_funcs["Load Register Offset Test"] = load_register_offset_test;
+  test_funcs["Store Direct Test"] = store_direct_test;
   int passes = 0;
   int fails = 0;
   int tests = 0;
   printf("########## TEST RESULTS ##########\n");
+  fflush(stdout);
   for(it_type iterator = test_funcs.begin();
       iterator != test_funcs.end(); iterator++)
   {
       tests++;
+      setUp();
       if((*(iterator->second))())
       {
-	  printf("Test %d#: %s - Test Passed!\n", tests,
+	  printf("Test #%d: %s - Test Passed!\n", tests,
 		 iterator->first.c_str());
+	  fflush(stdout);
 	  passes++;
       }
       else
       {
-	  printf("Test #d#: %s - Test Failed!\n", tests,
+	  printf("Test #d: %s - Test Failed!\n", tests,
 		 iterator->first.c_str());
 	  fails++;
       }
@@ -39,26 +45,58 @@ int main()
   return 0;
 }
 
-//void setUp()
-//{
-//  for (int i=0; sizeof(registers)/sizeof(registers[0]); i++)
-//  {
-//    registers[i] = 0;
-//  }
-//}
+void setUp()
+{
+  for(int i = 0; i < MEM_SIZE; i++)
+    {
+      memory[i] = 0;
+    }
+}
+
+void setMemory(uint32 * new_mem, int size)
+{
+  assert(size <= MEM_SIZE);
+  for(int i = 0; i < size; i++)
+    {
+      memory[i] = new_mem[i];
+    }
+  return;
+}
+
+void setRegisters(uint32 * new_reg_file, int size)
+{
+  assert(size <= REG_NUM);
+  for(int i = 0; i < size; i++)
+    {
+      registers[i] = new_reg_file[i];
+    }
+  return;
+}
 
 bool load_direct_test()
 {
-  int mem[5] = {0x08040003, 0x18000802, 0x00000000, 0x22FF22FF, 0xFFEEDDCC};
-  agito(mem, 0x0);
-  return mem[3] == 0x22FF22FF;
+  uint32 mem[3] = {0x08040002, 0x00000000, 0x22FF22FF};
+  setMemory(mem, 3);
+  agito(0);
+  return registers[1] == 0x22FF22FF;
 }
 
 bool load_register_offset_test()
 {
-  int mem[4] = {0x10140403, 0x00000000, 0x22FF22FF, 0xFFEEDDCC};
-  agito(mem, 0x0);
-  return true;
+  uint32 mem[5] = {0x10080601, 0x00000000, 0x00000003, 0x22222222, 0xFFEEDDCC};
+  uint32 reg_file[4] = {0x00000000, 0x00000000, 0x00000000, 0x00000003};
+  setMemory(mem, 5);
+  setRegisters(reg_file, 4);
+  agito(0);
+  return registers[2] == 0xFFEEDDCC;
 }
 
-//
+bool store_direct_test()
+{
+  uint32 mem[5] = {0X18000800, 0x00000000, 0x00000003, 0x22222222, 0xFFEEDDCC};
+  uint32 reg_file[1] = {0xFFAA5522};
+  setMemory(mem, 5);
+  setRegisters(reg_file, 1);
+  agito(0);
+  return memory[4] == 0xFFAA5522;
+}
