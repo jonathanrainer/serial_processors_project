@@ -24,13 +24,14 @@ int main()
   test_funcs["Load Register Offset Test"] = load_register_offset_test;
   test_funcs["Store Direct Test"] = store_direct_test;
   test_funcs["Store Register Offset Test"] = store_register_offset_test;
+  test_funcs["Add Register Test"] = add_register_test;
   int passes = 0;
   int fails = 0;
   int tests = 0;
   printf("########## TEST RESULTS ##########\n");
   fflush(stdout);
-  for(it_type iterator = test_funcs.begin();
-      iterator != test_funcs.end(); iterator++)
+  for(it_type iterator = test_funcs.begin(); iterator != test_funcs.end();
+      iterator++)
   {
       tests++;
       setUp();
@@ -59,6 +60,10 @@ void setUp()
   for(int i = 0; i < MEM_SIZE; i++)
     {
       memory[i] = 0;
+    }
+  for(int i = 0; i < REG_NUM; i++)
+    {
+      registers[i] = 0;
     }
 }
 
@@ -120,9 +125,24 @@ bool store_register_offset_test()
   return memory[2] == 0x44444444;
 }
 
+bool add_constant_test()
+{
+  uint32 mem[2] = {0X30100403, 0x00000000};
+  uint32 reg_file[5] = {0x0, 0x0, 0x00000022, 0x0, 0x00000044};
+  setMemory(mem, 2);
+  setRegisters(reg_file, 5);
+  agito(0);
+  return registers[3] == 0x00000066;
+}
+
 bool add_register_test()
 {
-  return false;
+  uint32 mem[2] = {0X30100403, 0x00000000};
+  uint32 reg_file[5] = {0x0, 0x0, 0x00000022, 0x0, 0x00000044};
+  setMemory(mem, 2);
+  setRegisters(reg_file, 5);
+  agito(0);
+  return registers[3] == 0x00000066;
 }
 
 bool add_constant_test()
