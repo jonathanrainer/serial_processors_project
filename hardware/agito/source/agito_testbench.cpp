@@ -7,7 +7,7 @@ void setMemory(uint32 * new_mem, int size);
 bool load_direct_test();
 bool load_register_offset_test();
 bool store_direct_test();
-bool store_register_offset_set();
+bool store_register_offset_test();
 bool add_register_test();
 bool add_constant_test();
 bool arithmetic_shift_right_test();
@@ -23,6 +23,7 @@ int main()
   test_funcs["Load Direct Test"] = load_direct_test;
   test_funcs["Load Register Offset Test"] = load_register_offset_test;
   test_funcs["Store Direct Test"] = store_direct_test;
+  test_funcs["Store Register Offset Test"] = store_register_offset_test;
   int passes = 0;
   int fails = 0;
   int tests = 0;
@@ -109,9 +110,14 @@ bool store_direct_test()
   return memory[4] == 0xFFAA5522;
 }
 
-bool store_register_offset_set()
+bool store_register_offset_test()
 {
-  return false;
+  uint32 mem[3] = {0X20100406, 0x00000000, 0x00000000};
+  uint32 reg_file[7] = {0xFFAA5522, 0x0, 0x0, 0x0, 0x0, 0x0, 0x44444444};
+  setMemory(mem, 3);
+  setRegisters(reg_file, 7);
+  agito(0);
+  return memory[2] == 0x44444444;
 }
 
 bool add_register_test()

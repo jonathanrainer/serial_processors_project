@@ -20,6 +20,7 @@ void load_direct(uint27 operands);
 void load_register_offset(uint27 operands);
 uint32 bit_serial_add(uint32 arg1, uint32 arg2);
 void store_direct(uint27 operands);
+void store_register_offset(uint27 operands);
 
 // Defines
 #define MEM_SIZE 8

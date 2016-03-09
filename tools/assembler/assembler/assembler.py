@@ -29,9 +29,10 @@ class OneOperandInstruction(AgitoInstructionBase):
 		return	
 
 	def create_instruction(self, instruction_elements):
-                if self.opcode == "0":
-                    instruction_elements.extend("0")
-		return self.create_hex_representation([(self.opcode,"05b"),(instruction_elements[0], "027b")])
+            if self.opcode == "0":
+                instruction_elements.extend("0")
+	    return self.create_hex_representation([(self.opcode,"05b"),(instruction_elements[0], "027b")])
+
 
 class TwoOperandInstruction(AgitoInstructionBase):
 	__metaclass__ = abc.ABCMeta

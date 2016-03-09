@@ -33,6 +33,10 @@ uint32 agito(int output_loc) {
 	  store_direct(operands);
 	  pc++;
 	  break;
+	case 0x4:
+	  store_register_offset(operands);
+	  pc++;
+	  break;
 	default :
 	  break;
       }
@@ -55,6 +59,13 @@ void load_register_offset(uint27 operands)
 void store_direct(uint27 operands)
 {
   memory[(operands & 0x7FFFE00) >> 9] = registers[(operands & 0x000001FF)];
+}
+
+void store_register_offset(uint27 operands)
+{
+  uint32 memory_location = bit_serial_add(
+      registers[(operands & 0x07FC0000) >> 18], (operands & 0x0003FE00) >> 9);
+  memory[memory_location] = registers[(operands & 0x000001FF)];
 }
 
 uint32 bit_serial_add(uint32 arg1, uint32 arg2)
