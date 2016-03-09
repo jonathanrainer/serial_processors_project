@@ -29,7 +29,9 @@ class OneOperandInstruction(AgitoInstructionBase):
 		return	
 
 	def create_instruction(self, instruction_elements):
-		return self.create_hex_representation([(self.opcode,"05b"),("0", "027b")])
+                if self.opcode == "0":
+                    instruction_elements.extend("0")
+		return self.create_hex_representation([(self.opcode,"05b"),(instruction_elements[0], "027b")])
 
 class TwoOperandInstruction(AgitoInstructionBase):
 	__metaclass__ = abc.ABCMeta
@@ -128,6 +130,246 @@ class StoreRegisterOffset(ThreeOperandInstruction):
 	@property
 	def opcode(self):
 		return "4"
+
+class AddConstant(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "ADDC"
+
+        @property
+        def opcode(self):
+                return "5"
+
+class AddRegister(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "ADD"
+
+        @property
+        def opcode(self):
+                return "6"
+
+class ArithmeticShiftRight(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "ASHR"
+
+        @property
+        def opcode(self):
+                return "7"
+
+class ShiftRight(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "SHR"
+
+        @property
+        def opcode(self):
+                return "8"
+
+class ArithmeticShiftLeft(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "ASHL"
+
+        @property
+        def opcode(self):
+                return "9"
+
+
+class ShiftLeft(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "SHL"
+
+        @property
+        def opcode(self):
+                return "A"
+
+class Complement(TwoOperandInstruction):
+
+        @property
+        def name(self):
+                return "COMP"
+
+        @property
+        def opcode(self):
+                return "B"
+
+        @property
+        def short_long_flag(self):
+                return True
+
+class BranchLessThanRegisterOffset(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "BLTRO"
+
+        @property
+        def opcode(self):
+                return "C"
+
+class BranchLessThanAddress(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "BLTA"
+
+        @property
+        def opcode(self):
+                return "D"
+
+
+class BranchEqualRegisterOffset(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "BERO"
+
+        @property
+        def opcode(self):
+                return "E"
+
+class BranchEqualAddress(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "BEA"
+
+        @property
+        def opcode(self):
+                return "F"
+
+class BranchGreaterThanRegisterOffset(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "BGTRO"
+
+        @property
+        def opcode(self):
+                return "10"
+
+class BranchGreaterThanAddress(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "BGTA"
+
+        @property
+        def opcode(self):
+                return "11"
+
+class BranchRegisterOffset(TwoOperandInstruction):
+
+        @property
+        def name(self):
+                return "BRO"
+
+        @property
+        def opcode(self):
+                return "12"
+
+        @property
+        def short_long_flag(self):
+                return True
+
+class BranchAddress(OneOperandInstruction):
+
+        @property
+        def name(self):
+                return "BA"
+
+        @property
+        def opcode(self):
+                return "13"
+
+        def short_long_flag(self):
+                return True
+
+
+class ANDRegister(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "AND"
+
+        @property
+        def opcode(self):
+                return "14"
+
+class ANDConstant(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "ANDC"
+
+        @property
+        def opcode(self):
+                return "15"
+
+
+class ORRegister(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "OR"
+
+        @property
+        def opcode(self):
+                return "16"
+
+class ORConstant(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "ORC"
+
+        @property
+        def opcode(self):
+                return "17"
+
+class NOT(TwoOperandInstruction):
+
+        @property
+        def name(self):
+                return "NOT"
+
+        @property
+        def opcode(self):
+                return "18"
+
+        @property
+        def short_long_flag(self):
+                return True
+
+class Divide(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "DIV"
+
+        @property
+        def opcode(self):
+                return "1A"
+
+class Multiply(ThreeOperandInstruction):
+
+        @property
+        def name(self):
+                return "MUL"
+
+        @property
+        def opcode(self):
+                return "19"
+
 
 class Assembler(object):
 	

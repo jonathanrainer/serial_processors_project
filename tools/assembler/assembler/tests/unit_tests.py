@@ -47,57 +47,52 @@ class AssemblerUnitTests(unittest.TestCase):
                 self.parse_test("SHL R2 R5 #3", "0X50080A03")
 
         def test_parse_complement(self):
-                self.parse_test("COMP R2 R4", "0x58080800")
+                self.parse_test("COMP R2 R4", "0X58080004")
 
         def test_parse_branch_less_than_register(self):
-                self.parse_test("BLTRO R3 R7 R1", "")
+                self.parse_test("BLTRO R3 R7 R1", "0X600C0E01")
 
         def test_parse_branch_less_than_address(self):
-                self.parse_test("BLTA R5 R6 #44", "")
+                self.parse_test("BLTA R5 R6 #44", "0X68140C44")
 
         def test_parse_branch_equal_register(self):
-                self.parse_test("BERO R2 R1 R7", "") 
+                self.parse_test("BERO R2 R1 R7", "0X70080207") 
 
         def test_parse_branch_equal_address(self):
-                self.parse_test("BEA R3 R4 #2", "")
+                self.parse_test("BEA R3 R4 #2", "0X780C0802")
 
         def test_parse_branch_greater_than_register(self):
-                self.parse_test("BGTRO R2 R5 R1", "")
+                self.parse_test("BGTRO R2 R5 R1", "0X80080A01")
 
         def test_parse_branch_greater_than_address(self):
-                self.parse_test("BGTA R3 R2 #7", "")
+                self.parse_test("BGTA R3 R2 #7", "0X880C0407")
 
         def test_parse_branch_register_offset(self):
-                self.parse_test("BRO R7 #55", "")
+                self.parse_test("BRO R7 #55", "0X901C0055")
 
         def test_parse_branch_address(self):
-                self.parse_test("BRA #6754", "")
+                self.parse_test("BA #6754", "0X98006754")
 
         def test_parse_and_register(self):
-                self.parse_test("AND R3 R4 R5", "")
+                self.parse_test("AND R3 R4 R5", "0XA00C0805")
 
         def test_parse_and_constant(self):
-                self.parse_test("ANDC R3 R7 #F", "")
+                self.parse_test("ANDC R3 R7 #F", "0XA80C0E0F")
 
         def test_parse_or_register(self):
-                self.parse_test("OR R4 R5 R3", "")
+                self.parse_test("OR R4 R5 R3", "0XB0100A03")
 
         def test_parse_or_constant(self):
-                self.parse_test("OR R4 R7 #1", "")
+                self.parse_test("ORC R4 R7 #1", "0XB8100E01")
 
         def test_parse_not(self):
-                self.parse_fail()
+                self.parse_test("NOT R5 R5", "0XC0140005")
 
         def test_parse_mul(self):
-                self.fail()
+                self.parse_test("MUL R4 R6 R9", "0XC8100C09")
 
         def test_parse_div(self):
-                self.fail()
-
-        def test_parse_sub(self):
-                self.fail()
-
-        
+                self.parse_test("DIV R2 R1 R5", "0XD0080205")
 
 if __name__ == '__main__':
 	unittest.main()
