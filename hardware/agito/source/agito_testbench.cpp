@@ -15,6 +15,22 @@ bool shift_right_test();
 bool arithmetic_shift_left_test();
 bool shift_left_test();
 bool complement_test();
+bool branch_less_than_register_offset_test();
+bool branch_less_than_address_test();
+bool branch_equal_register_offset_test();
+bool branch_equal_address_test();
+bool branch_greater_than_register_offset_test();
+bool branch_greater_than_address_test();
+bool branch_register_offset_test();
+bool branch_address_test();
+bool and_register_test();
+bool and_constant_test();
+bool or_register_test();
+bool or_constant_test();
+bool not_test();
+bool multiply_test();
+bool divide_test();
+
 
 int main()
 {
@@ -24,7 +40,32 @@ int main()
   test_funcs["Load Register Offset Test"] = load_register_offset_test;
   test_funcs["Store Direct Test"] = store_direct_test;
   test_funcs["Store Register Offset Test"] = store_register_offset_test;
+  test_funcs["Add Constant Test"] = add_constant_test;
   test_funcs["Add Register Test"] = add_register_test;
+  test_funcs["Arithmetic Shift Right Test"] = arithmetic_shift_right_test;
+  test_funcs["Shift Right Test"] = shift_right_test;
+  test_funcs["Arithmetic Shift Left Test"] = arithmetic_shift_left_test;
+  test_funcs["Shift Left Test"] = shift_left_test;
+  test_funcs["Complement Test"] = complement_test;
+  //test_funcs["Branch Less Than Register Offset Test"] =
+  //    branch_less_than_register_offset_test;
+  //test_funcs["Branch Less Than Address Test"] = branch_less_than_address_test;
+  //test_funcs["Branch Equal Register Offset Test"] =
+  //	branch_equal_register_offset_test;
+  //test_funcs["Branch Equal Address Test"] = branch_equal_address_test;
+  //test_funcs["Branch Greater Than Register Offset Test"] =
+  //	branch_greater_than_register_offset_test;
+  //test_funcs["Branch Greater Than Address Test"] =
+  //	branch_greater_than_address_test;
+  //test_funcs["Branch Register Offset Test"] = branch_register_offset_test;
+  //test_funcs["Branch Address Test"] = branch_address_test;
+  //test_funcs["AND Register Test"] = and_register_test;
+  //test_funcs["AND Constant Test"] = and_constant_test;
+  //test_funcs["OR Register Test"] = or_register_test;
+  //test_funcs["OR Constant Test"] = or_constant_test;
+  //test_funcs["NOT Test"] = not_test;
+  //test_funcs["Multiply Test"] = multiply_test;
+  //test_funcs["Divide Test"] = divide_test;
   int passes = 0;
   int fails = 0;
   int tests = 0;
@@ -127,12 +168,12 @@ bool store_register_offset_test()
 
 bool add_constant_test()
 {
-  uint32 mem[2] = {0X30100403, 0x00000000};
+  uint32 mem[2] = {0X28100434, 0x00000000};
   uint32 reg_file[5] = {0x0, 0x0, 0x00000022, 0x0, 0x00000044};
   setMemory(mem, 2);
   setRegisters(reg_file, 5);
   agito(0);
-  return registers[3] == 0x00000066;
+  return registers[4] == 0x00000056;
 }
 
 bool add_register_test()
@@ -142,20 +183,131 @@ bool add_register_test()
   setMemory(mem, 2);
   setRegisters(reg_file, 5);
   agito(0);
-  return registers[3] == 0x00000066;
-}
-
-bool add_constant_test()
-{
-  return false;
+  return registers[4] == 0x00000022;
 }
 
 bool arithmetic_shift_right_test()
 {
-  return false;
+  uint32 mem[2] = {0X38180007, 0x00000000};
+  uint32 reg_file[7] = {0xFFFFF822, 0x0, 0x00000022, 0x0, 0x00000044, 0x0, 0x0};
+  setMemory(mem, 2);
+  setRegisters(reg_file, 7);
+  agito(0);
+  return registers[6] == 0xFFFFFFF0;
 }
 
 bool shift_right_test()
+{
+  uint32 mem[2] = {0X4018000A, 0x00000000};
+  uint32 reg_file[7] = {0xFFFFF822, 0x0, 0x00000022, 0x0, 0x00000044, 0x0, 0x0};
+  setMemory(mem, 2);
+  setRegisters(reg_file, 7);
+  agito(0);
+  return registers[6] == 0x003FFFFE;
+}
+
+bool arithmetic_shift_left_test()
+{
+  uint32 mem[2] = {0X48180807, 0x00000000};
+  uint32 reg_file[7] = {0xFFFFF822, 0x0, 0x00000022, 0x0, 0x00000044, 0x0, 0x0};
+  setMemory(mem, 2);
+  setRegisters(reg_file, 7);
+  agito(0);
+  return registers[6] == 0x00002200;
+}
+
+bool shift_left_test()
+{
+  uint32 mem[2] = {0X50000007, 0x00000000};
+  uint32 reg_file[7] = {0x00000001, 0x0, 0x00000022, 0x0, 0x00000044, 0x0, 0x0};
+  setMemory(mem, 2);
+  setRegisters(reg_file, 7);
+  agito(0);
+  return registers[0] == 0x00000080;
+}
+
+bool complement_test()
+{
+  uint32 mem[2] = {0X580C0003, 0x00000000};
+  uint32 reg_file[7] = {0x00000001, 0x0, 0x00000022, 0x000170C0,
+      0x00000044, 0x0, 0x0};
+  setMemory(mem, 2);
+  setRegisters(reg_file, 7);
+  agito(0);
+  return registers[3] == 0xFFFE8F40;
+}
+
+bool branch_less_than_register_offset_test()
+{
+  return false;
+}
+
+bool branch_less_than_address_test()
+{
+  return false;
+}
+
+bool branch_equal_register_offset_test()
+{
+  return false;
+}
+
+bool branch_equal_address_test()
+{
+  return false;
+}
+
+bool branch_greater_than_register_offset_test()
+{
+  return false;
+}
+
+bool branch_greater_than_address_test()
+{
+  return false;
+}
+
+bool branch_register_offset_test()
+{
+  return false;
+}
+
+bool branch_address_test()
+{
+  return false;
+}
+
+bool and_register_test()
+{
+  return false;
+}
+
+bool and_constant_test()
+{
+  return false;
+}
+
+bool or_register_test()
+{
+  return false;
+}
+
+bool or_constant_test()
+{
+  return false;
+}
+
+bool not_test()
+{
+  return false;
+}
+
+bool multiply_test()
+{
+  return false;
+}
+
+bool divide_test()
 {
   return false;
 }

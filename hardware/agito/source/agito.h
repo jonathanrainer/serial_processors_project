@@ -22,6 +22,9 @@ uint32 bit_serial_add(uint32 arg1, uint32 arg2);
 void store_direct(uint27 operands);
 void store_register_offset(uint27 operands);
 void add_register(uint27 operands);
+void add_constant(uint27 operands);
+void shift(uint27 operands, bool right_flag, bool arithmetic_flag);
+void complement(uint27 operands);
 
 // Defines
 #define MEM_SIZE 8

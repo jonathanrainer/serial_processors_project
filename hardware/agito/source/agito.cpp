@@ -37,8 +37,32 @@ uint32 agito(int output_loc) {
 	  store_register_offset(operands);
 	  pc++;
 	  break;
+	case 0x5:
+	  add_constant(operands);
+	  pc++;
+	  break;
 	case 0x6:
 	  add_register(operands);
+	  pc++;
+	  break;
+	case 0x7:
+	  shift(operands, true, true);
+	  pc++;
+	  break;
+	case 0x8:
+	  shift(operands, true, false);
+	  pc++;
+	  break;
+	case 0x9:
+	  shift(operands, false, true);
+	  pc++;
+	  break;
+	case 0xA:
+	  shift(operands, false, false);
+	  pc++;
+	  break;
+	case 0xB:
+	  complement(operands);
 	  pc++;
 	  break;
 	default :
@@ -73,18 +97,51 @@ void store_register_offset(uint27 operands)
   memory[memory_location] = registers[(operands & 0x000001FF)];
 }
 
+void add_constant(uint27 operands)
+{
+  registers[(operands & 0x07FC0000) >> 18] = bit_serial_add(
+        (uint32) registers[(operands & 0x0003FE00) >> 9],
+        operands & 0x000001FF);
+}
+
 void add_register(uint27 operands)
 {
-  registers[operands & 0x000001FF] = bit_serial_add(
-      (uint32) registers[(operands & 0x07FC0000) >> 18],
-      (uint32) registers[(operands & 0x0003FE00) >> 9]);
+  registers[(operands & 0x07FC0000) >> 18] = bit_serial_add(
+      (uint32) registers[(operands & 0x0003FE00) >> 9],
+      (uint32) registers[operands & 0x000001FF]);
+}
+
+void shift(uint27 operands, bool right_flag, bool arithmetic_flag)
+{
+  uint32 input = registers[(operands & 0x0003FE00) >> 9];
+  uint32 msb = input & 0xC0000000;
+  uint32 result = input;
+  for(int i = 0; i < (operands & 0x000001FF); i++)
+  {
+      if (right_flag)
+      {
+	result = (arithmetic_flag) ? msb | (result >> 1) :
+		(result) >> 1;
+      }
+      else
+      {
+	result = (result) << 1;
+      }
+  }
+  registers[(operands & 0x07FC0000) >> 18] = result;
+}
+
+void complement(uint27 operands)
+{
+  uint32 input = registers[operands & 0x0003FFFF];
+  registers[(operands & 0x07FC0000) >> 18] = bit_serial_add(~input, 0x1);
 }
 
 uint32 bit_serial_add(uint32 arg1, uint32 arg2)
 {
   uint32 result = 0x00000000;
   uint1 carry = 0x0;
-  add_loop:for (int i = 0; i < 31; i++)
+  add_loop:for (int i = 0; i <= 31; i++)
     {
       uint1 bit_1 = arg1.bit(i);
       uint1 bit_2 = arg2.bit(i);
@@ -93,3 +150,5 @@ uint32 bit_serial_add(uint32 arg1, uint32 arg2)
     }
   return result;
 }
+
+

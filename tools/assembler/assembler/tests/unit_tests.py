@@ -12,7 +12,6 @@ class AssemblerUnitTests(unittest.TestCase):
                 parsed_text = self.a.parse(command)
                 self.assertEqual(parsed_text, output)
         
-
 	def test_parse_halt(self):
 		self.parse_test("HALT",  "0X00000000")
 
