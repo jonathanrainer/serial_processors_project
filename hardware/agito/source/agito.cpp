@@ -2,17 +2,19 @@
 
 uint32 registers[REG_NUM] = {0,0,0,0,0,0,0,0,0,0};
 uint32 memory[MEM_SIZE] = {0,0,0,0,0,0,0,0};
+bool halt_flag = false;
+bool zero_flag = false;
+uint32 pc = 0;
 
 uint32 agito(int output_loc) {
 
-  uint32 pc = 0;
-  bool halt_flag = false;
-
+  halt_flag = false;
+  pc = 0;
   uint32 inst;
-
   // Execute until the halt bit is set.
   while (!halt_flag)
   {
+      zero_flag = false;
       inst = memory[pc];
       uint5 opcode = (inst & 0xF8000000) >> 27;
       uint27 operands = (inst & 0x07FFFFFF);
@@ -65,6 +67,9 @@ uint32 agito(int output_loc) {
 	  complement(operands);
 	  pc++;
 	  break;
+	case 0xC:
+	  pc = conditional_branch(operands, false, -1, pc);
+	  break;
 	default :
 	  break;
       }
@@ -80,7 +85,7 @@ void load_direct(uint27 operands)
 void load_register_offset(uint27 operands)
 {
   uint32 memory_location = bit_serial_add(
-      registers[(operands & 0x0003FE00) >> 9], operands & 0x000001FF);
+      registers[(operands & 0x0003FE00) >> 9], operands & 0x000001FF, false);
   registers[(operands & 0x07FC0000) >> 18] = memory[memory_location];
 }
 
@@ -93,7 +98,7 @@ void store_register_offset(uint27 operands)
 {
   uint32 memory_location = bit_serial_add(
       (uint32) registers[(operands & 0x07FC0000) >> 18],
-      (uint32) (operands & 0x0003FE00) >> 9);
+      (uint32) (operands & 0x0003FE00) >> 9, false);
   memory[memory_location] = registers[(operands & 0x000001FF)];
 }
 
@@ -101,14 +106,14 @@ void add_constant(uint27 operands)
 {
   registers[(operands & 0x07FC0000) >> 18] = bit_serial_add(
         (uint32) registers[(operands & 0x0003FE00) >> 9],
-        operands & 0x000001FF);
+        operands & 0x000001FF, false);
 }
 
 void add_register(uint27 operands)
 {
   registers[(operands & 0x07FC0000) >> 18] = bit_serial_add(
       (uint32) registers[(operands & 0x0003FE00) >> 9],
-      (uint32) registers[operands & 0x000001FF]);
+      (uint32) registers[operands & 0x000001FF], false);
 }
 
 void shift(uint27 operands, bool right_flag, bool arithmetic_flag)
@@ -134,20 +139,45 @@ void shift(uint27 operands, bool right_flag, bool arithmetic_flag)
 void complement(uint27 operands)
 {
   uint32 input = registers[operands & 0x0003FFFF];
-  registers[(operands & 0x07FC0000) >> 18] = bit_serial_add(~input, 0x1);
+  registers[(operands & 0x07FC0000) >> 18] = bit_serial_add(~input, 0x1, false);
 }
 
-uint32 bit_serial_add(uint32 arg1, uint32 arg2)
+uint32 conditional_branch(uint27 operands, bool direct_switch,
+			  int comparison, uint32 old_pc)
+{
+  uint32 destination  = (direct_switch) ?
+      (uint32) (operands & 0x07FC0000) >> 18 :
+      (uint32) registers[(operands & 0x07FC0000) >> 18];
+  uint32 result = bit_serial_add(
+      (uint32) registers[(operands & 0x0003FE00) >> 9],
+      (uint32) registers[(operands & 0x000001FF)], true);
+  switch (comparison)
+  {
+    case -1:
+      return (result.bit(31) == 1) ? destination : (uint32) (old_pc+1);
+    case 0:
+      return (zero_flag) ? destination : (uint32) (old_pc+1);
+    case 1:
+      return (!zero_flag &&  (result.bit(31) != 1)) ? destination :
+	  (uint32) (old_pc+1);
+  }
+}
+
+uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag)
 {
   uint32 result = 0x00000000;
-  uint1 carry = 0x0;
+  uint1 carry = sub_flag;
+  bool is_zero = sub_flag;
   add_loop:for (int i = 0; i <= 31; i++)
-    {
-      uint1 bit_1 = arg1.bit(i);
-      uint1 bit_2 = arg2.bit(i);
-      result.bit(i) = (bit_1 ^ bit_2 ^ carry);
-      carry = (bit_1 & bit_2) | (carry & (bit_1 ^ bit_2));
-    }
+  {
+    uint1 bit_1 = arg1.bit(i);
+    uint1 bit_2 = arg2.bit(i);
+    uint1 new_bit = (bit_1 ^ bit_2 ^ carry);
+    result.bit(i) = new_bit;
+    is_zero = (is_zero & !new_bit);
+    carry = (bit_1 & bit_2) | (carry & (bit_1 ^ bit_2));
+  }
+  zero_flag = is_zero;
   return result;
 }
 

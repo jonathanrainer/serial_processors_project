@@ -5,8 +5,8 @@
 ############################################################
 open_project kuuga
 set_top kuuga
-add_files kuuga/source/kuuga.h
 add_files kuuga/source/kuuga.cpp
+add_files kuuga/source/kuuga.h
 add_files -tb kuuga/source/kuuga_testbench.cpp
 open_solution "solution1"
 set_part {xc7vx485tffg1761-2}

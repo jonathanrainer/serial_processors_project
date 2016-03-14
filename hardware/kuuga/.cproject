@@ -28,10 +28,9 @@
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/systemc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/auto_cc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include"/>
-									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/hardware"/>
+									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/ap_sysc"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/etc"/>
-									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1768972665" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="AESL_TB"/>
@@ -47,10 +46,9 @@
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/systemc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/auto_cc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include"/>
-									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/hardware"/>
+									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/ap_sysc"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/etc"/>
-									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1243028637" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="AESL_TB"/>
@@ -116,10 +114,9 @@
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/systemc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/auto_cc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include"/>
-									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/hardware"/>
+									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/ap_sysc"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/etc"/>
-									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.2107056828" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -130,10 +127,9 @@
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/systemc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/lnx64/tools/auto_cc/include"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include"/>
-									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/hardware"/>
+									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/ap_sysc"/>
 									<listOptionValue builtIn="false" value="/usr/local/pkg/xilinx_vivado-2015.4_ise-14.7_x86-64-1/Vivado_HLS/2015.4/include/etc"/>
-									<listOptionValue builtIn="false" value="/usr/userfs/j/jr776/w2k/serial_processors_project/micro_oisc"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.465768514" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>

@@ -18,13 +18,15 @@ typedef ap_uint<1> uint1;
 uint32 agito(int output_loc);
 void load_direct(uint27 operands);
 void load_register_offset(uint27 operands);
-uint32 bit_serial_add(uint32 arg1, uint32 arg2);
+uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag);
 void store_direct(uint27 operands);
 void store_register_offset(uint27 operands);
 void add_register(uint27 operands);
 void add_constant(uint27 operands);
 void shift(uint27 operands, bool right_flag, bool arithmetic_flag);
 void complement(uint27 operands);
+uint32 conditional_branch(uint27 operands, bool direct_switch,
+			  int comparison, uint32 old_pc);
 
 // Defines
 #define MEM_SIZE 8
