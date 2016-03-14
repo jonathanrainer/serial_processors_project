@@ -50,7 +50,7 @@ uint32 subleq(uint32 pc, uint10 a, uint10 b,uint10 c)
 uint32 bit_serial_and(uint32 arg1, uint32 arg2)
 {
 	uint32 result = 0x00000000;
-	and_loop:for (int i = 0; i < 31; i++)
+	and_loop:for (int i = 0; i <= 31; i++)
 	{
 		uint1 bit_1 = arg1.bit(i);
 		uint1 bit_2 = arg2.bit(i);
@@ -64,7 +64,7 @@ uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag)
 	uint32 result = 0x00000000;
 	uint1 carry = sub_flag;
 	bool is_zero = sub_flag;
-	add_loop:for (int i = 0; i < 31; i++)
+	add_loop:for (int i = 0; i <= 31; i++)
 	{
 	    uint1 bit_1 = arg1.bit(i);
 	    uint1 bit_2 = (sub_flag) ? ~arg2.bit(i) : arg2.bit(i);
