@@ -1,0 +1,13 @@
+DATA:
+S0: 25
+S1: 32
+S2: C
+S3: 54F
+S4: 0
+FP: 10
+Z:  0
+END_DATA
+
+CODE:
+ADD #C FP
+END_CODE
