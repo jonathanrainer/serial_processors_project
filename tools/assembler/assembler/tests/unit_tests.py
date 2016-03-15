@@ -49,19 +49,19 @@ class AssemblerUnitTests(unittest.TestCase):
                 self.parse_test("COMP R2 R4", "0X58080004")
 
         def test_parse_branch_less_than_register(self):
-                self.parse_test("BLTRO R1 R3 R7", "0X60040607")
+                self.parse_test("BLTR R1 R3 R7", "0X60040607")
 
         def test_parse_branch_less_than_address(self):
                 self.parse_test("BLTA #44 R5 R6", "0X69100A06")
 
         def test_parse_branch_equal_register(self):
-                self.parse_test("BERO R2 R1 R7", "0X70080207") 
+                self.parse_test("BER R2 R1 R7", "0X70080207") 
 
         def test_parse_branch_equal_address(self):
                 self.parse_test("BEA #2 R3 R4", "0X78080604")
 
         def test_parse_branch_greater_than_register(self):
-                self.parse_test("BGTRO R2 R5 R1", "0X80080A01")
+                self.parse_test("BGTR R2 R5 R1", "0X80080A01")
 
         def test_parse_branch_greater_than_address(self):
                 self.parse_test("BGTA #7 R3 R2", "0X881C0602")
@@ -86,12 +86,6 @@ class AssemblerUnitTests(unittest.TestCase):
 
         def test_parse_not(self):
                 self.parse_test("NOT R5 R5", "0XC0140005")
-
-        def test_parse_mul(self):
-                self.parse_test("MUL R4 R6 R9", "0XC8100C09")
-
-        def test_parse_div(self):
-                self.parse_test("DIV R2 R1 R5", "0XD0080205")
 
 if __name__ == '__main__':
 	unittest.main()

@@ -17,9 +17,9 @@ bool shift_left_test();
 bool complement_test();
 bool branch_less_than_register_test();
 bool branch_less_than_address_test();
-bool branch_equal_register_offset_test();
+bool branch_equal_register_test();
 bool branch_equal_address_test();
-bool branch_greater_than_register_offset_test();
+bool branch_greater_than_register_test();
 bool branch_greater_than_address_test();
 bool branch_register_offset_test();
 bool branch_address_test();
@@ -28,9 +28,6 @@ bool and_constant_test();
 bool or_register_test();
 bool or_constant_test();
 bool not_test();
-bool multiply_test();
-bool divide_test();
-
 
 int main()
 {
@@ -49,21 +46,21 @@ int main()
   test_funcs["Complement Test"] = complement_test;
   test_funcs["Branch Less Than Register Test"] =
       branch_less_than_register_test;
-  //test_funcs["Branch Less Than Address Test"] = branch_less_than_address_test;
-  //test_funcs["Branch Equal Register Offset Test"] =
-  //	branch_equal_register_offset_test;
-  //test_funcs["Branch Equal Address Test"] = branch_equal_address_test;
-  //test_funcs["Branch Greater Than Register Offset Test"] =
-  //	branch_greater_than_register_offset_test;
-  //test_funcs["Branch Greater Than Address Test"] =
-  //	branch_greater_than_address_test;
-  //test_funcs["Branch Register Offset Test"] = branch_register_offset_test;
-  //test_funcs["Branch Address Test"] = branch_address_test;
-  //test_funcs["AND Register Test"] = and_register_test;
-  //test_funcs["AND Constant Test"] = and_constant_test;
-  //test_funcs["OR Register Test"] = or_register_test;
-  //test_funcs["OR Constant Test"] = or_constant_test;
-  //test_funcs["NOT Test"] = not_test;
+  test_funcs["Branch Less Than Address Test"] = branch_less_than_address_test;
+  test_funcs["Branch Equal Register Test"] =
+  	branch_equal_register_test;
+  test_funcs["Branch Equal Address Test"] = branch_equal_address_test;
+  test_funcs["Branch Greater Than Register Test"] =
+  	branch_greater_than_register_test;
+  test_funcs["Branch Greater Than Address Test"] =
+  	branch_greater_than_address_test;
+  test_funcs["Branch Register Offset Test"] = branch_register_offset_test;
+  test_funcs["Branch Address Test"] = branch_address_test;
+  test_funcs["AND Register Test"] = and_register_test;
+  test_funcs["AND Constant Test"] = and_constant_test;
+  test_funcs["OR Register Test"] = or_register_test;
+  test_funcs["OR Constant Test"] = or_constant_test;
+  test_funcs["NOT Test"] = not_test;
   //test_funcs["Multiply Test"] = multiply_test;
   //test_funcs["Divide Test"] = divide_test;
   int passes = 0;
@@ -250,70 +247,137 @@ bool branch_less_than_register_test()
 
 bool branch_less_than_address_test()
 {
-  return false;
+  uint32 mem[3] = {0X68100607, 0X28000044, 0x00000000};
+  uint32 reg_file[8] = {0x00000001, 0x00000002, 0x00000002, 0x000170C0,
+      0x00000044, 0x0, 0x0, 0x00000005};
+  setMemory(mem, 3);
+  setRegisters(reg_file, 8);
+  agito(0);
+  return registers[0] == 0x45;
 }
 
-bool branch_equal_register_offset_test()
+bool branch_equal_register_test()
 {
-  return false;
+  uint32 mem[3] = {0X70100405, 0X28000044, 0x00000000};
+  uint32 reg_file[8] = {0x00000001, 0x00000002, 0x00000002, 0x000170C0,
+      0x00000044, 0x0, 0x0, 0x00000005};
+  setMemory(mem, 3);
+  setRegisters(reg_file, 8);
+  agito(0);
+  return registers[0] == 0x45;
 }
 
 bool branch_equal_address_test()
 {
-  return false;
+  uint32 mem[8] = {0X78180401, 0X28000044, 0x00000000, 0x00000000,
+      0x00000000,0x00000000,0X28000044, 0x00000000};
+  uint32 reg_file[8] = {0x00000003, 0x00000002, 0x00000002, 0x000170C0,
+      0x00000044, 0x0, 0x0, 0x00000005};
+  setMemory(mem, 8);
+  setRegisters(reg_file, 8);
+  agito(0);
+  return registers[0] == 0x47;
 }
 
-bool branch_greater_than_register_offset_test()
+bool branch_greater_than_register_test()
 {
-  return false;
+  uint32 mem[6] = {0X800C0202, 0X28000044, 0x00000000, 0x00000000,
+      0X28000024, 0x00000000};
+  uint32 reg_file[8] = {0x00000003, 0x00000005, 0x00000002, 0x00000004,
+      0x00000044, 0x0, 0x0, 0x00000005};
+  setMemory(mem, 6);
+  setRegisters(reg_file, 8);
+  agito(0);
+  return registers[0] == 0x27;
 }
 
 bool branch_greater_than_address_test()
 {
-  return false;
+  uint32 mem[6] = {0X88C80202, 0X28000044, 0x00000000, 0x00000000,
+        0X28000024, 0x00000000};
+  uint32 reg_file[8] = {0x00000003, 0x00000001, 0x00000002, 0x00000004,
+      0x00000044, 0x0, 0x0, 0x00000005};
+  setMemory(mem, 6);
+  setRegisters(reg_file, 8);
+  agito(0);
+  return registers[0] == 0x47;
 }
 
 bool branch_register_offset_test()
 {
-  return false;
+  uint32 mem[7] = {0X90100004, 0X28000044, 0x00000000, 0x00000000,
+        0x00000000, 0X28000128, 0x00000000};
+  uint32 reg_file[8] = {0x00000003, 0x00000001, 0x00000002, 0x00000004,
+      0x00000001, 0x0, 0x0, 0x00000005};
+  setMemory(mem, 7);
+  setRegisters(reg_file, 8);
+  agito(0);
+  return registers[0] == 0x12B;
 }
 
 bool branch_address_test()
 {
-  return false;
+  uint32 mem[9] = {0X98000007, 0X28000044, 0x00000000, 0x00000000,
+        0X28000024, 0x00000000, 0x11223344, 0X28000054, 0x00000000};
+  uint32 reg_file[8] = {0x00000003, 0x00000001, 0x00000002, 0x00000004,
+      0x00000044, 0x0, 0x0, 0x00000005};
+  setMemory(mem, 9);
+  setRegisters(reg_file, 8);
+  agito(0);
+  return registers[0] == 0x57;
 }
 
 bool and_register_test()
 {
-  return false;
+  uint32 mem[2] = {0XA0080403, 0x00000000};
+  uint32 reg_file[8] = {0x00000003, 0x00000001, 0xAAAAAAAA, 0x55555555,
+      0x00000044, 0x0, 0x0, 0x00000005};
+  setMemory(mem, 2);
+  setRegisters(reg_file, 8);
+  agito(0);
+  return registers[2] == 0x0;
 }
 
 bool and_constant_test()
 {
-  return false;
+  uint32 mem[2] = {0XA80804FF, 0x00000000};
+  uint32 reg_file[8] = {0x00000003, 0x00000001, 0xAAAAAAAA, 0x55555555,
+      0x00000044, 0x0, 0x0, 0x00000005};
+  setMemory(mem, 2);
+  setRegisters(reg_file, 8);
+  agito(0);
+  return registers[2] == 0xAA;
 }
 
 bool or_register_test()
 {
-  return false;
+  uint32 mem[2] = {0XB0080403, 0x00000000};
+  uint32 reg_file[8] = {0x00000003, 0x00000001, 0xAAAAAAAA, 0x55555555,
+      0x00000044, 0x0, 0x0, 0x00000005};
+  setMemory(mem, 2);
+  setRegisters(reg_file, 8);
+  agito(0);
+  return registers[2] == 0xFFFFFFFF;
 }
 
 bool or_constant_test()
 {
-  return false;
+  uint32 mem[2] = {0XB808041A, 0x00000000};
+  uint32 reg_file[8] = {0x00000003, 0x00000001, 0xAAAAAAAA, 0x55555555,
+      0x00000044, 0x0, 0x0, 0x00000005};
+  setMemory(mem, 2);
+  setRegisters(reg_file, 8);
+  agito(0);
+  return registers[2] == 0xAAAAAABA;
 }
 
 bool not_test()
 {
-  return false;
-}
-
-bool multiply_test()
-{
-  return false;
-}
-
-bool divide_test()
-{
-  return false;
+  uint32 mem[2] = {0XC0100008, 0x00000000};
+  uint32 reg_file[9] = {0x00000003, 0x00000001, 0xAAAAAAAA, 0x55555555,
+      0x00000044, 0x0, 0x0, 0x00000005, 0xFFFF0000};
+  setMemory(mem, 2);
+  setRegisters(reg_file, 9);
+  agito(0);
+  return registers[4] == 0xFFFF;
 }

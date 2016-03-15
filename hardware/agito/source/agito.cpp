@@ -12,7 +12,7 @@ uint32 agito(int output_loc) {
   pc = 0;
   uint32 inst;
   // Execute until the halt bit is set.
-  while (!halt_flag)
+  main_loop: while (!halt_flag)
   {
       zero_flag = false;
       inst = memory[pc];
@@ -70,11 +70,52 @@ uint32 agito(int output_loc) {
 	case 0xC:
 	  pc = conditional_branch(operands, false, -1, pc);
 	  break;
+	case 0xD:
+	  pc = conditional_branch(operands, true, -1, pc);
+	  break;
+	case 0xE:
+	  pc = conditional_branch(operands, false, 0, pc);
+	  break;
+	case 0xF:
+	  pc = conditional_branch(operands, true, 0, pc);
+	  break;
+	case 0x10:
+	  pc = conditional_branch(operands, false, 1, pc);
+	  break;
+	case 0x11:
+	  pc = conditional_branch(operands, true, 1, pc);
+	  break;
+	case 0x12:
+	  pc = unconditional_branch(operands, false);
+	  break;
+	case 0x13:
+	  pc = unconditional_branch(operands, true);
+	  break;
+	case 0x14:
+	  and_register(operands);
+	  pc++;
+	  break;
+	case 0x15:
+	  and_constant(operands);
+	  pc++;
+	  break;
+	case 0x16:
+	  or_register(operands);
+	  pc++;
+	  break;
+	case 0x17:
+	  or_constant(operands);
+	  pc++;
+	  break;
+	case 0x18:
+	  not_register(operands);
+	  pc++;
+	  break;
 	default :
 	  break;
       }
   }
-  return 0;
+  return memory[output_loc];
 }
 
 void load_direct(uint27 operands)
@@ -157,10 +198,80 @@ uint32 conditional_branch(uint27 operands, bool direct_switch,
       return (result.bit(31) == 1) ? destination : (uint32) (old_pc+1);
     case 0:
       return (zero_flag) ? destination : (uint32) (old_pc+1);
-    case 1:
+    default:
       return (!zero_flag &&  (result.bit(31) != 1)) ? destination :
 	  (uint32) (old_pc+1);
   }
+}
+
+uint32 unconditional_branch(uint27 operands, bool direct_switch)
+{
+  return (direct_switch) ?
+        (uint32) (operands & 0x07FFFFFF):
+        (uint32) (registers[(operands & 0x07FC0000) >> 18] +
+	(operands & 0x0003FFFF));
+}
+
+void and_register(uint27 operands)
+{
+  registers[(operands & 0x07FC0000) >> 18] = bit_serial_and(
+          (uint32) registers[(operands & 0x0003FE00) >> 9],
+	  (uint32) registers[(operands & 0x000001FF)]);
+  return;
+}
+
+void and_constant(uint27 operands)
+{
+  registers[(operands & 0x07FC0000) >> 18] = bit_serial_and(
+            (uint32) registers[(operands & 0x0003FE00) >> 9],
+  	  operands & 0x000001FF);
+  return;
+}
+
+void or_register(uint27 operands)
+{
+  registers[(operands & 0x07FC0000) >> 18] = bit_serial_or(
+          (uint32) registers[(operands & 0x0003FE00) >> 9],
+	  (uint32) registers[(operands & 0x000001FF)]);
+  return;
+}
+
+void or_constant(uint27 operands)
+{
+  registers[(operands & 0x07FC0000) >> 18] = bit_serial_or(
+            (uint32) registers[(operands & 0x0003FE00) >> 9],
+  	  operands & 0x000001FF);
+  return;
+}
+
+void not_register(uint27 operands)
+{
+  registers[(operands & 0x07FC0000) >> 18] = bit_serial_not(
+      (uint32) registers[(operands & 0x0003FFFF)]);
+}
+
+uint32 bit_serial_and(uint32 arg1, uint32 arg2)
+{
+  uint32 result = 0x00000000;
+  and_loop:for (int i = 0; i <= 31; i++)
+  {
+    uint1 bit_1 = arg1.bit(i);
+    uint1 bit_2 = arg2.bit(i);
+    result.bit(i) = (bit_1 & bit_2);
+  }
+  return result;
+}
+
+uint32 bit_serial_or(uint32 arg1, uint32 arg2)
+{
+  uint32 result = 0x00000000;
+  and_loop:for (int i = 0; i <= 31; i++)
+  {
+    uint1 bit_1 = arg1.bit(i);
+    uint1 bit_2 = arg2.bit(i);
+    result.bit(i) = (bit_1 | bit_2);
+  }
+  return result;
 }
 
 uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag)
@@ -181,4 +292,12 @@ uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag)
   return result;
 }
 
-
+uint32 bit_serial_not(uint32 arg)
+{
+  uint32 result = 0x00000000;
+  for(int i = 0; i <= 31; i++)
+  {
+    result.bit(i) = ~arg.bit(i);
+  }
+  return result;
+}

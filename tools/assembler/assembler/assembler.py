@@ -207,11 +207,11 @@ class Complement(TwoOperandInstruction):
         def short_long_flag(self):
                 return True
 
-class BranchLessThanRegisterOffset(ThreeOperandInstruction):
+class BranchLessThanRegister(ThreeOperandInstruction):
 
         @property
         def name(self):
-                return "BLTRO"
+                return "BLTR"
 
         @property
         def opcode(self):
@@ -228,11 +228,11 @@ class BranchLessThanAddress(ThreeOperandInstruction):
                 return "D"
 
 
-class BranchEqualRegisterOffset(ThreeOperandInstruction):
+class BranchEqualRegister(ThreeOperandInstruction):
 
         @property
         def name(self):
-                return "BERO"
+                return "BER"
 
         @property
         def opcode(self):
@@ -248,11 +248,11 @@ class BranchEqualAddress(ThreeOperandInstruction):
         def opcode(self):
                 return "F"
 
-class BranchGreaterThanRegisterOffset(ThreeOperandInstruction):
+class BranchGreaterThanRegister(ThreeOperandInstruction):
 
         @property
         def name(self):
-                return "BGTRO"
+                return "BGTR"
 
         @property
         def opcode(self):
@@ -268,7 +268,7 @@ class BranchGreaterThanAddress(ThreeOperandInstruction):
         def opcode(self):
                 return "11"
 
-class BranchRegisterOffset(TwoOperandInstruction):
+class BranchRegister(TwoOperandInstruction):
 
         @property
         def name(self):

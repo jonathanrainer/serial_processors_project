@@ -1,11 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <AutoPilot:ProjectResources xmlns:AutoPilot="com.autoesl.autopilot.ui.directiveView">
-    <sourceFile name="">
-        <directive functionName="agito" label="" functionLabel="">
-            <pragma name="RESOURCE">
-                <option name="variable" value="memory" positionalBoolean="4"/>
-                <option name="core" value="RAM_1P_BRAM"/>
-            </pragma>
-        </directive>
-    </sourceFile>
+  <sourceFile>
+    <directive functionName="agito" label="" functionLabel="">
+      <pragma name="RESOURCE">
+        <option name="variable" value="memory" positionalBoolean="4"/>
+        <option name="core" value="RAM_1P_BRAM"/>
+      </pragma>
+    </directive>
+    <directive functionName="agito" label="main_loop" functionLabel="">
+      <pragma name="LOOP_TRIPCOUNT">
+        <option name="min" value="1"/>
+        <option name="max" value="30"/>
+        <option name="avg" value="10"/>
+      </pragma>
+    </directive>
+  </sourceFile>
 </AutoPilot:ProjectResources>
-

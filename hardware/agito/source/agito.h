@@ -27,9 +27,18 @@ void shift(uint27 operands, bool right_flag, bool arithmetic_flag);
 void complement(uint27 operands);
 uint32 conditional_branch(uint27 operands, bool direct_switch,
 			  int comparison, uint32 old_pc);
+uint32 unconditional_branch(uint27 operands, bool direct_switch);
+uint32 bit_serial_and(uint32 arg1, uint32 arg2);
+void and_constant(uint27 operands);
+void and_register(uint27 operands);
+uint32 bit_serial_or(uint32 arg1, uint32 arg2);
+void or_constant(uint27 operands);
+void or_register(uint27 operands);
+void not_register(uint27 operands);
+uint32 bit_serial_not(uint32 arg);
 
 // Defines
-#define MEM_SIZE 8
+#define MEM_SIZE 12
 #define REG_NUM 10
 
 // Globals
