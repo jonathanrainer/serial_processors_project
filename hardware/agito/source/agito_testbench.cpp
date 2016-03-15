@@ -15,7 +15,7 @@ bool shift_right_test();
 bool arithmetic_shift_left_test();
 bool shift_left_test();
 bool complement_test();
-bool branch_less_than_register_offset_test();
+bool branch_less_than_register_test();
 bool branch_less_than_address_test();
 bool branch_equal_register_offset_test();
 bool branch_equal_address_test();
@@ -47,8 +47,8 @@ int main()
   test_funcs["Arithmetic Shift Left Test"] = arithmetic_shift_left_test;
   test_funcs["Shift Left Test"] = shift_left_test;
   test_funcs["Complement Test"] = complement_test;
-  //test_funcs["Branch Less Than Register Offset Test"] =
-  //    branch_less_than_register_offset_test;
+  test_funcs["Branch Less Than Register Test"] =
+      branch_less_than_register_test;
   //test_funcs["Branch Less Than Address Test"] = branch_less_than_address_test;
   //test_funcs["Branch Equal Register Offset Test"] =
   //	branch_equal_register_offset_test;
@@ -237,9 +237,15 @@ bool complement_test()
   return registers[3] == 0xFFFE8F40;
 }
 
-bool branch_less_than_register_offset_test()
+bool branch_less_than_register_test()
 {
-  return false;
+  uint32 mem[4] = {0X60080001, 0x00001010, 0X280C0822, 0x00000000};
+  uint32 reg_file[7] = {0x00000001, 0x00000002, 0x00000002, 0x000170C0,
+      0x00000044, 0x0, 0x0};
+  setMemory(mem, 4);
+  setRegisters(reg_file, 7);
+  agito(0);
+  return registers[3] == 0x66;
 }
 
 bool branch_less_than_address_test()

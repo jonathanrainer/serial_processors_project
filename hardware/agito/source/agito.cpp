@@ -171,7 +171,7 @@ uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag)
   add_loop:for (int i = 0; i <= 31; i++)
   {
     uint1 bit_1 = arg1.bit(i);
-    uint1 bit_2 = arg2.bit(i);
+    uint1 bit_2 = (sub_flag) ? ~arg2.bit(i) : arg2.bit(i);
     uint1 new_bit = (bit_1 ^ bit_2 ^ carry);
     result.bit(i) = new_bit;
     is_zero = (is_zero & !new_bit);
