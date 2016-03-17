@@ -1,0 +1,13 @@
+DATA:
+S0: 25
+S1: 32
+Z:  0
+ON: 1
+T1: 0
+T2: 0
+T3: 0
+END_DATA
+
+CODE:
+ADD S0 S1
+END_CODE

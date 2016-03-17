@@ -20,8 +20,63 @@ class AddPseudoInstruction(KuugaPseudoInstruction):
         return "ADD"
 
     def expand_instruction(self, instruction, start_location):
-        return [[instruction[1], "Z", start_location+1], ["Z", instruction[2], start_location+2],
+        return [[instruction[2], "Z", start_location+1], ["Z", instruction[1], start_location+2],
                 ["Z", "Z", start_location+3]]
+
+
+class SubtractPseudoInstruction(KuugaPseudoInstruction):
+
+    @property
+    def name(self):
+        return "SUB"
+
+    def expand_instruction(self, instruction, start_location):
+        return [[instruction[2], instruction[1], start_location+1]]
+
+
+class NOTPseudoInstruction(KuugaPseudoInstruction):
+
+    @property
+    def name(self):
+        return "NOT"
+
+    def expand_instruction(self, instruction, start_location):
+        return [["SUB", "Z", instruction[1], start_location+1], ["SUB", "Z", "ON", start_location+2],
+                ["Z", "Z", start_location+3]]
+
+
+class MultiplyPseudoInstruction(KuugaPseudoInstruction):
+
+    @property
+    def name(self):
+        return "MUL"
+
+    def expand_instruction(self, instruction, start_location):
+        return [["ON", instruction[2], start_location+3], ["ADD", "T1", instruction[1], start_location+2],
+                ["Z", "Z", start_location], ["MOVE", "S3", "T1", start_location+4], ["T1", "T1", start_location+5]]
+
+
+class MOVEPseudoInstruction(KuugaPseudoInstruction):
+
+    @property
+    def name(self):
+        return "MOVE"
+
+    def expand_instruction(self, instruction, start_location):
+        return [[instruction[1], instruction[1], start_location+1], [instruction[2], "Z", start_location+2],
+                ["Z", instruction[1], start_location + 3], ["Z", "Z", start_location + 4]]
+
+
+class DividePseudoInstruction(KuugaPseudoInstruction):
+
+    @property
+    def name(self):
+        return "DIV"
+
+    def expand_instruction(self, instruction, start_location):
+        return [[instruction[2], instruction[1], start_location+3],
+                ["ADD", "T1", "ON", start_location+2], ["Z", "Z", start_location],
+                ["MOVE", instruction[1], "T1", start_location+4], ["T1", "T1", start_location+5]]
 
 
 class Gouram(object):
@@ -43,15 +98,13 @@ class Gouram(object):
         data_dict = {data_pair[0]: [location, int(data_pair[1], base=16)]
                      for location, data_pair in enumerate(data_list)}
         code_string = re.search("(?<=CODE:\n).*(?=END_CODE)", file_string, re.DOTALL).group(0)
-        code_list = [re.split(" ", y) for y in [x for x in re.split("\n", code_string) if len(x) > 0]]
+        code_list = [re.split(" ", y) + [count+1] for count, y in
+                     enumerate([x for x in re.split("\n", code_string) if len(x) > 0])]
         return Program(data_dict, code_list)
 
     def process_program_object(self, program):
-        program_counter = 0
-        expanded_code = []
-        for code_line in program.code:
-            expanded_code.extend(self.pseudo_instructions[code_line[0]].expand_instruction(code_line, program_counter))
-            program_counter = expanded_code[-1][2]
+        expanded_code = self.expand_code(program.code)
+        program_counter = expanded_code[-1][2]
         # Add in space for a HALT command
         program_counter += 1
         # Taking Program Size, Create Memory with enough blanks for Code
@@ -74,6 +127,24 @@ class Gouram(object):
         binary_string = "{0}{1}{2}00".format(format(first_op, "010b"), format(second_op, "010b"),
                                              format(third_op, "010b"))
         return format(int(binary_string, base=2), "#010x")
+
+    def expand_code(self, code):
+        expanded_code = code
+        while True:
+            end_of_loop = True
+            for counter, code_line in enumerate(expanded_code):
+                if code_line[0] in self.pseudo_instructions.keys():
+                    destinations_to_alter = [destination for destination, x in enumerate(expanded_code)
+                                             if x[-1] > counter and destination != counter]
+                    expansion = self.pseudo_instructions[code_line[0]].expand_instruction(code_line, counter)
+                    for destination in destinations_to_alter:
+                        expanded_code[destination][-1] += (len(expansion) - 1)
+                    expanded_code = expanded_code[:counter] + expansion + expanded_code[counter+1:]
+                    end_of_loop = False
+                    break
+            if end_of_loop:
+                break
+        return expanded_code
 
 
 class Program(object):
