@@ -20,8 +20,8 @@ class AddPseudoInstruction(KuugaPseudoInstruction):
         return "ADD"
 
     def expand_instruction(self, instruction, start_location):
-        return [[instruction[2], "Z", start_location+1], ["Z", instruction[1], start_location+2],
-                ["Z", "Z", start_location+3]]
+        return [[instruction[2], "TADD", start_location+1], ["TADD", instruction[1], start_location+2],
+                ["TADD", "TADD", start_location+3]]
 
 
 class SubtractPseudoInstruction(KuugaPseudoInstruction):
@@ -41,8 +41,8 @@ class NOTPseudoInstruction(KuugaPseudoInstruction):
         return "NOT"
 
     def expand_instruction(self, instruction, start_location):
-        return [["SUB", "Z", instruction[1], start_location+1], ["SUB", "Z", "ON", start_location+2],
-                ["Z", "Z", start_location+3]]
+        return [["SUB", "TNOT", instruction[1], start_location+1], ["SUB", "TNOT", "ON", start_location+2],
+                ["MOVE", instruction[1], "TNOT", start_location+3], ["TNOT", "TNOT", start_location+4]]
 
 
 class MultiplyPseudoInstruction(KuugaPseudoInstruction):
@@ -52,8 +52,9 @@ class MultiplyPseudoInstruction(KuugaPseudoInstruction):
         return "MUL"
 
     def expand_instruction(self, instruction, start_location):
-        return [["ON", instruction[2], start_location+3], ["ADD", "T1", instruction[1], start_location+2],
-                ["Z", "Z", start_location], ["MOVE", "S3", "T1", start_location+4], ["T1", "T1", start_location+5]]
+        return [["ON", instruction[2], start_location+3], ["ADD", "TMUL", instruction[1], start_location+2],
+                ["Z", "Z", start_location], ["ADD", instruction[1], "TMUL",  start_location+4],
+                ["TMUL", "TMUL", start_location+5]]
 
 
 class MOVEPseudoInstruction(KuugaPseudoInstruction):
@@ -63,8 +64,8 @@ class MOVEPseudoInstruction(KuugaPseudoInstruction):
         return "MOVE"
 
     def expand_instruction(self, instruction, start_location):
-        return [[instruction[1], instruction[1], start_location+1], [instruction[2], "Z", start_location+2],
-                ["Z", instruction[1], start_location + 3], ["Z", "Z", start_location + 4]]
+        return [[instruction[1], instruction[1], start_location+1], [instruction[2], "TMOVE", start_location+2],
+                ["TMOVE", instruction[1], start_location + 3], ["TMOVE", "TMOVE", start_location + 4]]
 
 
 class DividePseudoInstruction(KuugaPseudoInstruction):
@@ -75,8 +76,8 @@ class DividePseudoInstruction(KuugaPseudoInstruction):
 
     def expand_instruction(self, instruction, start_location):
         return [[instruction[2], instruction[1], start_location+3],
-                ["ADD", "T1", "ON", start_location+2], ["Z", "Z", start_location],
-                ["MOVE", instruction[1], "T1", start_location+4], ["T1", "T1", start_location+5]]
+                ["ADD", "TDIV", "ON", start_location+2], ["Z", "Z", start_location],
+                ["MOVE", instruction[1], "TDIV", start_location+4], ["TDIV", "TDIV", start_location+5]]
 
 
 class Gouram(object):
@@ -117,7 +118,7 @@ class Gouram(object):
         result.extend(["0x00000001"])
         data_vals = sorted(program.data.values(), key=lambda datum: datum[0])
         result.extend([format(x[1], "#010x") for x in data_vals])
-        return "{ \"" + "\", \"".join(result) + "\" }"
+        return "{ " + ", ".join(result) + " }"
 
     @staticmethod
     def codeline_to_hexadecimal(codeline, data):

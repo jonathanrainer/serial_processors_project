@@ -1,6 +1,5 @@
 DATA:
 S0: 25
-S1: 32
 Z:  0
 ON: 1
 TADD: 0
@@ -11,5 +10,5 @@ TMOVE: 0
 END_DATA
 
 CODE:
-ADD S0 S1
+NOT S0
 END_CODE
