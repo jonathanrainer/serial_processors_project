@@ -6,6 +6,7 @@ S3: 54F
 S4: 0
 FP: 10
 Z:  0
+TADD: 0
 END_DATA
 
 CODE:

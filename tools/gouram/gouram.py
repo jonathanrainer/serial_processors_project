@@ -80,6 +80,40 @@ class DividePseudoInstruction(KuugaPseudoInstruction):
                 ["MOVE", instruction[1], "TDIV", start_location+4], ["TDIV", "TDIV", start_location+5]]
 
 
+class ShiftLeftPseudoInstruction(KuugaPseudoInstruction):
+
+    @property
+    def name(self):
+        return "SHL"
+
+    def expand_instruction(self, instruction, start_location):
+        return [["ADD", instruction[2], "ON", start_location+1], ["ON", instruction[2], start_location+5],
+                ["MUL", instruction[1], "SHLC1", start_location+3], ["SUB", instruction[1], "SHRL2", start_location+4],
+                ["Z", "Z", start_location+1]]
+
+
+class ShiftRightPseudoInstruction(KuugaPseudoInstruction):
+
+    @property
+    def name(self):
+        return "SHR"
+
+    def expand_instruction(self, instruction, start_location):
+        return [["ADD", instruction[2], "ON", start_location+1], ["ON", instruction[2], start_location+4],
+                ["DIV", instruction[1], "SHRC1", start_location+3], ["Z", "Z", start_location+1]]
+
+
+class COPYPseudoInstruction(KuugaPseudoInstruction):
+
+    @property
+    def name(self):
+        return "COPY"
+
+    def expand_instruction(self, instruction, start_location):
+        return [[instruction[2], "TCOPY1", start_location+1], ["TCOPY1", "TCOPY2", start_location+2],
+                ["MOVE", instruction[0], "TCOPY2", start_location+3], ["TCOPY1", "TCOPY1", start_location+4],
+                ["TCOPY2", "TCOPY2", start_location+5]]
+
 class Gouram(object):
 
     pseudo_instructions = {c().name: c() for c in KuugaPseudoInstruction.__subclasses__()}
