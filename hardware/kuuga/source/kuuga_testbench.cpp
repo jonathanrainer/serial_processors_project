@@ -9,6 +9,12 @@ bool subleq_test();
 bool add_test();
 bool serial_and_test();
 bool serial_add_test();
+bool generated_add_test();
+bool generated_sub_test();
+bool generated_move_test();
+bool generated_not_test();
+bool generated_mul_test();
+bool generated_div_test();
 
 int main()
  {
@@ -18,7 +24,13 @@ int main()
   test_funcs["Subleq Test"] = subleq_test;
   test_funcs["Add Test"] = add_test;
   test_funcs["Serial AND Test"] = serial_and_test;
-  test_funcs["Serial ADD Test"] = serial_add_test;
+  test_funcs["Serial Add Test"] = serial_add_test;
+  test_funcs["Generated Add Test"] = generated_add_test;
+  test_funcs["Generated Sub Test"] = generated_sub_test;
+  test_funcs["Generated MOVE Test"] = generated_move_test;
+  test_funcs["Generated NOT Test"] = generated_not_test;
+  test_funcs["Generated Multiply Test"] = generated_mul_test;
+  test_funcs["Generated Divide Test"] = generated_mul_test;
   int passes = 0;
   int fails = 0;
   int tests = 0;
@@ -30,13 +42,13 @@ int main()
       setUp();
       if((*(iterator->second))())
 	{
-	  printf("Test %d#: %s - Test Passed!\n", tests,
+	  printf("Test #%d: %s - Test Passed!\n", tests,
 		 iterator->first.c_str());
 	  passes++;
 	}
       else
 	{
-	  printf("Test #d#: %s - Test Failed!\n", tests,
+	  printf("Test #d: %s - Test Failed!\n", tests,
 		 iterator->first.c_str());
 	  fails++;
 	}
@@ -92,6 +104,75 @@ bool add_test()
 	setMemory(mem_temp, 8);
 	uint32 result = kuuga(2);
 	return (result == 0x00000004);
+}
+
+bool generated_add_test()
+{
+	uint32 mem_temp[13] =
+	    { 0x01408004, 0x02004008, 0x0200800c, 0x00000001, 0x00000025,
+		0x00000032, 0x00000000, 0x00000001, 0x00000000, 0x00000000,
+		0x00000000, 0x00000000, 0x00000000 };
+	setMemory(mem_temp, 13);
+	uint32 result = kuuga(4);
+	return (result == 0x00000057);
+}
+
+bool generated_sub_test()
+{
+	uint32 mem_temp[11] =
+	    { 0x00c02004, 0x00000001, 0x00000025, 0x00000032, 0x00000000,
+		0x00000001, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+		0x00000000 };
+	setMemory(mem_temp, 11);
+	uint32 result = kuuga(2);
+	return (result == 0xFFFFFFF3);
+}
+
+bool generated_move_test()
+{
+	uint32 mem_temp[14] =
+	    { 0x01405004, 0x0180d008, 0x0340500c, 0x0340d010, 0x00000001,
+		0x00000025, 0x00000032, 0x00000000, 0x00000001, 0x00000000,
+		0x00000000, 0x00000000, 0x00000000, 0x00000000 };
+	setMemory(mem_temp, 14);
+	uint32 result = kuuga(5);
+	return (result == 0x00000032);
+}
+
+bool generated_not_test()
+{
+	uint32 mem_temp[16] =
+	    { 0x0200c004, 0x0280c008, 0x0200800c, 0x0300f010, 0x03c08014,
+		0x03c0f018, 0x0300c01c, 0x00000001, 0x00000025, 0x00000000,
+		0x00000001, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+		0x00000000 };
+	setMemory(mem_temp, 16);
+	uint32 result = kuuga(8);
+	return (result == 0xFFFFFFDA);
+}
+
+bool generated_mul_test()
+{
+	uint32 mem_temp[19] =
+	    { 0x0340b014, 0x0280e008, 0x0381000c, 0x0380e010, 0x0300c000,
+		0x0400e018, 0x0380a01c, 0x0380e020, 0x04010024, 0x00000001,
+		0x00000009, 0x00000009, 0x00000000, 0x00000001, 0x00000000,
+		0x00000000, 0x00000000, 0x00000000, 0x00000000 };
+	setMemory(mem_temp, 19);
+	uint32 result = kuuga(10);
+	return (result == 0x51);
+}
+
+bool generated_div_test()
+{
+	uint32 mem_temp[20] =
+	    { 0x0300b014, 0x0380f008, 0x03c1200c, 0x03c0f010, 0x0340d000,
+		0x02c0b018, 0x0481301c, 0x04c0b020, 0x04c13024, 0x04812028,
+		0x00000001, 0x00000051, 0x00000009, 0x00000000, 0x00000001,
+		0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
+	setMemory(mem_temp, 20);
+	uint32 result = kuuga(11);
+	return (result == 0x9);
 }
 
 bool serial_and_test()

@@ -9,7 +9,7 @@
         <schedule model="kuuga"/>
     </config>
     <UIConfigurations>
-        <UIAutosynConf boardInfo="Virtex-7 VC707 Evaluation Platform (xc7vx485tffg1761-2) " hideTrivialOp="true" isBasedOnBoard="true" isSolutionDirty="false" isStopAskAgain="false" showDetailDesignViewer="false">
+        <UIAutosynConf boardInfo="Virtex-7 VC707 Evaluation Platform (xc7vx485tffg1761-2) " hideTrivialOp="true" isBasedOnBoard="true" isSolutionDirty="true" isStopAskAgain="true" showDetailDesignViewer="false">
             <Platform>xilinx/virtex7/virtex7</Platform>
             <Platform>xilinx/virtex7/virtex7_fpv6</Platform>
             <customLibs/>
