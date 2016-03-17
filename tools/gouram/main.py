@@ -1,4 +1,4 @@
-from tools.gouram.gouram import Gouram
+from gouram import Gouram
 import sys
 
 if __name__ == "__main__":
