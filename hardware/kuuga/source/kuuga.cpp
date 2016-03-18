@@ -14,6 +14,8 @@ uint32 kuuga(int output_loc) {
 
 	uint32 pc = 0;
 	uint32 inst = memory[0];
+	printf("Instruction: %X\n", (int) inst);
+	fflush(stdout);
 	zero_flag = false;
 
 	// Execute until the halt bit is set.
@@ -24,6 +26,8 @@ uint32 kuuga(int output_loc) {
 		uint10 c = (bit_serial_and(inst, 0x00000FFC) >> 2);
 		pc = subleq(pc, a, b, c);
 		inst = memory[pc];
+		printf("Instruction: %X\n", (int) inst);
+		fflush(stdout);
 	}
 	return memory[output_loc];
 }

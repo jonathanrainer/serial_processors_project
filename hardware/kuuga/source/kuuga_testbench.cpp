@@ -15,6 +15,7 @@ bool generated_move_test();
 bool generated_not_test();
 bool generated_mul_test();
 bool generated_div_test();
+bool generated_shift_right_test();
 
 int main()
  {
@@ -31,6 +32,7 @@ int main()
   test_funcs["Generated NOT Test"] = generated_not_test;
   test_funcs["Generated Multiply Test"] = generated_mul_test;
   test_funcs["Generated Divide Test"] = generated_mul_test;
+  test_funcs["Generated Shift Right Test"] = generated_shift_right_test;
   int passes = 0;
   int fails = 0;
   int tests = 0;
@@ -173,6 +175,22 @@ bool generated_div_test()
 	setMemory(mem_temp, 20);
 	uint32 result = kuuga(11);
 	return (result == 0x9);
+}
+
+bool generated_shift_right_test()
+{
+	uint32 mem_temp[26] =
+	    { 0x01c09004, 0x02405008, 0x0240900c, 0x01c0503c, 0x02004024,
+		0x01c09018, 0x0240c01c, 0x02409020, 0x01806010, 0x01004028,
+		0x0300d02c, 0x03404030, 0x0340d034, 0x0300c038, 0x0180600c,
+		0x00000001, 0x00001000, 0x00000008, 0x00000000, 0x00000001,
+		0x00000002, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+		0x00000000 };
+	setMemory(mem_temp, 26);
+	uint32 result = kuuga(15);
+	printf("Result: %X\n", (int) result);
+	fflush(stdout);
+	return (result == 0x10);
 }
 
 bool serial_and_test()

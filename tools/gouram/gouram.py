@@ -88,7 +88,7 @@ class ShiftLeftPseudoInstruction(KuugaPseudoInstruction):
 
     def expand_instruction(self, instruction, start_location):
         return [["ADD", instruction[2], "ON", start_location+1], ["ON", instruction[2], start_location+5],
-                ["MUL", instruction[1], "SHLC1", start_location+3], ["SUB", instruction[1], "SHRL2", start_location+4],
+                ["MUL", instruction[1], "SHC1", start_location+3], ["SUB", instruction[1], "SHC2", start_location+4],
                 ["Z", "Z", start_location+1]]
 
 
@@ -100,7 +100,7 @@ class ShiftRightPseudoInstruction(KuugaPseudoInstruction):
 
     def expand_instruction(self, instruction, start_location):
         return [["ADD", instruction[2], "ON", start_location+1], ["ON", instruction[2], start_location+4],
-                ["DIV", instruction[1], "SHRC1", start_location+3], ["Z", "Z", start_location+1]]
+                ["DIV", instruction[1], "SHC1", start_location+3], ["Z", "Z", start_location+1]]
 
 
 class COPYPseudoInstruction(KuugaPseudoInstruction):
