@@ -18,6 +18,7 @@
 	uint32 subleq(uint32 pc, uint10 a, uint10 b, uint10 c);
 	uint32 bit_serial_and(uint32 arg1, uint32 arg2);
 	uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag);
+	void print_memory();
 
 	// Defines
 	#define MEM_SIZE 50

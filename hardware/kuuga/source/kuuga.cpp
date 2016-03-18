@@ -14,8 +14,6 @@ uint32 kuuga(int output_loc) {
 
 	uint32 pc = 0;
 	uint32 inst = memory[0];
-	printf("Instruction: %X\n", (int) inst);
-	fflush(stdout);
 	zero_flag = false;
 
 	// Execute until the halt bit is set.
@@ -26,8 +24,6 @@ uint32 kuuga(int output_loc) {
 		uint10 c = (bit_serial_and(inst, 0x00000FFC) >> 2);
 		pc = subleq(pc, a, b, c);
 		inst = memory[pc];
-		printf("Instruction: %X\n", (int) inst);
-		fflush(stdout);
 	}
 	return memory[output_loc];
 }
@@ -81,16 +77,16 @@ uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag)
 	return result;
 }
 
-//void print_memory(volatile int * ram)
-//{
-//	printf("Memory: [\n");
-//	for (int j=0; j < MEM_SIZE; j++)
-//	{
-//		if (j % 4 == 0 && j != 0)
-//		{
-//			printf("\n");
-//		}
-//		printf("0x%08X,", (int) ram[j]);
-//	}
-//	printf("]\n");
-//}
+void print_memory()
+{
+	printf("Memory: [\n");
+	for (int j=0; j < MEM_SIZE; j++)
+	{
+		if (j % 4 == 0 && j != 0)
+		{
+			printf("\n");
+		}
+		printf("0x%08X,", (int) memory[j]);
+	}
+	printf("]\n");
+}
