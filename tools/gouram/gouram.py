@@ -76,8 +76,11 @@ class DividePseudoInstruction(KuugaPseudoInstruction):
 
     def expand_instruction(self, instruction, start_location):
         return [[instruction[2], instruction[1], start_location+3],
-                ["ADD", "TDIV", "ON", start_location+2], ["Z", "Z", start_location],
-                ["MOVE", instruction[1], "TDIV", start_location+4], ["TDIV", "TDIV", start_location+5]]
+                ["ADD", "TDIV1", "ON", start_location+2], ["Z", "Z", start_location],
+                [instruction[1], "TDIV2", start_location+5], ["Z", "Z", start_location+6],
+                ["ADD", "TDIV1", "ON", start_location+4],
+                ["MOVE", instruction[1], "TDIV1", start_location+7], ["TDIV1", "TDIV1", start_location+8],
+                ["TDIV2", "TDIV2", start_location+9]]
 
 
 class ShiftLeftPseudoInstruction(KuugaPseudoInstruction):
@@ -87,9 +90,8 @@ class ShiftLeftPseudoInstruction(KuugaPseudoInstruction):
         return "SHL"
 
     def expand_instruction(self, instruction, start_location):
-        return [["ADD", instruction[2], "ON", start_location+1], ["ON", instruction[2], start_location+5],
-                ["MUL", instruction[1], "SHC1", start_location+3], ["SUB", instruction[1], "SHC2", start_location+4],
-                ["Z", "Z", start_location+1]]
+        return [["ADD", instruction[2], "ON", start_location+1], ["ON", instruction[2], start_location+4],
+                ["MUL", instruction[1], "SHC1", start_location+3], ["Z", "Z", start_location+1]]
 
 
 class ShiftRightPseudoInstruction(KuugaPseudoInstruction):
@@ -139,7 +141,7 @@ class Gouram(object):
 
     def process_program_object(self, program):
         expanded_code = self.expand_code(program.code)
-        program_counter = expanded_code[-1][2]
+        program_counter = len(expanded_code)
         # Add in space for a HALT command
         program_counter += 1
         # Taking Program Size, Create Memory with enough blanks for Code

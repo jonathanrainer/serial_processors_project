@@ -33,5 +33,13 @@ class GouramUnitTests(unittest.TestCase):
                                              ["TADD", "TADD", 4], ["Z", "Z", 0], ["S6", "S6", 6], ["TDIV", "TMOVE", 7],
                                              ["TMOVE", "S6", 8], ["TMOVE", "TMOVE", 9], ["TDIV", "TDIV", 10]])
 
+    def test_shift_right(self):
+        expanded_code = self.gouram.expand_code([["SHR", "S2", "S3", 1]])
+        self.assertListEqual(expanded_code, [[]])
+
+    def test_shift_left(self):
+        expanded_code = self.gouram.expand_code([["SHL", "S2", "S3", 1]])
+        self.assertListEqual(expanded_code, [[]])
+
 if __name__ == '__main__':
     unittest.main()
