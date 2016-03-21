@@ -21,7 +21,7 @@
 	void print_memory();
 
 	// Defines
-	#define MEM_SIZE 50
+	#define MEM_SIZE 150
 
 	// Globals
 	extern uint32 memory[MEM_SIZE];

@@ -23,6 +23,12 @@ uint32 kuuga(int output_loc) {
 		uint10 b = (bit_serial_and(inst, 0x003FF000) >> 12);
 		uint10 c = (bit_serial_and(inst, 0x00000FFC) >> 2);
 		pc = subleq(pc, a, b, c);
+//		printf("Inst: %X, TAND1: %X, TAND2: %X, TAND3: %X, "
+//		    "TAND4: %X, TAND5: %X, TAND6: %X\n",
+//		       (int) inst, (int) memory[68], (int) memory[69],
+//		       (int) memory[70], (int) memory[71], (int) memory[72],
+//		       (int) memory[73]);
+//		fflush(stdout);
 		inst = memory[pc];
 	}
 	return memory[output_loc];

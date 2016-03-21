@@ -17,6 +17,7 @@ bool generated_mul_test();
 bool generated_div_test();
 bool generated_shift_right_test();
 bool generated_shift_left_test();
+bool generated_and_test();
 
 int main()
  {
@@ -34,7 +35,8 @@ int main()
   test_funcs["Generated Multiply Test"] = generated_mul_test;
   test_funcs["Generated Divide Test"] = generated_div_test;
   test_funcs["Generated Shift Right Test"] = generated_shift_right_test;
-  //test_funcs["Generated Shift Left Test"] = generated_shift_left_test;
+  test_funcs["Generated Shift Left Test"] = generated_shift_left_test;
+  test_funcs["Generated AND Test"] = generated_and_test;
   int passes = 0;
   int fails = 0;
   int tests = 0;
@@ -198,18 +200,37 @@ bool generated_shift_right_test()
 
 bool generated_shift_left_test()
 {
-  uint32 mem_temp[27] =
-      { 0x04815004, 0x05410008, 0x0541500c, 0x04810038, 0x04813024,
-	  0x03c15018, 0x0541701c, 0x05415020, 0x04411010, 0x05c15028,
-	  0x0540f02c, 0x05415030, 0x05c17034, 0x0441100c, 0x00000001,
-	  0x00000001, 0x00000008, 0x00000000, 0x00000001, 0x00000002,
-	  0x80000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-	  0x00000000, 0x00000000 };
-  	setMemory(mem_temp, 27);
-  	uint32 result = kuuga(15);
-  	printf("Result: %X\n", (int) result);
-  	fflush(stdout);
+  uint32 mem_temp[19] =
+      { 0x0300d004, 0x0340a008, 0x0340d00c, 0x0300a020, 0x0240d014,
+	  0x03409018, 0x0340d01c, 0x02c0b00c, 0x00000001, 0x00000001,
+	  0x00000008, 0x00000000, 0x00000001, 0x00000000, 0x00000000,
+	  0x00000000, 0x00000000, 0x00000000, 0x00000000 };
+  	setMemory(mem_temp, 19);
+  	uint32 result = kuuga(9);
   	return (result == 0x100);
+}
+
+bool generated_and_test()
+{
+  uint32 mem_temp[74] =
+      { 0x10840004, 0x10041008, 0x1104400c, 0x1043f010, 0x0fc44014,
+	  0x0fc3f018, 0x1004001c, 0x10441020, 0x0e8440b8, 0x0dc40028,
+	  0x1004102c, 0x11445030, 0x1043f034, 0x0fc45038, 0x0fc3f03c,
+	  0x10040040, 0x10441044, 0x0e040048, 0x1004104c, 0x11846050,
+	  0x1043f054, 0x0fc46058, 0x0fc3f05c, 0x10040060, 0x10441064,
+	  0x11c3b068, 0x0ec4706c, 0x0ec3b070, 0x10c450a0, 0x10c460ac,
+	  0x0e83b07c, 0x0ec47080, 0x0ec3b084, 0x0dc3b088, 0x0ec3708c,
+	  0x0ec3b090, 0x0e03b094, 0x0ec38098, 0x0ec3b09c, 0x0e439020,
+	  0x120480a4, 0x11448074, 0x12048084, 0x124490b0, 0x11849078,
+	  0x12449084, 0x0dc370bc, 0x11c3f0c0, 0x0fc370c4, 0x0fc3f0c8,
+	  0x110440cc, 0x114450d0, 0x118460d4, 0x11c470d8, 0x00000001,
+	  0x00000c87, 0x0000000f, 0x00000000, 0x00000001, 0x00000000,
+	  0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	  0x00000000, 0x00000021, 0x80000000, 0x00000000, 0x00000000,
+	  0x00000000, 0x00000000, 0x00000000, 0x00000000 };
+  	setMemory(mem_temp, 74);
+  	uint32 result = kuuga(55);
+  	return (result == 0x7);
 }
 
 bool serial_and_test()
