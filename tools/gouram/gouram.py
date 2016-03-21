@@ -113,8 +113,47 @@ class COPYPseudoInstruction(KuugaPseudoInstruction):
 
     def expand_instruction(self, instruction, start_location):
         return [[instruction[2], "TCOPY1", start_location+1], ["TCOPY1", "TCOPY2", start_location+2],
-                ["MOVE", instruction[0], "TCOPY2", start_location+3], ["TCOPY1", "TCOPY1", start_location+4],
+                ["MOVE", instruction[1], "TCOPY2", start_location+3], ["TCOPY1", "TCOPY1", start_location+4],
                 ["TCOPY2", "TCOPY2", start_location+5]]
+
+
+class ANDPseudoInstruction(KuugaPseudoInstruction):
+
+    @property
+    def name(self):
+        return "AND"
+
+    def expand_instruction(self, instruction, start_location):
+        return [
+            # Set Up
+            ["COPY", "TAND1", "ANDC1", start_location+1],
+            # Main
+            ["ON", "TAND1", start_location+17],
+            ["COPY", "TAND2", instruction[1], start_location+3],
+            ["COPY", "TAND3", instruction[2], start_location+4],
+            ["ADD", "TAND4", "TAND4", start_location+5],
+            ["ANDC2", "TAND2", start_location+11],
+            ["ANDC2", "TAND3", start_location+14],
+            # Operation
+            ["ADD", "TAND4", "ON", start_location+8],
+            ["ADD", instruction[1], instruction[1], start_location+9],
+            ["ADD", instruction[2], instruction[2], start_location+10],
+            ["Z", "Z", start_location+1],
+            # Zero Check
+            ["TAND5", "TAND5", start_location+12],
+            ["TAND2", "TAND5", start_location+6],
+            ["TAND5", "TAND5", start_location+8],
+            # Zero Check2
+            ["TAND6", "TAND6", start_location+15],
+            ["TAND3", "TAND6", start_location+7],
+            ["TAND6", "TAND6", start_location+8],
+            # Cleanup
+            ["MOVE", instruction[1], "TAND4", start_location+18],
+            ["TAND1", "TAND1", start_location+19],
+            ["TAND2", "TAND2", start_location+20],
+            ["TAND3", "TAND3", start_location+21],
+            ["TAND4", "TAND4", start_location+22]
+        ]
 
 class Gouram(object):
 
