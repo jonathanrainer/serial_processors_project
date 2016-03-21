@@ -91,7 +91,7 @@ class ShiftLeftPseudoInstruction(KuugaPseudoInstruction):
 
     def expand_instruction(self, instruction, start_location):
         return [["ADD", instruction[2], "ON", start_location+1], ["ON", instruction[2], start_location+4],
-                ["MUL", instruction[1], "SHC1", start_location+3], ["Z", "Z", start_location+1]]
+                ["ADD", instruction[1], instruction[1], start_location+3], ["Z", "Z", start_location+1]]
 
 
 class ShiftRightPseudoInstruction(KuugaPseudoInstruction):
