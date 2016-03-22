@@ -168,8 +168,6 @@ class Gouram(object):
     raw_file_reader = RawFileReader()
 
     def expand(self, file_name):
-        with open(file_name, 'r') as description_file:
-            file_string = description_file.read()
         program = self.raw_file_reader.split_data_and_code(file_string)
         program = self.process_program_object(program)
         return self.create_memory_contents(program)

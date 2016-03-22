@@ -1,10 +1,13 @@
 from tools.test_case_generators.raw_file_reader.program import Program
 import re
 
+
 class RawFileReader(object):
 
     @staticmethod
-    def split_data_and_code(file_string):
+    def split_data_and_code(file_name):
+        with open(file_name, 'r') as description_file:
+            file_string = description_file.read()
         data_string = re.search("(?<=DATA:\n).*(?=END_DATA\n)", file_string, re.DOTALL).group(0)
         data_list = [re.split(": ", y) for y in [x for x in re.split("\n", data_string) if len(x) > 0]]
         assert([x for x in data_list if len(x) != 2] == [])
