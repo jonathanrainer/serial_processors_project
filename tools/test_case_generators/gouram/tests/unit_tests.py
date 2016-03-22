@@ -1,5 +1,7 @@
 import unittest
-from tools.gouram.gouram import Gouram
+
+from test_case_generators.gouram import Gouram
+
 
 class GouramUnitTests(unittest.TestCase):
 

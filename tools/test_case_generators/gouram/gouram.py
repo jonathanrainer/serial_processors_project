@@ -1,5 +1,6 @@
 import re
 import abc
+import sys
 
 
 class KuugaPseudoInstruction(object):
@@ -236,3 +237,7 @@ class Program(object):
     def __init__(self, data_dict, code_list):
         self.data = data_dict
         self.code = code_list
+
+if __name__ == "__main__":
+    g = Gouram()
+    print(g.expand(sys.argv[1]))
