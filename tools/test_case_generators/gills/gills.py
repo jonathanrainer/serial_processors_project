@@ -2,6 +2,7 @@ from tools.test_case_generators.raw_file_reader.raw_file_reader import RawFileRe
 from tools.assembler.assembler import Assembler
 import sys
 
+
 class Gills(object):
 
     raw_file_reader = RawFileReader()
