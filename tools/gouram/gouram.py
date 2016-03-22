@@ -52,9 +52,10 @@ class MultiplyPseudoInstruction(KuugaPseudoInstruction):
         return "MUL"
 
     def expand_instruction(self, instruction, start_location):
-        return [["ON", instruction[2], start_location+3], ["ADD", "TMUL", instruction[1], start_location+2],
-                ["Z", "Z", start_location], ["ADD", instruction[1], "TMUL",  start_location+4],
-                ["TMUL", "TMUL", start_location+5]]
+        return [["COPY", "TMUL1", instruction[2], start_location+1],
+                ["ON", "TMUL1", start_location+4], ["ADD", "TMUL2", instruction[1], start_location+3],
+                ["Z", "Z", start_location+1], ["ADD", instruction[1], "TMUL2",  start_location+5],
+                ["TMUL1", "TMUL1", start_location+6], ["TMUL2", "TMUL2", start_location+7]]
 
 
 class MOVEPseudoInstruction(KuugaPseudoInstruction):
@@ -90,8 +91,9 @@ class ShiftLeftPseudoInstruction(KuugaPseudoInstruction):
         return "SHL"
 
     def expand_instruction(self, instruction, start_location):
-        return [["ADD", instruction[2], "ON", start_location+1], ["ON", instruction[2], start_location+4],
-                ["ADD", instruction[1], instruction[1], start_location+3], ["Z", "Z", start_location+1]]
+        return [["COPY", "TSHIFT", instruction[2], start_location+1],
+                ["ADD", "TSHIFT", "ON", start_location+2], ["ON", "TSHIFT", start_location+5],
+                ["ADD", instruction[1], instruction[1], start_location+4], ["Z", "Z", start_location+2]]
 
 
 class ShiftRightPseudoInstruction(KuugaPseudoInstruction):
@@ -101,8 +103,9 @@ class ShiftRightPseudoInstruction(KuugaPseudoInstruction):
         return "SHR"
 
     def expand_instruction(self, instruction, start_location):
-        return [["ADD", instruction[2], "ON", start_location+1], ["ON", instruction[2], start_location+4],
-                ["DIV", instruction[1], "SHC1", start_location+3], ["Z", "Z", start_location+1]]
+        return [["COPY", "TSHIFT", instruction[2], start_location+1],
+                ["ADD", "TSHIFT", "ON", start_location+2], ["ON", "TSHIFT", start_location+5],
+                ["DIV", instruction[1], "SHC1", start_location+4], ["Z", "Z", start_location+2]]
 
 
 class COPYPseudoInstruction(KuugaPseudoInstruction):
@@ -127,32 +130,34 @@ class ANDPseudoInstruction(KuugaPseudoInstruction):
         return [
             # Set Up
             ["COPY", "TAND1", "ANDC1", start_location+1],
+            ["COPY", "TAND7", instruction[2], start_location+2],
             # Main
-            ["ON", "TAND1", start_location+17],
-            ["COPY", "TAND2", instruction[1], start_location+3],
-            ["COPY", "TAND3", instruction[2], start_location+4],
-            ["ADD", "TAND4", "TAND4", start_location+5],
-            ["ANDC2", "TAND2", start_location+11],
-            ["ANDC2", "TAND3", start_location+14],
+            ["ON", "TAND1", start_location+18],
+            ["COPY", "TAND2", instruction[1], start_location+4],
+            ["COPY", "TAND3", instruction[2], start_location+5],
+            ["ADD", "TAND4", "TAND4", start_location+6],
+            ["ANDC2", "TAND2", start_location+12],
+            ["ANDC2", "TAND3", start_location+15],
             # Operation
-            ["ADD", "TAND4", "ON", start_location+8],
-            ["ADD", instruction[1], instruction[1], start_location+9],
-            ["ADD", instruction[2], instruction[2], start_location+10],
-            ["Z", "Z", start_location+1],
+            ["ADD", "TAND4", "ON", start_location+9],
+            ["ADD", instruction[1], instruction[1], start_location+10],
+            ["ADD", instruction[2], instruction[2], start_location+11],
+            ["Z", "Z", start_location+2],
             # Zero Check
-            ["TAND5", "TAND5", start_location+12],
-            ["TAND2", "TAND5", start_location+6],
-            ["TAND5", "TAND5", start_location+8],
+            ["TAND5", "TAND5", start_location+13],
+            ["TAND2", "TAND5", start_location+7],
+            ["TAND5", "TAND5", start_location+9],
             # Zero Check2
-            ["TAND6", "TAND6", start_location+15],
-            ["TAND3", "TAND6", start_location+7],
-            ["TAND6", "TAND6", start_location+8],
+            ["TAND6", "TAND6", start_location+16],
+            ["TAND3", "TAND6", start_location+8],
+            ["TAND6", "TAND6", start_location+9],
             # Cleanup
-            ["MOVE", instruction[1], "TAND4", start_location+18],
-            ["TAND1", "TAND1", start_location+19],
-            ["TAND2", "TAND2", start_location+20],
-            ["TAND3", "TAND3", start_location+21],
-            ["TAND4", "TAND4", start_location+22]
+            ["MOVE", instruction[1], "TAND4", start_location+19],
+            ["MOVE", instruction[2], "TAND7", start_location+20],
+            ["TAND1", "TAND1", start_location+21],
+            ["TAND2", "TAND2", start_location+22],
+            ["TAND3", "TAND3", start_location+23],
+            ["TAND4", "TAND4", start_location+24]
         ]
 
 class Gouram(object):
