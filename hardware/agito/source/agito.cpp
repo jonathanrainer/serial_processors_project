@@ -162,7 +162,7 @@ void shift(uint27 operands, bool right_flag, bool arithmetic_flag)
   uint32 input = registers[(operands & 0x0003FE00) >> 9];
   uint32 msb = input & 0xC0000000;
   uint32 result = input;
-  for(int i = 0; i < (operands & 0x000001FF); i++)
+  shift_loop:for(int i = 0; i < (operands & 0x000001FF); i++)
   {
       if (right_flag)
       {
@@ -265,7 +265,7 @@ uint32 bit_serial_and(uint32 arg1, uint32 arg2)
 uint32 bit_serial_or(uint32 arg1, uint32 arg2)
 {
   uint32 result = 0x00000000;
-  and_loop:for (int i = 0; i <= 31; i++)
+  or_loop:for (int i = 0; i <= 31; i++)
   {
     uint1 bit_1 = arg1.bit(i);
     uint1 bit_2 = arg2.bit(i);
@@ -295,7 +295,7 @@ uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag)
 uint32 bit_serial_not(uint32 arg)
 {
   uint32 result = 0x00000000;
-  for(int i = 0; i <= 31; i++)
+  not_loop:for(int i = 0; i <= 31; i++)
   {
     result.bit(i) = ~arg.bit(i);
   }

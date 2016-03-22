@@ -39,7 +39,7 @@ uint32 bit_serial_not(uint32 arg);
 
 // Defines
 #define MEM_SIZE 12
-#define REG_NUM 10
+#define REG_NUM 11
 
 // Globals
 extern uint32 memory[MEM_SIZE];
