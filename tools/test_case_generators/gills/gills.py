@@ -19,8 +19,9 @@ class Gills(object):
             for counter_2, item in enumerate(code_line):
                 if item in program.data.keys():
                     program.code[counter_1][counter_2] = "#" + str(program.data[item][0])
+        data_vals = sorted(program.data.values(), key=lambda datum: datum[0])
         final_result = [self.assembler.parse(" ".join(x[:-1])).lower() for x in program.code]
-        final_result.extend([format(x[1], '#010x') for x in program.data.values()])
+        final_result.extend([format(x[1], '#010x') for x in data_vals])
         return final_result
 
 if __name__ == "__main__":
