@@ -1,4 +1,4 @@
-import re
+from tools.test_case_generators.raw_file_reader.raw_file_reader import RawFileReader
 import abc
 import sys
 
@@ -161,28 +161,18 @@ class ANDPseudoInstruction(KuugaPseudoInstruction):
             ["TAND4", "TAND4", start_location+24]
         ]
 
+
 class Gouram(object):
 
     pseudo_instructions = {c().name: c() for c in KuugaPseudoInstruction.__subclasses__()}
+    raw_file_reader = RawFileReader()
 
     def expand(self, file_name):
         with open(file_name, 'r') as description_file:
             file_string = description_file.read()
-        program = self.split_data_and_code(file_string)
+        program = self.raw_file_reader.split_data_and_code(file_string)
         program = self.process_program_object(program)
         return self.create_memory_contents(program)
-
-    @staticmethod
-    def split_data_and_code(file_string):
-        data_string = re.search("(?<=DATA:\n).*(?=END_DATA\n)", file_string, re.DOTALL).group(0)
-        data_list = [re.split(": ", y) for y in [x for x in re.split("\n", data_string) if len(x) > 0]]
-        assert([x for x in data_list if len(x) != 2] == [])
-        data_dict = {data_pair[0]: [location, int(data_pair[1], base=16)]
-                     for location, data_pair in enumerate(data_list)}
-        code_string = re.search("(?<=CODE:\n).*(?=END_CODE)", file_string, re.DOTALL).group(0)
-        code_list = [re.split(" ", y) + [count+1] for count, y in
-                     enumerate([x for x in re.split("\n", code_string) if len(x) > 0])]
-        return Program(data_dict, code_list)
 
     def process_program_object(self, program):
         expanded_code = self.expand_code(program.code)
@@ -228,15 +218,6 @@ class Gouram(object):
                 break
         return expanded_code
 
-
-class Program(object):
-
-    data = {}
-    code = []
-
-    def __init__(self, data_dict, code_list):
-        self.data = data_dict
-        self.code = code_list
 
 if __name__ == "__main__":
     g = Gouram()
