@@ -7,7 +7,6 @@
 	#include <ap_int.h>
 
 	//Typedefs
-	typedef ap_uint<128> uint128;
 	typedef ap_uint<32> uint32;
 	typedef ap_int<32> int32;
 	typedef ap_uint<10> uint10;
@@ -16,9 +15,7 @@
 	// Prototypes
 	uint32 kuuga(int output_loc);
 	uint32 subleq(uint32 pc, uint10 a, uint10 b, uint10 c);
-	uint32 bit_serial_and(uint32 arg1, uint32 arg2);
 	uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag);
-	void print_memory();
 
 	// Defines
 	#define MEM_SIZE 150
