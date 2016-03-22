@@ -7,7 +7,6 @@ void setUp();
 bool mutation_test();
 bool subleq_test();
 bool add_test();
-bool serial_and_test();
 bool serial_add_test();
 bool generated_add_test();
 bool generated_sub_test();
@@ -17,6 +16,7 @@ bool generated_mul_test();
 bool generated_div_test();
 bool generated_shift_right_test();
 bool generated_shift_left_test();
+bool generated_and_test();
 
 int main()
  {
@@ -25,7 +25,6 @@ int main()
   test_funcs["Mutation Test"] = mutation_test;
   test_funcs["Subleq Test"] = subleq_test;
   test_funcs["Add Test"] = add_test;
-  test_funcs["Serial AND Test"] = serial_and_test;
   test_funcs["Serial Add Test"] = serial_add_test;
   test_funcs["Generated Add Test"] = generated_add_test;
   test_funcs["Generated Sub Test"] = generated_sub_test;
@@ -34,7 +33,8 @@ int main()
   test_funcs["Generated Multiply Test"] = generated_mul_test;
   test_funcs["Generated Divide Test"] = generated_div_test;
   test_funcs["Generated Shift Right Test"] = generated_shift_right_test;
-  //test_funcs["Generated Shift Left Test"] = generated_shift_left_test;
+  test_funcs["Generated Shift Left Test"] = generated_shift_left_test;
+  test_funcs["Generated AND Test"] = generated_and_test;
   int passes = 0;
   int fails = 0;
   int tests = 0;
@@ -85,7 +85,7 @@ bool mutation_test()
 {
 	uint32 memory_temp[1] = {0x0ABBCFF1};
 	setMemory(memory_temp, 1);
-	uint128 result = kuuga(0);
+	uint32 result = kuuga(0);
 	return (result == 0x0ABBCFF1);
 }
 
@@ -102,12 +102,12 @@ bool subleq_test()
 bool add_test()
 {
 	uint32 mem_temp[8] =
-		{	0x00401010, 0x4F55AA32, 0xFFFFFFFF, 0x00000005,
+		{	0x00401010, 0x4F55AA32, 0xFFFFFFFF, 0xFFFFFFFA,
 			0x00C01014, 0x00402018, 0x0040101C, 0x00000001
 		};
 	setMemory(mem_temp, 8);
 	uint32 result = kuuga(2);
-	return (result == 0x00000004);
+	return (result == 0xFFFFFFF9 && memory[3] == 0xFFFFFFFA);
 }
 
 bool generated_add_test()
@@ -118,7 +118,7 @@ bool generated_add_test()
 		0x00000000, 0x00000000, 0x00000000 };
 	setMemory(mem_temp, 13);
 	uint32 result = kuuga(4);
-	return (result == 0x00000057);
+	return (result == 0x00000057 && memory[5] == 0x00000032);
 }
 
 bool generated_sub_test()
@@ -129,7 +129,7 @@ bool generated_sub_test()
 		0x00000000 };
 	setMemory(mem_temp, 11);
 	uint32 result = kuuga(2);
-	return (result == 0xFFFFFFF3);
+	return (result == 0xFFFFFFF3 && memory[3] == 0x00000032);
 }
 
 bool generated_move_test()
@@ -157,14 +157,18 @@ bool generated_not_test()
 
 bool generated_mul_test()
 {
-	uint32 mem_temp[19] =
-	    { 0x0340b014, 0x0280e008, 0x0381000c, 0x0380e010, 0x0300c000,
-		0x0400e018, 0x0380a01c, 0x0380e020, 0x04010024, 0x00000001,
-		0x00000001, 0x00000002, 0x00000000, 0x00000001, 0x00000000,
-		0x00000000, 0x00000000, 0x00000000, 0x00000000 };
-	setMemory(mem_temp, 19);
-	uint32 result = kuuga(10);
-	return (result == 0x2);
+	uint32 mem_temp[31] =
+	    { 0x0501d004, 0x0741e008, 0x0641900c, 0x0781c010, 0x07019014,
+		0x0701c018, 0x0741d01c, 0x0781e020, 0x05819034, 0x04c17028,
+		0x05c1a02c, 0x05c17030, 0x05415020, 0x06817038, 0x05c1303c,
+		0x05c17040, 0x06419044, 0x0681a048, 0x00000001, 0x00000009,
+		0x00000009, 0x00000000, 0x00000001, 0x00000000, 0x00000000,
+		0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+		0x00000000 }
+;
+	setMemory(mem_temp, 31);
+	uint32 result = kuuga(19);
+	return (result == 0x51 && memory[20] == 0x9);
 }
 
 bool generated_div_test()
@@ -178,47 +182,65 @@ bool generated_div_test()
 		0x00000000, 0x00000000 };
 	setMemory(mem_temp, 27);
 	uint32 result = kuuga(17);
-	return (result == 0x800);
+	return (result == 0x800 && memory[18] == 0x2);
 }
 
 bool generated_shift_right_test()
 {
-	uint32 mem_temp[33] =
-	    { 0x0641b004, 0x06c17008, 0x06c1b00c, 0x06417054, 0x06816024,
-		0x0641b018, 0x06c1e01c, 0x06c1b020, 0x06018010, 0x0581f02c,
-		0x06018038, 0x0641b030, 0x06c1e034, 0x06c1b038, 0x0581603c,
-		0x07820040, 0x08016044, 0x08020048, 0x0781e04c, 0x07c1f050,
-		0x0601800c, 0x00000001, 0x00001000, 0x00000008, 0x00000000,
-		0x00000001, 0x00000002, 0x00000000, 0x00000000, 0x00000000,
-		0x00000000, 0x00000000, 0x00000000 };
-	setMemory(mem_temp, 30);
-	uint32 result = kuuga(22);
-	return (result == 0x10);
+	uint32 mem_temp[44] =
+	    { 0x07c28004, 0x0a029008, 0x0a82a00c, 0x0a427010, 0x09c2a014,
+		0x09c27018, 0x0a02801c, 0x0a429020, 0x08422024, 0x0882a028,
+		0x0882202c, 0x0842a074, 0x0ac1e044, 0x08422038, 0x0882503c,
+		0x08822040, 0x08020030, 0x0782604c, 0x08020058, 0x08422050,
+		0x08825054, 0x08822058, 0x0781e05c, 0x09427060, 0x09c1e064,
+		0x09c27068, 0x0942506c, 0x09826070, 0x0802002c, 0x00000001,
+		0x00001000, 0x00000008, 0x00000000, 0x00000001, 0x00000000,
+		0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+		0x00000000, 0x00000000, 0x00000000, 0x00000002 };
+	setMemory(mem_temp, 44);
+	uint32 result = kuuga(30);
+	return (result == 0x10 && memory[31] == 0x8);
 }
 
 bool generated_shift_left_test()
 {
-  uint32 mem_temp[27] =
-      { 0x04815004, 0x05410008, 0x0541500c, 0x04810038, 0x04813024,
-	  0x03c15018, 0x0541701c, 0x05415020, 0x04411010, 0x05c15028,
-	  0x0540f02c, 0x05415030, 0x05c17034, 0x0441100c, 0x00000001,
-	  0x00000001, 0x00000008, 0x00000000, 0x00000001, 0x00000002,
-	  0x80000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-	  0x00000000, 0x00000000 };
-  	setMemory(mem_temp, 27);
-  	uint32 result = kuuga(15);
-  	printf("Result: %X\n", (int) result);
-  	fflush(stdout);
-  	return (result == 0x100);
+  uint32 mem_temp[30] =
+      { 0x0481b004, 0x06c1c008, 0x0741d00c, 0x0701a010, 0x0681d014,
+	  0x0681a018, 0x06c1b01c, 0x0701c020, 0x05015024, 0x0541d028,
+	  0x0541502c, 0x0501d040, 0x04415034, 0x05411038, 0x0541503c,
+	  0x04c1302c, 0x00000001, 0x00000001, 0x00000008, 0x00000000,
+	  0x00000001, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	  0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 }
+;
+  	setMemory(mem_temp, 30);
+  	uint32 result = kuuga(17);
+  	return (result == 0x100 && memory[18] == 8);
 }
 
-bool serial_and_test()
+bool generated_and_test()
 {
-	uint32 result1 = bit_serial_and(0x00010001, 0x00010000);
-	uint32 result2 = bit_serial_and(0xADD32F10, 0x44E53CD1);
-	uint32 result3 = bit_serial_and(0x10101010, 0x10110001);
-	return (result1 == 0x00010000 &&
-	    result2 == 0x04C12C10 && result3 == 0x10100000);
+  uint32 mem_temp[87] =
+      { 0x1384c004, 0x1304d008, 0x1405000c, 0x1344b010, 0x12c50014,
+	  0x12c4b018, 0x1304c01c, 0x1344d020, 0x1104c024, 0x1304d028,
+	  0x1585602c, 0x1344b030, 0x12c56034, 0x12c4b038, 0x1304c03c,
+	  0x1344d040, 0x118500d8, 0x10c4c048, 0x1304d04c, 0x14451050,
+	  0x1344b054, 0x12c51058, 0x12c4b05c, 0x1304c060, 0x1344d064,
+	  0x1104c068, 0x1304d06c, 0x14852070, 0x1344b074, 0x12c52078,
+	  0x12c4b07c, 0x1304c080, 0x1344d084, 0x14c47088, 0x11c5308c,
+	  0x11c47090, 0x13c510c0, 0x13c520cc, 0x1184709c, 0x11c530a0,
+	  0x11c470a4, 0x10c470a8, 0x11c430ac, 0x11c470b0, 0x110470b4,
+	  0x11c440b8, 0x11c470bc, 0x11445040, 0x150540c4, 0x14454094,
+	  0x150540a4, 0x154550d0, 0x14855098, 0x154550a4, 0x10c430dc,
+	  0x14c4b0e0, 0x12c430e4, 0x12c4b0e8, 0x110440ec, 0x1584b0f0,
+	  0x12c440f4, 0x12c4b0f8, 0x140500fc, 0x14451100, 0x14852104,
+	  0x14c53108, 0x00000001, 0x00000c87, 0x0000000f, 0x00000000,
+	  0x00000001, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	  0x00000000, 0x00000000, 0x00000000, 0x00000021, 0x80000000,
+	  0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	  0x00000000, 0x00000000 };
+  	setMemory(mem_temp, 87);
+  	uint32 result = kuuga(67);
+  	return (result == 0x7 && memory[68] == 0xF);
 }
 
 bool serial_add_test()
