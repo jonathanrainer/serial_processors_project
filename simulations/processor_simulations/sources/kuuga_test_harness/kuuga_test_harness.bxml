@@ -2,12 +2,20 @@
 <Root MajorVersion="0" MinorVersion="33">
   <CompositeFile CompositeFileTopName="kuuga_test_harness" CanBeSetAsTop="true" CanDisplayChildGraph="true">
     <Description>Composite Fileset</Description>
-    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1457198658"/>
-    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1457198658"/>
-    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1457198658"/>
+    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1458769186"/>
+    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1458769186"/>
+    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1458769186"/>
     <FileCollection Name="SOURCES" Type="SOURCES">
       <File Name="ip/kuuga_test_harness_kuuga_0_0/kuuga_test_harness_kuuga_0_0.xci" Type="IP">
         <Instance HierarchyPath="kuuga_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip/kuuga_test_harness_agito_0_0/kuuga_test_harness_agito_0_0.xci" Type="IP">
+        <Instance HierarchyPath="agito_0"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>

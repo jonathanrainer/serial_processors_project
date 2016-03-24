@@ -1,7 +1,8 @@
 #include "agito.h"
 
 uint32 registers[REG_NUM] = {0,0,0,0,0,0,0,0,0,0};
-uint32 memory[MEM_SIZE] = {0,0,0,0,0,0,0,0};
+uint32 memory[MEM_SIZE] = { 0x08000004, 0x08040005, 0x30000001, 0x00000000,
+    0x00000020, 0x00000025 };
 bool halt_flag = false;
 bool zero_flag = false;
 uint32 pc = 0;
@@ -115,7 +116,7 @@ uint32 agito(int output_loc) {
 	  break;
       }
   }
-  return memory[output_loc];
+  return registers[output_loc];
 }
 
 void load_direct(uint27 operands)

@@ -2,14 +2,11 @@
     <downStreamTool>
         <DownStreamTool name=""/>
     </downStreamTool>
-    <clockList>
-        <clock default="false" name="default" period="1.95" uncertainty="0.01ns"/>
-    </clockList>
     <config>
         <schedule model="kuuga"/>
     </config>
     <UIConfigurations>
-        <UIAutosynConf boardInfo="Virtex-7 VC707 Evaluation Platform (xc7vx485tffg1761-2) " hideTrivialOp="true" isBasedOnBoard="true" isSolutionDirty="true" isStopAskAgain="true" showDetailDesignViewer="false">
+        <UIAutosynConf boardInfo="Virtex-7 VC707 Evaluation Platform (xc7vx485tffg1761-2) " hideTrivialOp="true" isBasedOnBoard="true" isSolutionDirty="false" isStopAskAgain="true" showDetailDesignViewer="false">
             <Platform>xilinx/virtex7/virtex7</Platform>
             <Platform>xilinx/virtex7/virtex7_fpv6</Platform>
             <customLibs/>
@@ -41,7 +38,7 @@
         </UIAutoSimConf>
     </UIConfigurations>
     <ExportDesign askAgain="true" evaluate="false" formatName="ip_catalog" rtl="verilog">
-        <Format formatName="ip_catalog"/>
+        <Format formatName="ip_catalog" description="" vendor="" library="" version="1.0" driver_input_dir="" display_name="" taxonomy=""/>
         <Format formatName="sysgen"/>
         <Format formatName="sysgen_ise"/>
         <Format formatName="syn_dcp"/>
@@ -67,5 +64,8 @@
         <library name="DefaultPlatform" value="xilinx/virtex7/virtex7"/>
         <library name="DefaultPlatform" value="xilinx/virtex7/virtex7_fpv6"/>
     </libraryList>
+    <clockList>
+        <clock default="false" name="default" uncertainty="0.01ns" period="1.95"/>
+    </clockList>
 </solution>
 

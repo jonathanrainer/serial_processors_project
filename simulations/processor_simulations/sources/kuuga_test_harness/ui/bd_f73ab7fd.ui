@@ -1,20 +1,31 @@
 {
    guistr: "# # String gsaved with Nlview 6.5.5  2015-06-26 bk=1.3371 VDI=38 GEI=35 GUI=JA:1.8
 #  -string -flagsOSRD
+preplace port Agito_Done -pg 1 -y 280 -defaultsOSRD
+preplace port Kuuga_done -pg 1 -y 20 -defaultsOSRD
+preplace port Agito_CLK -pg 1 -y 400 -defaultsOSRD
+preplace port Kuuga_CLK -pg 1 -y 170 -defaultsOSRD
+preplace port Kuuga_RST -pg 1 -y 190 -defaultsOSRD
 preplace port start -pg 1 -y 90 -defaultsOSRD
-preplace port RST -pg 1 -y 210 -defaultsOSRD
-preplace port CLK -pg 1 -y 190 -defaultsOSRD
-preplace port done -pg 1 -y 40 -defaultsOSRD
-preplace portBus result -pg 1 -y 140 -defaultsOSRD
-preplace portBus input_location -pg 1 -y 230 -defaultsOSRD
-preplace inst kuuga_0 -pg 1 -lvl 1 -y 160 -defaultsOSRD
-preplace netloc start_1 1 0 1 NJ
-preplace netloc CLK_1 1 0 1 N
-preplace netloc input_location_1 1 0 1 NJ
+preplace port Agito_RST -pg 1 -y 420 -defaultsOSRD
+preplace portBus Kuuga_Result -pg 1 -y 140 -defaultsOSRD
+preplace portBus Agito_Result -pg 1 -y 320 -defaultsOSRD
+preplace portBus Agito_Input_Loc -pg 1 -y 310 -defaultsOSRD
+preplace portBus Kuuga_Input_Loc -pg 1 -y 210 -defaultsOSRD
+preplace inst kuuga_0 -pg 1 -lvl 1 -y 130 -defaultsOSRD
+preplace inst agito_0 -pg 1 -lvl 1 -y 370 -defaultsOSRD
+preplace netloc start_1 1 0 1 30
+preplace netloc CLK_1 1 0 1 NJ
+preplace netloc input_location_1 1 0 1 40
+preplace netloc Agito_CLK_1 1 0 1 NJ
+preplace netloc agito_0_ap_return 1 1 1 380
 preplace netloc kuuga_0_ap_return 1 1 1 NJ
-preplace netloc kuuga_0_ap_done 1 0 2 30 40 NJ
-preplace netloc RST_1 1 0 1 N
-levelinfo -pg 1 0 400 590 -top 20 -bot 280
+preplace netloc kuuga_0_ap_done 1 0 2 40 10 NJ
+preplace netloc agito_0_ap_done 1 0 2 40 250 NJ
+preplace netloc Agito_RST_1 1 0 1 NJ
+preplace netloc Agito_Input_Loc_1 1 0 1 20
+preplace netloc RST_1 1 0 1 NJ
+levelinfo -pg 1 0 210 400 -top 0 -bot 490
 ",
 }
 0

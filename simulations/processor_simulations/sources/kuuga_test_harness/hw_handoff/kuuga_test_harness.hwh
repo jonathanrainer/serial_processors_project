@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sat Mar  5 17:24:18 2016" VIVADOVERSION="2015.4">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Mar 23 21:39:46 2016" VIVADOVERSION="2015.4">
 
   <SYSTEMINFO ARCH="virtex7" BOARD="xilinx.com:vc707:part0:1.2" DEVICE="7vx485t" NAME="kuuga_test_harness" PACKAGE="ffg1761" SPEEDGRADE="-2"/>
 
@@ -7,31 +7,57 @@
     <PORT DIR="I" NAME="start" SIGIS="undef" SIGNAME="External_Ports_start">
       <CONNECTIONS>
         <CONNECTION INSTANCE="kuuga_0" PORT="ap_start"/>
+        <CONNECTION INSTANCE="agito_0" PORT="ap_start"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="done" SIGIS="undef" SIGNAME="kuuga_0_ap_done">
+    <PORT DIR="O" NAME="Kuuga_done" SIGIS="undef" SIGNAME="kuuga_0_ap_done">
       <CONNECTIONS>
         <CONNECTION INSTANCE="kuuga_0" PORT="ap_done"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" LEFT="31" NAME="result" RIGHT="0" SIGIS="data" SIGNAME="kuuga_0_ap_return">
+    <PORT DIR="O" LEFT="31" NAME="Kuuga_Result" RIGHT="0" SIGIS="data" SIGNAME="kuuga_0_ap_return">
       <CONNECTIONS>
         <CONNECTION INSTANCE="kuuga_0" PORT="ap_return"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="I" LEFT="31" NAME="input_location" RIGHT="0" SIGIS="data" SIGNAME="External_Ports_input_location">
+    <PORT DIR="I" LEFT="31" NAME="Kuuga_Input_Loc" RIGHT="0" SIGIS="data" SIGNAME="External_Ports_Kuuga_Input_Loc">
       <CONNECTIONS>
         <CONNECTION INSTANCE="kuuga_0" PORT="output_loc"/>
       </CONNECTIONS>
     </PORT>
-    <PORT CLKFREQUENCY="100000000" DIR="I" NAME="CLK" SIGIS="clk" SIGNAME="External_Ports_CLK">
+    <PORT CLKFREQUENCY="100000000" DIR="I" NAME="Kuuga_CLK" SIGIS="clk" SIGNAME="External_Ports_Kuuga_CLK">
       <CONNECTIONS>
         <CONNECTION INSTANCE="kuuga_0" PORT="ap_clk"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="I" NAME="RST" SIGIS="rst" SIGNAME="External_Ports_RST">
+    <PORT DIR="I" NAME="Kuuga_RST" SIGIS="rst" SIGNAME="External_Ports_Kuuga_RST">
       <CONNECTIONS>
         <CONNECTION INSTANCE="kuuga_0" PORT="ap_rst"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT CLKFREQUENCY="100000000" DIR="I" NAME="Agito_CLK" SIGIS="clk" SIGNAME="External_Ports_Agito_CLK">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="agito_0" PORT="ap_clk"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="Agito_RST" SIGIS="rst" SIGNAME="External_Ports_Agito_RST">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="agito_0" PORT="ap_rst"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="31" NAME="Agito_Input_Loc" RIGHT="0" SIGIS="data" SIGNAME="External_Ports_Agito_Input_Loc">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="agito_0" PORT="output_loc"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="Agito_Done" SIGIS="data" SIGNAME="agito_0_ap_done">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="agito_0" PORT="ap_done"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="31" NAME="Agito_Result" RIGHT="0" SIGIS="data" SIGNAME="agito_0_ap_return">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="agito_0" PORT="ap_return"/>
       </CONNECTIONS>
     </PORT>
   </EXTERNALPORTS>
@@ -39,26 +65,83 @@
   <EXTERNALINTERFACES/>
 
   <MODULES>
-    <MODULE FULLNAME="/kuuga_0" HWVERSION="1.0" INSTANCE="kuuga_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="kuuga" VLNV="xilinx.com:hls:kuuga:1.0">
+    <MODULE FULLNAME="/agito_0" HWVERSION="1.0" INSTANCE="agito_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="agito" VLNV="xilinx.com:hls:agito:1.0">
       <DOCUMENTS/>
       <PARAMETERS>
-        <PARAMETER NAME="Component_Name" VALUE="kuuga_test_harness_kuuga_0_0"/>
-        <PARAMETER NAME="clk_period" VALUE="2.120000"/>
+        <PARAMETER NAME="Component_Name" VALUE="kuuga_test_harness_agito_0_0"/>
+        <PARAMETER NAME="clk_period" VALUE="2.400000"/>
         <PARAMETER NAME="machine" VALUE="64"/>
         <PARAMETER NAME="combinational" VALUE="0"/>
-        <PARAMETER NAME="latency" VALUE="47"/>
+        <PARAMETER NAME="latency" VALUE="6"/>
         <PARAMETER NAME="II" VALUE="x"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
-        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="ap_clk" SIGIS="clk" SIGNAME="External_Ports_CLK">
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="ap_clk" SIGIS="clk" SIGNAME="External_Ports_Agito_CLK">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="CLK"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="Agito_CLK"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="ap_rst" SIGIS="rst" SIGNAME="External_Ports_RST">
+        <PORT DIR="I" NAME="ap_rst" SIGIS="rst" SIGNAME="External_Ports_Agito_RST">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="RST"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="Agito_RST"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="ap_start" SIGIS="undef" SIGNAME="External_Ports_start">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="start"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="ap_done" SIGIS="undef" SIGNAME="agito_0_ap_done">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="Agito_Done"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="ap_idle" SIGIS="undef"/>
+        <PORT DIR="O" NAME="ap_ready" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="31" NAME="ap_return" RIGHT="0" SIGIS="data" SIGNAME="agito_0_ap_return">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="Agito_Result"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="output_loc" RIGHT="0" SIGIS="data" SIGNAME="External_Ports_Agito_Input_Loc">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="Agito_Input_Loc"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="__NOC__" NAME="ap_ctrl" TYPE="TARGET">
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="xilinx.com:interface:datatypes:1.0 {start {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 1} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0}}} done {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 1} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0}}} idle {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 1} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0}}} ready {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 1} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0}}}}"/>
+          <PORTMAPS>
+            <PORTMAP PHYSICAL="ap_start"/>
+            <PORTMAP PHYSICAL="ap_done"/>
+            <PORTMAP PHYSICAL="ap_idle"/>
+            <PORTMAP PHYSICAL="ap_ready"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
+    </MODULE>
+    <MODULE FULLNAME="/kuuga_0" HWVERSION="1.0" INSTANCE="kuuga_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="kuuga" VLNV="xilinx.com:hls:kuuga:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="Component_Name" VALUE="kuuga_test_harness_kuuga_0_0"/>
+        <PARAMETER NAME="clk_period" VALUE="1.950000"/>
+        <PARAMETER NAME="machine" VALUE="64"/>
+        <PARAMETER NAME="combinational" VALUE="0"/>
+        <PARAMETER NAME="latency" VALUE="54"/>
+        <PARAMETER NAME="II" VALUE="x"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="ap_clk" SIGIS="clk" SIGNAME="External_Ports_Kuuga_CLK">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="Kuuga_CLK"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="ap_rst" SIGIS="rst" SIGNAME="External_Ports_Kuuga_RST">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="Kuuga_RST"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="ap_start" SIGIS="undef" SIGNAME="External_Ports_start">
@@ -68,19 +151,19 @@
         </PORT>
         <PORT DIR="O" NAME="ap_done" SIGIS="undef" SIGNAME="kuuga_0_ap_done">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="done"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="Kuuga_done"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="ap_idle" SIGIS="undef"/>
         <PORT DIR="O" NAME="ap_ready" SIGIS="undef"/>
         <PORT DIR="O" LEFT="31" NAME="ap_return" RIGHT="0" SIGIS="data" SIGNAME="kuuga_0_ap_return">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="result"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="Kuuga_Result"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="output_loc" RIGHT="0" SIGIS="data" SIGNAME="External_Ports_input_location">
+        <PORT DIR="I" LEFT="31" NAME="output_loc" RIGHT="0" SIGIS="data" SIGNAME="External_Ports_Kuuga_Input_Loc">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="input_location"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="Kuuga_Input_Loc"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>

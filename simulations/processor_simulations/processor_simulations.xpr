@@ -20,6 +20,7 @@
     <Option Name="ActiveSimSet" Val="sim_1"/>
     <Option Name="DefaultLib" Val="xil_defaultlib"/>
     <Option Name="IPRepoPath" Val="$PPRDIR/../../hardware/kuuga/solution1/impl"/>
+    <Option Name="IPRepoPath" Val="$PPRDIR/../../hardware/agito/solution2/impl"/>
     <Option Name="EnableCoreContainer" Val="FALSE"/>
     <Option Name="CreateRefXciForCoreContainers" Val="FALSE"/>
     <Option Name="IPUserFilesDir" Val="$PPRDIR/processor_simulations.ip_user_files"/>
@@ -35,8 +36,13 @@
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
+        <CompFileExtendedInfo CompFileName="kuuga_test_harness.bd" FileRelPathName="hdl/kuuga_test_harness.hwdef"/>
+        <CompFileExtendedInfo CompFileName="kuuga_test_harness.bd" FileRelPathName="hw_handoff/kuuga_test_harness_bd.tcl"/>
+        <CompFileExtendedInfo CompFileName="kuuga_test_harness.bd" FileRelPathName="hw_handoff/kuuga_test_harness.hwh"/>
         <CompFileExtendedInfo CompFileName="kuuga_test_harness.bd" FileRelPathName="ip/kuuga_test_harness_kuuga_0_0/kuuga_test_harness_kuuga_0_0.xci"/>
+        <CompFileExtendedInfo CompFileName="kuuga_test_harness.bd" FileRelPathName="ip/kuuga_test_harness_agito_0_0/kuuga_test_harness_agito_0_0.xci"/>
         <CompFileExtendedInfo CompFileName="kuuga_test_harness.bd" FileRelPathName="hdl/kuuga_test_harness.vhd"/>
+        <CompFileExtendedInfo CompFileName="kuuga_test_harness.bd" FileRelPathName="kuuga_test_harness_ooc.xdc"/>
       </File>
       <File Path="$PPRDIR/sources/kuuga_test_harness/hdl/kuuga_test_harness_wrapper.vhd">
         <FileInfo>
@@ -44,6 +50,8 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+      <File Path="$PPRDIR/sources/kuuga_test_harness/ip/kuuga_test_harness_kuuga_0_0/kuuga_test_harness_kuuga_0_0.upgrade_log"/>
+      <File Path="$PPRDIR/sources/kuuga_test_harness/ip/kuuga_test_harness_agito_0_0/kuuga_test_harness_agito_0_0.upgrade_log"/>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
         <Option Name="TopModule" Val="kuuga_test_harness_wrapper"/>
@@ -57,6 +65,7 @@
       </Config>
     </FileSet>
     <FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1">
+      <Filter Type="Srcs"/>
       <File Path="$PPRDIR/sources/kuuga_testbench.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -68,6 +77,7 @@
         <Option Name="TopModule" Val="kuuga_testbench"/>
         <Option Name="TopLib" Val="xil_defaultlib"/>
         <Option Name="TopAutoSet" Val="TRUE"/>
+        <Option Name="SimMode" Val="post-synthesis"/>
         <Option Name="SrcSet" Val="sources_1"/>
       </Config>
     </FileSet>
@@ -96,18 +106,14 @@
   <Runs Version="1" Minor="10">
     <Run Id="synth_1" Type="Ft3:Synth" SrcSet="sources_1" Part="xc7vx485tffg1761-2" ConstrsSet="constrs_1" Description="Vivado Synthesis Defaults" State="current" Dir="$PRUNDIR/synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
     </Run>
     <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7vx485tffg1761-2" ConstrsSet="constrs_1" Description="Vivado Implementation Defaults" State="current" SynthRun="synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015">
-          <Desc>Vivado Implementation Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2015"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>

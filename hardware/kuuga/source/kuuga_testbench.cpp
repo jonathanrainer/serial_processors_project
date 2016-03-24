@@ -17,6 +17,7 @@ bool generated_div_test();
 bool generated_shift_right_test();
 bool generated_shift_left_test();
 bool generated_and_test();
+bool generated_add_mp_test();
 
 int main()
  {
@@ -35,6 +36,7 @@ int main()
   test_funcs["Generated Shift Right Test"] = generated_shift_right_test;
   test_funcs["Generated Shift Left Test"] = generated_shift_left_test;
   test_funcs["Generated AND Test"] = generated_and_test;
+  test_funcs["Fenerated ADD_MP Test"] = generated_add_mp_test;
   int passes = 0;
   int fails = 0;
   int tests = 0;
@@ -241,6 +243,16 @@ bool generated_and_test()
   	setMemory(mem_temp, 87);
   	uint32 result = kuuga(67);
   	return (result == 0x7 && memory[68] == 0xF);
+}
+
+bool generated_add_mp_test()
+{
+  uint32 mem_temp[7] =
+      { 0x01406004, 0x01804008, 0x0180600c, 0x00000001, 0x00000020,
+	  0x00000025, 0x00000000 };
+  	setMemory(mem_temp, 7);
+  	kuuga(0);
+  	return (memory[4] == 0x45 && memory[5] == 0x25);
 }
 
 bool serial_add_test()

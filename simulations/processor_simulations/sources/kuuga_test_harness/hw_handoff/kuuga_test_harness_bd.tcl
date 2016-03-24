@@ -121,29 +121,45 @@ proc create_root_design { parentCell } {
   # Create interface ports
 
   # Create ports
-  set CLK [ create_bd_port -dir I -type clk CLK ]
-  set_property -dict [ list \
-CONFIG.FREQ_HZ {100000000} \
- ] $CLK
-  set RST [ create_bd_port -dir I -type rst RST ]
+  set Agito_CLK [ create_bd_port -dir I -type clk Agito_CLK ]
+  set Agito_Done [ create_bd_port -dir O -type data Agito_Done ]
+  set Agito_Input_Loc [ create_bd_port -dir I -from 31 -to 0 -type data Agito_Input_Loc ]
+  set Agito_RST [ create_bd_port -dir I -type rst Agito_RST ]
   set_property -dict [ list \
 CONFIG.POLARITY {ACTIVE_HIGH} \
- ] $RST
-  set done [ create_bd_port -dir O done ]
-  set input_location [ create_bd_port -dir I -from 31 -to 0 -type data input_location ]
-  set result [ create_bd_port -dir O -from 31 -to 0 -type data result ]
+ ] $Agito_RST
+  set Agito_Result [ create_bd_port -dir O -from 31 -to 0 -type data Agito_Result ]
+  set Kuuga_CLK [ create_bd_port -dir I -type clk Kuuga_CLK ]
+  set_property -dict [ list \
+CONFIG.FREQ_HZ {100000000} \
+ ] $Kuuga_CLK
+  set Kuuga_Input_Loc [ create_bd_port -dir I -from 31 -to 0 -type data Kuuga_Input_Loc ]
+  set Kuuga_RST [ create_bd_port -dir I -type rst Kuuga_RST ]
+  set_property -dict [ list \
+CONFIG.POLARITY {ACTIVE_HIGH} \
+ ] $Kuuga_RST
+  set Kuuga_Result [ create_bd_port -dir O -from 31 -to 0 -type data Kuuga_Result ]
+  set Kuuga_done [ create_bd_port -dir O Kuuga_done ]
   set start [ create_bd_port -dir I start ]
+
+  # Create instance: agito_0, and set properties
+  set agito_0 [ create_bd_cell -type ip -vlnv xilinx.com:hls:agito:1.0 agito_0 ]
 
   # Create instance: kuuga_0, and set properties
   set kuuga_0 [ create_bd_cell -type ip -vlnv xilinx.com:hls:kuuga:1.0 kuuga_0 ]
 
   # Create port connections
-  connect_bd_net -net CLK_1 [get_bd_ports CLK] [get_bd_pins kuuga_0/ap_clk]
-  connect_bd_net -net RST_1 [get_bd_ports RST] [get_bd_pins kuuga_0/ap_rst]
-  connect_bd_net -net input_location_1 [get_bd_ports input_location] [get_bd_pins kuuga_0/output_loc]
-  connect_bd_net -net kuuga_0_ap_done [get_bd_ports done] [get_bd_pins kuuga_0/ap_done]
-  connect_bd_net -net kuuga_0_ap_return [get_bd_ports result] [get_bd_pins kuuga_0/ap_return]
-  connect_bd_net -net start_1 [get_bd_ports start] [get_bd_pins kuuga_0/ap_start]
+  connect_bd_net -net Agito_CLK_1 [get_bd_ports Agito_CLK] [get_bd_pins agito_0/ap_clk]
+  connect_bd_net -net Agito_Input_Loc_1 [get_bd_ports Agito_Input_Loc] [get_bd_pins agito_0/output_loc]
+  connect_bd_net -net Agito_RST_1 [get_bd_ports Agito_RST] [get_bd_pins agito_0/ap_rst]
+  connect_bd_net -net CLK_1 [get_bd_ports Kuuga_CLK] [get_bd_pins kuuga_0/ap_clk]
+  connect_bd_net -net RST_1 [get_bd_ports Kuuga_RST] [get_bd_pins kuuga_0/ap_rst]
+  connect_bd_net -net agito_0_ap_done [get_bd_ports Agito_Done] [get_bd_pins agito_0/ap_done]
+  connect_bd_net -net agito_0_ap_return [get_bd_ports Agito_Result] [get_bd_pins agito_0/ap_return]
+  connect_bd_net -net input_location_1 [get_bd_ports Kuuga_Input_Loc] [get_bd_pins kuuga_0/output_loc]
+  connect_bd_net -net kuuga_0_ap_done [get_bd_ports Kuuga_done] [get_bd_pins kuuga_0/ap_done]
+  connect_bd_net -net kuuga_0_ap_return [get_bd_ports Kuuga_Result] [get_bd_pins kuuga_0/ap_return]
+  connect_bd_net -net start_1 [get_bd_ports start] [get_bd_pins agito_0/ap_start] [get_bd_pins kuuga_0/ap_start]
 
   # Create address segments
 
@@ -151,20 +167,31 @@ CONFIG.POLARITY {ACTIVE_HIGH} \
   regenerate_bd_layout -layout_string {
    guistr: "# # String gsaved with Nlview 6.5.5  2015-06-26 bk=1.3371 VDI=38 GEI=35 GUI=JA:1.8
 #  -string -flagsOSRD
+preplace port Agito_Done -pg 1 -y 280 -defaultsOSRD
+preplace port Kuuga_done -pg 1 -y 20 -defaultsOSRD
+preplace port Agito_CLK -pg 1 -y 400 -defaultsOSRD
+preplace port Kuuga_CLK -pg 1 -y 170 -defaultsOSRD
+preplace port Kuuga_RST -pg 1 -y 190 -defaultsOSRD
 preplace port start -pg 1 -y 90 -defaultsOSRD
-preplace port RST -pg 1 -y 210 -defaultsOSRD
-preplace port CLK -pg 1 -y 190 -defaultsOSRD
-preplace port done -pg 1 -y 40 -defaultsOSRD
-preplace portBus result -pg 1 -y 140 -defaultsOSRD
-preplace portBus input_location -pg 1 -y 230 -defaultsOSRD
-preplace inst kuuga_0 -pg 1 -lvl 1 -y 160 -defaultsOSRD
-preplace netloc start_1 1 0 1 NJ
-preplace netloc CLK_1 1 0 1 N
-preplace netloc input_location_1 1 0 1 NJ
+preplace port Agito_RST -pg 1 -y 420 -defaultsOSRD
+preplace portBus Kuuga_Result -pg 1 -y 140 -defaultsOSRD
+preplace portBus Agito_Result -pg 1 -y 320 -defaultsOSRD
+preplace portBus Agito_Input_Loc -pg 1 -y 310 -defaultsOSRD
+preplace portBus Kuuga_Input_Loc -pg 1 -y 210 -defaultsOSRD
+preplace inst kuuga_0 -pg 1 -lvl 1 -y 130 -defaultsOSRD
+preplace inst agito_0 -pg 1 -lvl 1 -y 370 -defaultsOSRD
+preplace netloc start_1 1 0 1 30
+preplace netloc CLK_1 1 0 1 NJ
+preplace netloc input_location_1 1 0 1 40
+preplace netloc Agito_CLK_1 1 0 1 NJ
+preplace netloc agito_0_ap_return 1 1 1 380
 preplace netloc kuuga_0_ap_return 1 1 1 NJ
-preplace netloc kuuga_0_ap_done 1 0 2 30 40 NJ
-preplace netloc RST_1 1 0 1 N
-levelinfo -pg 1 0 400 590 -top 20 -bot 280
+preplace netloc kuuga_0_ap_done 1 0 2 40 10 NJ
+preplace netloc agito_0_ap_done 1 0 2 40 250 NJ
+preplace netloc Agito_RST_1 1 0 1 NJ
+preplace netloc Agito_Input_Loc_1 1 0 1 20
+preplace netloc RST_1 1 0 1 NJ
+levelinfo -pg 1 0 210 400 -top 0 -bot 490
 ",
 }
 

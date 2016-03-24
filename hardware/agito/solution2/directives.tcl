@@ -9,5 +9,4 @@ set_directive_pipeline "bit_serial_and/and_loop"
 set_directive_resource -core RAM_1P_BRAM "agito" registers
 set_directive_loop_tripcount -min 0 -max 32 -avg 5 "shift/shift_loop"
 set_directive_inline "conditional_branch"
-set_directive_inline "bit_serial_or"
 set_directive_unroll "bit_serial_add/add_loop"

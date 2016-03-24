@@ -14,8 +14,8 @@ entity kuuga_memory_V_ram is
     generic(
             mem_type    : string := "block"; 
             dwidth     : integer := 32; 
-            awidth     : integer := 3; 
-            mem_size    : integer := 8
+            awidth     : integer := 10; 
+            mem_size    : integer := 1000
     ); 
     port (
           addr0     : in std_logic_vector(awidth-1 downto 0); 
@@ -33,23 +33,34 @@ architecture rtl of kuuga_memory_V_ram is
 signal addr0_tmp : std_logic_vector(awidth-1 downto 0); 
 type mem_array is array (0 to mem_size-1) of std_logic_vector (dwidth-1 downto 0); 
 shared variable ram : mem_array := (
-    0 => "00000000010000000001000000010000", 
-    1 => "01001111010101011010101000110010", 
-    2 => "11111111111111111111111111111111", 
-    3 => "00000000000000000000000000000101", 
-    4 => "00000000110000000001000000010100", 
-    5 => "00000000010000000010000000011000", 
-    6 => "00000000010000000001000000011100", 
-    7 => "00000000000000000000000000000001" );
+    0 => "00000001010000000110000000000100", 
+    1 => "00000001100000000100000000001000", 
+    2 => "00000001100000000110000000001100", 
+    3 => "00000000000000000000000000000001", 
+    4 => "00000000000000000000000000100000", 
+    5 => "00000000000000000000000000100101", 
+    6 to 999=> "00000000000000000000000000000000" );
 
 attribute syn_ramstyle : string; 
 attribute syn_ramstyle of ram : variable is "block_ram";
 attribute ram_style : string;
 attribute ram_style of ram : variable is mem_type;
 attribute EQUIVALENT_REGISTER_REMOVAL : string;
+signal q0_t0 : std_logic_vector(dwidth-1 downto 0);
+signal q0_t1 : std_logic_vector(dwidth-1 downto 0);
 
 begin 
 
+q0 <= q0_t1;
+
+p_IO_pipeline_reg : process (clk)  
+begin
+    if (clk'event and clk = '1') then
+      if (ce0 = '1') then
+        q0_t1 <= q0_t0;
+      end if;
+    end if;
+end process;
 
 memory_access_guard_0: process (addr0) 
 begin
@@ -70,7 +81,7 @@ begin
             if (we0 = '1') then 
                 ram(CONV_INTEGER(addr0_tmp)) := d0; 
             end if;
-            q0 <= ram(CONV_INTEGER(addr0_tmp)); 
+            q0_t0 <= ram(CONV_INTEGER(addr0_tmp)); 
         end if;
     end if;
 end process;
@@ -85,8 +96,8 @@ use IEEE.std_logic_1164.all;
 entity kuuga_memory_V is
     generic (
         DataWidth : INTEGER := 32;
-        AddressRange : INTEGER := 8;
-        AddressWidth : INTEGER := 3);
+        AddressRange : INTEGER := 1000;
+        AddressWidth : INTEGER := 10);
     port (
         reset : IN STD_LOGIC;
         clk : IN STD_LOGIC;

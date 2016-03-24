@@ -47,7 +47,7 @@
 // DO NOT MODIFY THIS FILE.
 
 // IP VLNV: xilinx.com:hls:kuuga:1.0
-// IP Revision: 1603051647
+// IP Revision: 1603231703
 
 // The following must be inserted into your Verilog file for this
 // core to be instantiated. Change the instance name and port connections

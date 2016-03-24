@@ -40,7 +40,7 @@ architecture Behavioural of rem_testbench is
             sig_r03, sig_FP, sig_FPout,sig_MDAT : std_logic_vector(31 DOWNTO 0);
     signal sig_reset, sig_CLK, sig_MWAIT : std_logic;
     
-    component coreandmemory is 
+    component REMCoreAndMemory is 
          PORT (
             in0 : IN std_logic_vector(31 DOWNTO 0);
             in1 : IN std_logic_vector(31 DOWNTO 0);
@@ -64,7 +64,7 @@ architecture Behavioural of rem_testbench is
      
 begin
 
-    uut: coreandmemory
+    uut: REMCoreAndMemory
         port map (
            in0 => sig_i00,
            in1 => sig_i01,
@@ -84,7 +84,7 @@ begin
            );
      
      clock: process 
-     constant clock_period:time := 50ns;
+     constant clock_period:time := 25ns;
      begin   
         wait for 200ns;
         for I in 0 to 10 loop
@@ -101,10 +101,10 @@ begin
         wait for 100ns;
         sig_reset <= '0';
         wait for 100ns;
-        sig_i00 <= "00000000000000000000000000001100";
-        sig_i01 <= "00000000000000000000000000000010";
-        sig_i02 <= "00000000000000000000000000000011";
-        sig_i03 <= "00000000000000000000000000000100";
+        sig_i00 <= "00000000000000000000000000000101";
+        sig_i01 <= "00000000000000000000000000001010";
+        sig_i02 <= "00000000000000000000000001100101";
+        sig_i03 <= "00000000000000000000000000010000";
         sig_MDAT <= "00000000000000000000000000011111";
         wait;
      end process test;

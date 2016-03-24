@@ -18,7 +18,7 @@
 	uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag);
 
 	// Defines
-	#define MEM_SIZE 150
+	#define MEM_SIZE 1000
 
 	// Globals
 	extern uint32 memory[MEM_SIZE];

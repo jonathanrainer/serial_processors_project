@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: xilinx.com:hls:kuuga:1.0
--- IP Revision: 1603051647
+-- IP Revision: 1603231703
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;

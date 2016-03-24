@@ -1,0 +1,16 @@
+Copyright 1986-2015 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2015.4 (lin64) Build 1412921 Wed Nov 18 09:44:32 MST 2015
+| Date         : Wed Mar 23 21:39:27 2016
+| Host         : csteach0 running 64-bit Ubuntu 14.04.4 LTS
+| Command      : upgrade_ip
+| Device       : xc7vx485tffg1761-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'kuuga_test_harness_agito_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of kuuga_test_harness_agito_0_0 (xilinx.com:hls:agito:1.0) from (Rev. 1603232114) to (Rev. 1603232137)
+

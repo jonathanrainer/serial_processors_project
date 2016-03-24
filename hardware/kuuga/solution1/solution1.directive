@@ -20,7 +20,12 @@
             </pragma>
         </directive>
         <directive functionName="bit_serial_add" label="add_loop" functionLabel="">
-            <pragma name="PIPELINE"/>
+            <pragma name="UNROLL"/>
+        </directive>
+        <directive functionName="subleq" label="" functionLabel="">
+            <pragma name="INLINE">
+                <option name="recursive" value="" positionalBoolean="1"/>
+            </pragma>
         </directive>
     </sourceFile>
 </AutoPilot:ProjectResources>

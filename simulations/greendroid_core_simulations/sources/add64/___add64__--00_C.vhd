@@ -25,7 +25,7 @@ FPout : OUT std_logic_vector(31 DOWNTO 0);
       ); 
 END ENTITY; 
 
-ARCHITECTURE Behavioural OF GreenDroidADD64Core IS
+ARCHITECTURE Behavioural OF GreenDroidADD64Core  IS
   TYPE States IS (ST_INIT,WS_INIT,ST_RESET,ST00,WS00,ST01,WS01,ST02,WS02,ST03,WS03,ST04,WS04,ST_END);
   SIGNAL Mstate : States;
 BEGIN
@@ -147,13 +147,13 @@ END IF;
 	   s6 := s7;
     WHEN ST01 =>
  --shr ;
-  s0 := '0' & s0(31) & s0(29 DOWNTO 0) ;
+  s0 := '0' & s0(31 DOWNTO 1) ;
  --rsd2 ;
  	T:=s0 ;
   s0:=s1 ;
   s1:=T ;
  --shr ;
-  s0 := '0' & s0(31) & s0(29 DOWNTO 0) ;
+  s0 := '0' & s0(31 DOWNTO 1) ;
  --add ;
   s0:=s0+s1 ;
 	   s1 := s2;
