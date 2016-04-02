@@ -1,7 +1,7 @@
 #include "agito.h"
 
-uint32 registers[REG_NUM] = {0,0,0,0,0,0,0,0,0,0};
-uint32 memory[MEM_SIZE] = {0,0,0,0,0,0,0,0};
+uint32 registers[REG_NUM] = {0x00000020,0x00000025,0,0,0,0,0,0,0,0};
+uint32 memory[MEM_SIZE] = { 0x30000001, 0x00000000 };
 bool halt_flag = false;
 bool zero_flag = false;
 uint32 pc = 0;
@@ -115,7 +115,7 @@ uint32 agito(int output_loc) {
 	  break;
       }
   }
-  return memory[output_loc];
+  return registers[output_loc];
 }
 
 void load_direct(uint27 operands)
@@ -255,9 +255,7 @@ uint32 bit_serial_and(uint32 arg1, uint32 arg2)
   uint32 result = 0x00000000;
   and_loop:for (int i = 0; i <= 31; i++)
   {
-    uint1 bit_1 = arg1.bit(i);
-    uint1 bit_2 = arg2.bit(i);
-    result.bit(i) = (bit_1 & bit_2);
+    result.bit(i) = (arg1.bit(i) & arg2.bit(i));
   }
   return result;
 }
@@ -267,9 +265,7 @@ uint32 bit_serial_or(uint32 arg1, uint32 arg2)
   uint32 result = 0x00000000;
   or_loop:for (int i = 0; i <= 31; i++)
   {
-    uint1 bit_1 = arg1.bit(i);
-    uint1 bit_2 = arg2.bit(i);
-    result.bit(i) = (bit_1 | bit_2);
+    result.bit(i) = (arg1.bit(i) | arg2.bit(i));
   }
   return result;
 }
@@ -277,16 +273,13 @@ uint32 bit_serial_or(uint32 arg1, uint32 arg2)
 uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag)
 {
   uint32 result = 0x00000000;
-  uint1 carry = sub_flag;
-  bool is_zero = sub_flag;
+  uint1 carry, is_zero = sub_flag;
   add_loop:for (int i = 0; i <= 31; i++)
   {
-    uint1 bit_1 = arg1.bit(i);
     uint1 bit_2 = (sub_flag) ? ~arg2.bit(i) : arg2.bit(i);
-    uint1 new_bit = (bit_1 ^ bit_2 ^ carry);
-    result.bit(i) = new_bit;
-    is_zero = (is_zero & !new_bit);
-    carry = (bit_1 & bit_2) | (carry & (bit_1 ^ bit_2));
+    result.bit(i) = (arg1.bit(i) ^ bit_2 ^ carry);
+    is_zero = (is_zero & !result.bit(i));
+    carry = (arg1.bit(i) & bit_2) | (carry & (arg1.bit(i) ^ bit_2));
   }
   zero_flag = is_zero;
   return result;

@@ -15,10 +15,11 @@
 	// Prototypes
 	uint32 kuuga(int output_loc);
 	uint32 subleq(uint32 pc, uint10 a, uint10 b, uint10 c);
-	uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag);
+	uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag,
+			      bool * zero_flag);
 
 	// Defines
-	#define MEM_SIZE 150
+	#define MEM_SIZE 1000
 
 	// Globals
 	extern uint32 memory[MEM_SIZE];
