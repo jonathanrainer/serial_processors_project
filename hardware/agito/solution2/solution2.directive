@@ -4,7 +4,7 @@
     <directive functionName="agito" label="" functionLabel="">
       <pragma name="RESOURCE">
         <option name="variable" value="memory" positionalBoolean="4"/>
-        <option name="core" value="RAM_1P_BRAM"/>
+        <option name="core" value="RAM_T2P_BRAM"/>
       </pragma>
     </directive>
     <directive functionName="agito" label="main_loop" functionLabel="">
@@ -14,30 +14,12 @@
         <option name="avg" value="8"/>
       </pragma>
     </directive>
-    <directive functionName="bit_serial_and" label="and_loop" functionLabel="">
-      <pragma name="PIPELINE"/>
-    </directive>
-    <directive functionName="agito" label="" functionLabel="">
-      <pragma name="RESOURCE">
-        <option name="variable" value="registers" positionalBoolean="4"/>
-        <option name="core" value="RAM_1P_BRAM"/>
-      </pragma>
-    </directive>
     <directive functionName="shift" label="shift_loop" functionLabel="">
       <pragma name="LOOP_TRIPCOUNT">
         <option name="min" value="0"/>
         <option name="max" value="32"/>
         <option name="avg" value="5"/>
       </pragma>
-    </directive>
-    <directive functionName="conditional_branch" label="" functionLabel="">
-      <pragma name="INLINE"/>
-    </directive>
-    <directive functionName="bit_serial_or" label="" functionLabel="">
-      <pragma name="INLINE"/>
-    </directive>
-    <directive functionName="bit_serial_add" label="add_loop" functionLabel="">
-      <pragma name="UNROLL"/>
     </directive>
   </sourceFile>
 </AutoPilot:ProjectResources>
