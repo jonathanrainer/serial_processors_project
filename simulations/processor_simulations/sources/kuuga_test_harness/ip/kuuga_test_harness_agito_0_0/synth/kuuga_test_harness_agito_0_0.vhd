@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: xilinx.com:hls:agito:1.0
--- IP Revision: 1603232137
+-- IP Revision: 1603301709
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
@@ -87,7 +87,7 @@ ARCHITECTURE kuuga_test_harness_agito_0_0_arch OF kuuga_test_harness_agito_0_0 I
   ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
   ATTRIBUTE CHECK_LICENSE_TYPE OF kuuga_test_harness_agito_0_0_arch : ARCHITECTURE IS "kuuga_test_harness_agito_0_0,agito,{}";
   ATTRIBUTE CORE_GENERATION_INFO : STRING;
-  ATTRIBUTE CORE_GENERATION_INFO OF kuuga_test_harness_agito_0_0_arch: ARCHITECTURE IS "kuuga_test_harness_agito_0_0,agito,{x_ipProduct=Vivado 2015.4,x_ipVendor=xilinx.com,x_ipLibrary=hls,x_ipName=agito,x_ipVersion=1.0,x_ipCoreRevision=1603232137,x_ipLanguage=VHDL,x_ipSimLanguage=MIXED}";
+  ATTRIBUTE CORE_GENERATION_INFO OF kuuga_test_harness_agito_0_0_arch: ARCHITECTURE IS "kuuga_test_harness_agito_0_0,agito,{x_ipProduct=Vivado 2015.4,x_ipVendor=xilinx.com,x_ipLibrary=hls,x_ipName=agito,x_ipVersion=1.0,x_ipCoreRevision=1603301709,x_ipLanguage=VHDL,x_ipSimLanguage=MIXED}";
   ATTRIBUTE X_INTERFACE_INFO : STRING;
   ATTRIBUTE X_INTERFACE_INFO OF ap_clk: SIGNAL IS "xilinx.com:signal:clock:1.0 ap_clk CLK";
   ATTRIBUTE X_INTERFACE_INFO OF ap_rst: SIGNAL IS "xilinx.com:signal:reset:1.0 ap_rst RST";

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:synthFlowMode="None" bd:tool_version="2015.4" bd:top="kuuga_test_harness" bd:version="1.00.a">
+<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:isValidated="true" bd:synthFlowMode="None" bd:tool_version="2015.4" bd:top="kuuga_test_harness" bd:version="1.00.a">
 
   <spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009">
     <spirit:vendor>xilinx.com</spirit:vendor>
@@ -30,26 +30,17 @@
             </spirit:physicalPort>
           </spirit:portMap>
         </spirit:portMaps>
-        <spirit:parameters/>
-      </spirit:busInterface>
-      <spirit:busInterface>
-        <spirit:name>DATA.KUUGA_INPUT_LOC</spirit:name>
-        <spirit:displayName>Data</spirit:displayName>
-        <spirit:description>Data</spirit:description>
-        <spirit:busType spirit:library="signal" spirit:name="data" spirit:vendor="xilinx.com" spirit:version="1.0"/>
-        <spirit:abstractionType spirit:library="signal" spirit:name="data_rtl" spirit:vendor="xilinx.com" spirit:version="1.0"/>
-        <spirit:slave/>
-        <spirit:portMaps>
-          <spirit:portMap>
-            <spirit:logicalPort>
-              <spirit:name>DATA</spirit:name>
-            </spirit:logicalPort>
-            <spirit:physicalPort>
-              <spirit:name>Kuuga_Input_Loc</spirit:name>
-            </spirit:physicalPort>
-          </spirit:portMap>
-        </spirit:portMaps>
-        <spirit:parameters/>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>LAYERED_METADATA</spirit:name>
+            <spirit:value>xilinx.com:interface:datatypes:1.0 {DATA {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 32} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0} integer {signed {attribs {resolve_type immediate dependency {} format bool minimum {} maximum {}} value false}}}}}</spirit:value>
+            <spirit:vendorExtensions>
+              <bd:configElementInfos>
+                <bd:configElementInfo bd:valueSource="const_prop"/>
+              </bd:configElementInfos>
+            </spirit:vendorExtensions>
+          </spirit:parameter>
+        </spirit:parameters>
       </spirit:busInterface>
       <spirit:busInterface>
         <spirit:name>CLK.KUUGA_CLK</spirit:name>
@@ -72,6 +63,38 @@
           <spirit:parameter>
             <spirit:name>FREQ_HZ</spirit:name>
             <spirit:value>100000000</spirit:value>
+            <spirit:vendorExtensions>
+              <bd:configElementInfos>
+                <bd:configElementInfo bd:valueSource="user"/>
+              </bd:configElementInfos>
+            </spirit:vendorExtensions>
+          </spirit:parameter>
+          <spirit:parameter>
+            <spirit:name>PHASE</spirit:name>
+            <spirit:value>0.000</spirit:value>
+            <spirit:vendorExtensions>
+              <bd:configElementInfos>
+                <bd:configElementInfo bd:valueSource="default"/>
+              </bd:configElementInfos>
+            </spirit:vendorExtensions>
+          </spirit:parameter>
+          <spirit:parameter>
+            <spirit:name>CLK_DOMAIN</spirit:name>
+            <spirit:value>kuuga_test_harness_Kuuga_CLK</spirit:value>
+            <spirit:vendorExtensions>
+              <bd:configElementInfos>
+                <bd:configElementInfo bd:valueSource="default"/>
+              </bd:configElementInfos>
+            </spirit:vendorExtensions>
+          </spirit:parameter>
+          <spirit:parameter>
+            <spirit:name>ASSOCIATED_RESET</spirit:name>
+            <spirit:value>Kuuga_RST</spirit:value>
+            <spirit:vendorExtensions>
+              <bd:configElementInfos>
+                <bd:configElementInfo bd:valueSource="default"/>
+              </bd:configElementInfos>
+            </spirit:vendorExtensions>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:busInterface>
@@ -96,49 +119,40 @@
           <spirit:parameter>
             <spirit:name>POLARITY</spirit:name>
             <spirit:value>ACTIVE_HIGH</spirit:value>
+            <spirit:vendorExtensions>
+              <bd:configElementInfos>
+                <bd:configElementInfo bd:valueSource="user"/>
+              </bd:configElementInfos>
+            </spirit:vendorExtensions>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:busInterface>
       <spirit:busInterface>
-        <spirit:name>CLK.AGITO_CLK</spirit:name>
-        <spirit:displayName>Clk</spirit:displayName>
-        <spirit:description>Clock</spirit:description>
-        <spirit:busType spirit:library="signal" spirit:name="clock" spirit:vendor="xilinx.com" spirit:version="1.0"/>
-        <spirit:abstractionType spirit:library="signal" spirit:name="clock_rtl" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:name>DATA.KUUGA_INPUT_LOC</spirit:name>
+        <spirit:displayName>Data</spirit:displayName>
+        <spirit:description>Data</spirit:description>
+        <spirit:busType spirit:library="signal" spirit:name="data" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:abstractionType spirit:library="signal" spirit:name="data_rtl" spirit:vendor="xilinx.com" spirit:version="1.0"/>
         <spirit:slave/>
         <spirit:portMaps>
           <spirit:portMap>
             <spirit:logicalPort>
-              <spirit:name>CLK</spirit:name>
+              <spirit:name>DATA</spirit:name>
             </spirit:logicalPort>
             <spirit:physicalPort>
-              <spirit:name>Agito_CLK</spirit:name>
-            </spirit:physicalPort>
-          </spirit:portMap>
-        </spirit:portMaps>
-        <spirit:parameters/>
-      </spirit:busInterface>
-      <spirit:busInterface>
-        <spirit:name>RST.AGITO_RST</spirit:name>
-        <spirit:displayName>Reset</spirit:displayName>
-        <spirit:description>Reset</spirit:description>
-        <spirit:busType spirit:library="signal" spirit:name="reset" spirit:vendor="xilinx.com" spirit:version="1.0"/>
-        <spirit:abstractionType spirit:library="signal" spirit:name="reset_rtl" spirit:vendor="xilinx.com" spirit:version="1.0"/>
-        <spirit:slave/>
-        <spirit:portMaps>
-          <spirit:portMap>
-            <spirit:logicalPort>
-              <spirit:name>RST</spirit:name>
-            </spirit:logicalPort>
-            <spirit:physicalPort>
-              <spirit:name>Agito_RST</spirit:name>
+              <spirit:name>Kuuga_Input_Loc</spirit:name>
             </spirit:physicalPort>
           </spirit:portMap>
         </spirit:portMaps>
         <spirit:parameters>
           <spirit:parameter>
-            <spirit:name>POLARITY</spirit:name>
-            <spirit:value>ACTIVE_HIGH</spirit:value>
+            <spirit:name>LAYERED_METADATA</spirit:name>
+            <spirit:value>undef</spirit:value>
+            <spirit:vendorExtensions>
+              <bd:configElementInfos>
+                <bd:configElementInfo bd:valueSource="default"/>
+              </bd:configElementInfos>
+            </spirit:vendorExtensions>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:busInterface>
@@ -159,7 +173,17 @@
             </spirit:physicalPort>
           </spirit:portMap>
         </spirit:portMaps>
-        <spirit:parameters/>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>LAYERED_METADATA</spirit:name>
+            <spirit:value>undef</spirit:value>
+            <spirit:vendorExtensions>
+              <bd:configElementInfos>
+                <bd:configElementInfo bd:valueSource="default"/>
+              </bd:configElementInfos>
+            </spirit:vendorExtensions>
+          </spirit:parameter>
+        </spirit:parameters>
       </spirit:busInterface>
       <spirit:busInterface>
         <spirit:name>DATA.AGITO_DONE</spirit:name>
@@ -178,7 +202,17 @@
             </spirit:physicalPort>
           </spirit:portMap>
         </spirit:portMaps>
-        <spirit:parameters/>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>LAYERED_METADATA</spirit:name>
+            <spirit:value>undef</spirit:value>
+            <spirit:vendorExtensions>
+              <bd:configElementInfos>
+                <bd:configElementInfo bd:valueSource="default"/>
+              </bd:configElementInfos>
+            </spirit:vendorExtensions>
+          </spirit:parameter>
+        </spirit:parameters>
       </spirit:busInterface>
       <spirit:busInterface>
         <spirit:name>DATA.AGITO_RESULT</spirit:name>
@@ -197,7 +231,17 @@
             </spirit:physicalPort>
           </spirit:portMap>
         </spirit:portMaps>
-        <spirit:parameters/>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>LAYERED_METADATA</spirit:name>
+            <spirit:value>xilinx.com:interface:datatypes:1.0 {DATA {datatype {name {attribs {resolve_type immediate dependency {} format string minimum {} maximum {}} value {}} bitwidth {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 32} bitoffset {attribs {resolve_type immediate dependency {} format long minimum {} maximum {}} value 0} integer {signed {attribs {resolve_type immediate dependency {} format bool minimum {} maximum {}} value false}}}}}</spirit:value>
+            <spirit:vendorExtensions>
+              <bd:configElementInfos>
+                <bd:configElementInfo bd:valueSource="const_prop"/>
+              </bd:configElementInfos>
+            </spirit:vendorExtensions>
+          </spirit:parameter>
+        </spirit:parameters>
       </spirit:busInterface>
     </spirit:busInterfaces>
     <spirit:model>
@@ -232,16 +276,6 @@
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>Kuuga_Input_Loc</spirit:name>
-          <spirit:wire>
-            <spirit:direction>in</spirit:direction>
-            <spirit:vector>
-              <spirit:left>31</spirit:left>
-              <spirit:right>0</spirit:right>
-            </spirit:vector>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
           <spirit:name>Kuuga_CLK</spirit:name>
           <spirit:wire>
             <spirit:direction>in</spirit:direction>
@@ -254,15 +288,13 @@
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>Agito_CLK</spirit:name>
+          <spirit:name>Kuuga_Input_Loc</spirit:name>
           <spirit:wire>
             <spirit:direction>in</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>Agito_RST</spirit:name>
-          <spirit:wire>
-            <spirit:direction>in</spirit:direction>
+            <spirit:vector>
+              <spirit:left>31</spirit:left>
+              <spirit:right>0</spirit:right>
+            </spirit:vector>
           </spirit:wire>
         </spirit:port>
         <spirit:port>
@@ -315,6 +347,15 @@
           <spirit:configurableElementValue spirit:referenceId="bd:xciName">kuuga_test_harness_agito_0_0</spirit:configurableElementValue>
         </spirit:configurableElementValues>
       </spirit:componentInstance>
+      <spirit:componentInstance>
+        <spirit:instanceName>clk_gen_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="ip" spirit:name="clk_gen" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">kuuga_test_harness_clk_gen_0_0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="INITIAL_RESET_CLOCK_CYCLES">250</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="RESET_POLARITY">ACTIVE_HIGH</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
     </spirit:componentInstances>
     <spirit:adHocConnections>
       <spirit:adHocConnection>
@@ -344,16 +385,6 @@
         <spirit:internalPortReference spirit:componentRef="kuuga_0" spirit:portRef="ap_rst"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>Agito_CLK_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="Agito_CLK"/>
-        <spirit:internalPortReference spirit:componentRef="agito_0" spirit:portRef="ap_clk"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>Agito_RST_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="Agito_RST"/>
-        <spirit:internalPortReference spirit:componentRef="agito_0" spirit:portRef="ap_rst"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
         <spirit:name>input_location_1</spirit:name>
         <spirit:externalPortReference spirit:portRef="Kuuga_Input_Loc"/>
         <spirit:internalPortReference spirit:componentRef="kuuga_0" spirit:portRef="output_loc"/>
@@ -372,6 +403,16 @@
         <spirit:name>agito_0_ap_return</spirit:name>
         <spirit:internalPortReference spirit:componentRef="agito_0" spirit:portRef="ap_return"/>
         <spirit:externalPortReference spirit:portRef="Agito_Result"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>clk_gen_0_clk</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="clk_gen_0" spirit:portRef="clk"/>
+        <spirit:internalPortReference spirit:componentRef="agito_0" spirit:portRef="ap_clk"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>clk_gen_0_sync_rst</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="clk_gen_0" spirit:portRef="sync_rst"/>
+        <spirit:internalPortReference spirit:componentRef="agito_0" spirit:portRef="ap_rst"/>
       </spirit:adHocConnection>
     </spirit:adHocConnections>
   </spirit:design>

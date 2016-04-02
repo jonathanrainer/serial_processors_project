@@ -12,17 +12,19 @@ use ieee.std_logic_unsigned.all;
 
 entity agito_memory_V_ram is 
     generic(
-            mem_type    : string := "block"; 
+            mem_type    : string := "distributed"; 
             dwidth     : integer := 32; 
-            awidth     : integer := 8; 
-            mem_size    : integer := 250
+            awidth     : integer := 5; 
+            mem_size    : integer := 30
     ); 
     port (
           addr0     : in std_logic_vector(awidth-1 downto 0); 
           ce0       : in std_logic; 
-          d0        : in std_logic_vector(dwidth-1 downto 0); 
-          we0       : in std_logic; 
           q0        : out std_logic_vector(dwidth-1 downto 0);
+          addr1     : in std_logic_vector(awidth-1 downto 0); 
+          ce1       : in std_logic; 
+          d1        : in std_logic_vector(dwidth-1 downto 0); 
+          we1       : in std_logic; 
           clk        : in std_logic 
     ); 
 end entity; 
@@ -33,16 +35,11 @@ architecture rtl of agito_memory_V_ram is
 signal addr0_tmp : std_logic_vector(awidth-1 downto 0); 
 type mem_array is array (0 to mem_size-1) of std_logic_vector (dwidth-1 downto 0); 
 shared variable ram : mem_array := (
-    0 => "00001000000000000000000000000100", 
-    1 => "00001000000001000000000000000101", 
-    2 => "00110000000000000000000000000001", 
-    3 => "00000000000000000000000000000000", 
-    4 => "00000000000000000000000000100000", 
-    5 => "00000000000000000000000000100101", 
-    6 to 249=> "00000000000000000000000000000000" );
+    0 => "00110000000000000000000000000001", 
+    1 to 29=> "00000000000000000000000000000000" );
 
 attribute syn_ramstyle : string; 
-attribute syn_ramstyle of ram : variable is "block_ram";
+attribute syn_ramstyle of ram : variable is "select_ram";
 attribute ram_style : string;
 attribute ram_style of ram : variable is mem_type;
 attribute EQUIVALENT_REGISTER_REMOVAL : string;
@@ -66,10 +63,19 @@ p_memory_access_0: process (clk)
 begin 
     if (clk'event and clk = '1') then
         if (ce0 = '1') then 
-            if (we0 = '1') then 
-                ram(CONV_INTEGER(addr0_tmp)) := d0; 
-            end if;
             q0 <= ram(CONV_INTEGER(addr0_tmp)); 
+        end if;
+    end if;
+end process;
+
+
+p_memory_access_1: process (clk)  
+begin 
+    if (clk'event and clk = '1') then
+        if (ce1 = '1') then 
+            if (we1 = '1') then 
+                ram(CONV_INTEGER(addr1)) := d1; 
+            end if;
         end if;
     end if;
 end process;
@@ -84,16 +90,18 @@ use IEEE.std_logic_1164.all;
 entity agito_memory_V is
     generic (
         DataWidth : INTEGER := 32;
-        AddressRange : INTEGER := 250;
-        AddressWidth : INTEGER := 8);
+        AddressRange : INTEGER := 30;
+        AddressWidth : INTEGER := 5);
     port (
         reset : IN STD_LOGIC;
         clk : IN STD_LOGIC;
         address0 : IN STD_LOGIC_VECTOR(AddressWidth - 1 DOWNTO 0);
         ce0 : IN STD_LOGIC;
-        we0 : IN STD_LOGIC;
-        d0 : IN STD_LOGIC_VECTOR(DataWidth - 1 DOWNTO 0);
-        q0 : OUT STD_LOGIC_VECTOR(DataWidth - 1 DOWNTO 0));
+        q0 : OUT STD_LOGIC_VECTOR(DataWidth - 1 DOWNTO 0);
+        address1 : IN STD_LOGIC_VECTOR(AddressWidth - 1 DOWNTO 0);
+        ce1 : IN STD_LOGIC;
+        we1 : IN STD_LOGIC;
+        d1 : IN STD_LOGIC_VECTOR(DataWidth - 1 DOWNTO 0));
 end entity;
 
 architecture arch of agito_memory_V is
@@ -102,9 +110,11 @@ architecture arch of agito_memory_V is
             clk : IN STD_LOGIC;
             addr0 : IN STD_LOGIC_VECTOR;
             ce0 : IN STD_LOGIC;
-            d0 : IN STD_LOGIC_VECTOR;
-            we0 : IN STD_LOGIC;
-            q0 : OUT STD_LOGIC_VECTOR);
+            q0 : OUT STD_LOGIC_VECTOR;
+            addr1 : IN STD_LOGIC_VECTOR;
+            ce1 : IN STD_LOGIC;
+            d1 : IN STD_LOGIC_VECTOR;
+            we1 : IN STD_LOGIC);
     end component;
 
 
@@ -115,9 +125,11 @@ begin
         clk => clk,
         addr0 => address0,
         ce0 => ce0,
-        d0 => d0,
-        we0 => we0,
-        q0 => q0);
+        q0 => q0,
+        addr1 => address1,
+        ce1 => ce1,
+        d1 => d1,
+        we1 => we1);
 
 end architecture;
 

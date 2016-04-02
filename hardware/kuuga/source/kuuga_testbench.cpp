@@ -36,11 +36,12 @@ int main()
   test_funcs["Generated Shift Right Test"] = generated_shift_right_test;
   test_funcs["Generated Shift Left Test"] = generated_shift_left_test;
   test_funcs["Generated AND Test"] = generated_and_test;
-  test_funcs["Fenerated ADD_MP Test"] = generated_add_mp_test;
+  test_funcs["Generated ADD_MP Test"] = generated_add_mp_test;
   int passes = 0;
   int fails = 0;
   int tests = 0;
   printf("########## TEST RESULTS ##########\n");
+  fflush(stdout);
   for(it_type iterator = test_funcs.begin(); iterator != test_funcs.end();
       iterator++)
     {
@@ -50,18 +51,21 @@ int main()
 	{
 	  printf("Test #%d: %s - Test Passed!\n", tests,
 		 iterator->first.c_str());
+	  fflush(stdout);
 	  passes++;
 	}
       else
 	{
 	  printf("Test #d: %s - Test Failed!\n", tests,
 		 iterator->first.c_str());
+	  fflush(stdout);
 	  fails++;
 	}
     }
   printf("########## END RESULTS ##########\n");
   printf("Summary - Passes: %d/%d - Fails: %d/%d\n", passes, passes+fails,
 	 fails, passes+fails);
+  fflush(stdout);
   return 0;
 }
 
@@ -257,7 +261,8 @@ bool generated_add_mp_test()
 
 bool serial_add_test()
 {
-	uint32 result1 = bit_serial_add(0x0000000A, 0x00000005, false);
-	uint32 result2 = bit_serial_add(0x0000000F, 0x00000005, true);
-	return (result1 == 0x0000000F && result2 == 0x0000000A);
+  bool zero_flag = false;
+  uint32 result1 = bit_serial_add(0x0000000A, 0x00000005, false, &zero_flag);
+  uint32 result2 = bit_serial_add(0x0000000F, 0x00000005, true, &zero_flag);
+  return (result1 == 0x0000000F && result2 == 0x0000000A);
 }

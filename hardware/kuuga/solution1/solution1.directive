@@ -1,17 +1,5 @@
 <AutoPilot:ProjectResources xmlns:AutoPilot="com.autoesl.autopilot.ui.directiveView">
     <sourceFile name="">
-        <directive functionName="bit_serial_and" label="and_loop" functionLabel="">
-            <pragma name="UNROLL"/>
-        </directive>
-        <directive functionName="bit_serial_and" label="" functionLabel="">
-            <pragma name="INLINE"/>
-        </directive>
-        <directive functionName="kuuga" label="" functionLabel="">
-            <pragma name="RESOURCE">
-                <option name="variable" value="memory" positionalBoolean="4"/>
-                <option name="core" value="RAM_1P_BRAM"/>
-            </pragma>
-        </directive>
         <directive functionName="kuuga" label="main_loop" functionLabel="">
             <pragma name="LOOP_TRIPCOUNT">
                 <option name="min" value="1"/>
@@ -19,13 +7,14 @@
                 <option name="avg" value="15"/>
             </pragma>
         </directive>
-        <directive functionName="bit_serial_add" label="add_loop" functionLabel="">
-            <pragma name="UNROLL"/>
-        </directive>
-        <directive functionName="subleq" label="" functionLabel="">
-            <pragma name="INLINE">
-                <option name="recursive" value="" positionalBoolean="1"/>
+        <directive functionName="kuuga" label="" functionLabel="">
+            <pragma name="RESOURCE">
+                <option name="variable" value="memory" positionalBoolean="4"/>
+                <option name="core" value="RAM_2P_BRAM"/>
             </pragma>
+        </directive>
+        <directive functionName="bit_serial_add" label="add_loop" functionLabel="">
+            <pragma name="PIPELINE"/>
         </directive>
     </sourceFile>
 </AutoPilot:ProjectResources>

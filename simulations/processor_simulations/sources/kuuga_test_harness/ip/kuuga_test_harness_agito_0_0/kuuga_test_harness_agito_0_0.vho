@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: xilinx.com:hls:agito:1.0
--- IP Revision: 1603232137
+-- IP Revision: 1603301709
 
 -- The following code must appear in the VHDL architecture header.
 

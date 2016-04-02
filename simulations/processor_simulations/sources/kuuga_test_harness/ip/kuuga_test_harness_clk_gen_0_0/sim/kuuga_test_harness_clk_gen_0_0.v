@@ -46,27 +46,31 @@
 // 
 // DO NOT MODIFY THIS FILE.
 
-// IP VLNV: xilinx.com:hls:agito:1.0
-// IP Revision: 1603301709
 
-// The following must be inserted into your Verilog file for this
-// core to be instantiated. Change the instance name and port connections
-// (in parentheses) to your own signal names.
+// IP VLNV: xilinx.com:ip:clk_gen:1.0
+// IP Revision: 0
 
-//----------- Begin Cut here for INSTANTIATION Template ---// INST_TAG
-kuuga_test_harness_agito_0_0 your_instance_name (
-  .ap_clk(ap_clk),          // input wire ap_clk
-  .ap_rst(ap_rst),          // input wire ap_rst
-  .ap_start(ap_start),      // input wire ap_start
-  .ap_done(ap_done),        // output wire ap_done
-  .ap_idle(ap_idle),        // output wire ap_idle
-  .ap_ready(ap_ready),      // output wire ap_ready
-  .ap_return(ap_return),    // output wire [31 : 0] ap_return
-  .output_loc(output_loc)  // input wire [31 : 0] output_loc
+`timescale 1ns/1ps
+
+(* DowngradeIPIdentifiedWarnings = "yes" *)
+module kuuga_test_harness_clk_gen_0_0 (
+  clk,
+  sync_rst
 );
-// INST_TAG_END ------ End INSTANTIATION Template ---------
 
-// You must compile the wrapper file kuuga_test_harness_agito_0_0.v when simulating
-// the core, kuuga_test_harness_agito_0_0. When compiling the wrapper file, be sure to
-// reference the Verilog simulation library.
+(* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 clk CLK" *)
+output wire clk;
+(* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 sync_rst RST" *)
+output wire sync_rst;
 
+  clk_gen #(
+    .CLOCK_PERIOD(10),
+    .INITIAL_RESET_CLOCK_CYCLES(250),
+    .RESET_POLARITY(1)
+  ) inst (
+    .clk(clk),
+    .clk_n(),
+    .clk_p(),
+    .sync_rst(sync_rst)
+  );
+endmodule
