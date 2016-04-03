@@ -5,12 +5,12 @@
 ############################################################
 open_project agito
 set_top agito
-add_files agito/source/agito.cpp
 add_files agito/source/agito.h
+add_files agito/source/agito.cpp
 add_files -tb agito/source/agito_testbench.cpp
 open_solution "solution2"
 set_part {xc7vx485tffg1761-2}
-create_clock -period 2.39 -name default
+create_clock -period 2.4 -name default
 source "./agito/solution2/directives.tcl"
 csim_design -ldflags {-B"/usr/lib/x86_64-linux-gnu/"}
 csynth_design

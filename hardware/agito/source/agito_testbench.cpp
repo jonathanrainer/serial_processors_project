@@ -47,8 +47,7 @@ int main()
   test_funcs["Branch Less Than Register Test"] =
       branch_less_than_register_test;
   test_funcs["Branch Less Than Address Test"] = branch_less_than_address_test;
-  test_funcs["Branch Equal Register Test"] =
-  	branch_equal_register_test;
+  test_funcs["Branch Equal Register Test"] = branch_equal_register_test;
   test_funcs["Branch Equal Address Test"] = branch_equal_address_test;
   test_funcs["Branch Greater Than Register Test"] =
   	branch_greater_than_register_test;
@@ -61,8 +60,6 @@ int main()
   test_funcs["OR Register Test"] = or_register_test;
   test_funcs["OR Constant Test"] = or_constant_test;
   test_funcs["NOT Test"] = not_test;
-  //test_funcs["Multiply Test"] = multiply_test;
-  //test_funcs["Divide Test"] = divide_test;
   int passes = 0;
   int fails = 0;
   int tests = 0;

@@ -3,7 +3,7 @@
         <directive functionName="agito" label="" functionLabel="">
             <pragma name="RESOURCE">
                 <option name="variable" value="memory" positionalBoolean="4"/>
-                <option name="core" value="RAM_2P_BRAM"/>
+                <option name="core" value="RAM_S2P_BRAM"/>
             </pragma>
         </directive>
         <directive functionName="agito" label="main_loop" functionLabel="">
@@ -11,12 +11,6 @@
                 <option name="min" value="1"/>
                 <option name="max" value="15"/>
                 <option name="avg" value="8"/>
-            </pragma>
-        </directive>
-        <directive functionName="agito" label="" functionLabel="">
-            <pragma name="RESOURCE">
-                <option name="variable" value="registers" positionalBoolean="4"/>
-                <option name="core" value="RAM_2P_BRAM"/>
             </pragma>
         </directive>
         <directive functionName="shift" label="shift_loop" functionLabel="">
@@ -40,13 +34,13 @@
                 <option name="avg" value="3"/>
             </pragma>
         </directive>
-        <directive functionName="conditional_branch" label="" functionLabel="">
-            <pragma name="INLINE"/>
+        <directive functionName="agito" label="" functionLabel="">
+            <pragma name="RESOURCE">
+                <option name="variable" value="registers" positionalBoolean="4"/>
+                <option name="core" value="RAM_S2P_BRAM"/>
+            </pragma>
         </directive>
         <directive functionName="bit_serial_add" label="add_loop" functionLabel="">
-            <pragma name="UNROLL"/>
-        </directive>
-        <directive functionName="bit_serial_and" label="" functionLabel="">
             <pragma name="PIPELINE"/>
         </directive>
     </sourceFile>

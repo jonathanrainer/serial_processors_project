@@ -10,14 +10,14 @@ uint32 agito(int output_loc) {
 
   halt_flag = false;
   pc = 0;
-  uint32 inst;
   // Execute until the halt bit is set.
   main_loop: while (!halt_flag)
   {
       zero_flag = false;
-      inst = memory[pc];
-      uint5 opcode = (inst & 0xF8000000) >> 27;
-      uint27 operands = (inst & 0x07FFFFFF);
+      uint32 inst = memory[pc];
+      uint5 opcode = inst >> 27;
+      uint27 operands = inst;
+      bool branched = false;
       switch (opcode)
       {
 	case 0x0:
@@ -25,95 +25,88 @@ uint32 agito(int output_loc) {
 	  break;
 	case 0x1:
 	  load_direct(operands);
-	  pc++;
 	  break;
 	case 0x2:
 	  load_register_offset(operands);
-	  pc++;
 	  break;
 	case 0x3:
 	  store_direct(operands);
-	  pc++;
 	  break;
 	case 0x4:
 	  store_register_offset(operands);
-	  pc++;
 	  break;
 	case 0x5:
 	  add_constant(operands);
-	  pc++;
 	  break;
 	case 0x6:
 	  add_register(operands);
-	  pc++;
 	  break;
 	case 0x7:
 	  shift(operands, true, true);
-	  pc++;
 	  break;
 	case 0x8:
 	  shift(operands, true, false);
-	  pc++;
 	  break;
 	case 0x9:
 	  shift(operands, false, true);
-	  pc++;
 	  break;
 	case 0xA:
 	  shift(operands, false, false);
-	  pc++;
 	  break;
 	case 0xB:
 	  complement(operands);
-	  pc++;
 	  break;
 	case 0xC:
 	  pc = conditional_branch(operands, false, -1, pc);
+	  branched = true;
 	  break;
 	case 0xD:
 	  pc = conditional_branch(operands, true, -1, pc);
+	  branched = true;
 	  break;
 	case 0xE:
 	  pc = conditional_branch(operands, false, 0, pc);
+	  branched = true;
 	  break;
 	case 0xF:
 	  pc = conditional_branch(operands, true, 0, pc);
+	  branched = true;
 	  break;
 	case 0x10:
 	  pc = conditional_branch(operands, false, 1, pc);
+	  branched = true;
 	  break;
 	case 0x11:
 	  pc = conditional_branch(operands, true, 1, pc);
+	  branched = true;
 	  break;
 	case 0x12:
 	  pc = unconditional_branch(operands, false);
+	  branched = true;
 	  break;
 	case 0x13:
 	  pc = unconditional_branch(operands, true);
+	  branched = true;
 	  break;
 	case 0x14:
 	  and_register(operands);
-	  pc++;
 	  break;
 	case 0x15:
 	  and_constant(operands);
-	  pc++;
 	  break;
 	case 0x16:
 	  or_register(operands);
-	  pc++;
 	  break;
 	case 0x17:
 	  or_constant(operands);
-	  pc++;
 	  break;
 	case 0x18:
 	  not_register(operands);
-	  pc++;
 	  break;
 	default :
 	  break;
       }
+      pc = (branched) ? pc : bit_serial_add(pc, 1, false);
   }
   return registers[output_loc];
 }
@@ -166,8 +159,7 @@ void shift(uint27 operands, bool right_flag, bool arithmetic_flag)
   {
       if (right_flag)
       {
-	result = (arithmetic_flag) ? msb | (result >> 1) :
-		(result) >> 1;
+	result = (arithmetic_flag) ? msb | (result >> 1) : (result) >> 1;
       }
       else
       {
@@ -195,12 +187,14 @@ uint32 conditional_branch(uint27 operands, bool direct_switch,
   switch (comparison)
   {
     case -1:
-      return (result.bit(31) == 1) ? destination : (uint32) (old_pc+1);
+      return (result.bit(31)) ? destination :
+	  bit_serial_add(old_pc, 1, false);
     case 0:
-      return (zero_flag) ? destination : (uint32) (old_pc+1);
+      return (zero_flag) ? destination :
+	  bit_serial_add(old_pc, 1, false);
     default:
-      return (!zero_flag &&  (result.bit(31) != 1)) ? destination :
-	  (uint32) (old_pc+1);
+      return (!(zero_flag ||  result.bit(31))) ? destination :
+	  bit_serial_add(old_pc, 1, false);
   }
 }
 
@@ -208,8 +202,8 @@ uint32 unconditional_branch(uint27 operands, bool direct_switch)
 {
   return (direct_switch) ?
         (uint32) (operands & 0x07FFFFFF):
-        (uint32) (registers[(operands & 0x07FC0000) >> 18] +
-	(operands & 0x0003FFFF));
+        (uint32) bit_serial_add(registers[(operands & 0x07FC0000) >> 18],
+	(operands & 0x0003FFFF), false);
 }
 
 void and_register(uint27 operands)
@@ -273,7 +267,8 @@ uint32 bit_serial_or(uint32 arg1, uint32 arg2)
 uint32 bit_serial_add(uint32 arg1, uint32 arg2, bool sub_flag)
 {
   uint32 result = 0x00000000;
-  uint1 carry, is_zero = sub_flag;
+  uint1 carry = sub_flag;
+  bool is_zero = sub_flag;
   add_loop:for (int i = 0; i <= 31; i++)
   {
     uint1 bit_2 = (sub_flag) ? ~arg2.bit(i) : arg2.bit(i);

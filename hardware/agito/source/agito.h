@@ -9,6 +9,7 @@
 //Typedefs
 typedef ap_uint<32> uint32;
 typedef ap_uint<27> uint27;
+typedef ap_uint<18> uint18;
 typedef ap_uint<10> uint10;
 typedef ap_uint<9> uint9;
 typedef ap_uint<5> uint5;
