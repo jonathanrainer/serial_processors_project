@@ -28,6 +28,17 @@ bool and_constant_test();
 bool or_register_test();
 bool or_constant_test();
 bool not_test();
+bool generated_add_mp_test();
+bool generated_atoi_test();
+bool generated_divu_test();
+bool generated_asl64_test();
+bool generated_rem_test();
+bool generated_copy_test();
+bool generated_fprintf_test();
+bool generated_int64_eq_test();
+bool generated_asr64_test();
+bool generated_utsa_va_args_test();
+bool generated_add64_test();
 
 int main()
 {
@@ -60,6 +71,17 @@ int main()
   test_funcs["OR Register Test"] = or_register_test;
   test_funcs["OR Constant Test"] = or_constant_test;
   test_funcs["NOT Test"] = not_test;
+  test_funcs["Generated ADD MP Test"] = generated_add_mp_test;
+  test_funcs["Generated ATOI Test"] = generated_atoi_test;
+  test_funcs["Generated DIVU Test"] = generated_divu_test;
+  test_funcs["Generated ASL64 Test"] = generated_asl64_test;
+  test_funcs["Generated REM Test"] = generated_rem_test;
+  test_funcs["Generated COPY Test"] = generated_copy_test;
+  test_funcs["Generated FPRINTF Test"] = generated_fprintf_test;
+  test_funcs["Generated INT64EQ Test"] = generated_int64_eq_test;
+  test_funcs["Generated ASR64 Test"] = generated_asr64_test;
+  test_funcs["Generated UTSA VA ARGS Test"] = generated_utsa_va_args_test;
+  test_funcs["Generated ADD64 Test"] = generated_add64_test;
   int passes = 0;
   int fails = 0;
   int tests = 0;
@@ -377,4 +399,138 @@ bool not_test()
   setRegisters(reg_file, 9);
   agito(0);
   return registers[4] == 0xFFFF;
+}
+
+bool generated_add_mp_test()
+{
+  uint32 mem[2] = { 0x30000001, 0x00000000 };
+  uint32 reg_file[11] = {0x00000020, 0x00000025, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+  0x0, 0x0, 0x50};
+  setMemory(mem, 2);
+  setRegisters(reg_file, 11);
+  agito(0);
+  return registers[0] == 0x45;
+}
+
+bool generated_atoi_test()
+{
+  uint32 mem[4] = { 0x28281410, 0x08080003, 0x00000000, 0x00000000 };
+  uint32 reg_file[11] = {0x00000020, 0x00000025, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+  0x0, 0x0, 0x50};
+  setMemory(mem, 4);
+  setRegisters(reg_file, 11);
+  agito(0);
+  return registers[10] == 0x60 && registers[2] == 0x0;
+}
+
+bool generated_divu_test()
+{
+  uint32 mem[6] = { 0x280c0700, 0x500c0617, 0x28100801, 0x58100004,
+      0x300c0604, 0x00000000 };
+  uint32 reg_file[11] = {0x10, 0x25, 0x7, 0x0, 0x0, 0x0, 0x0, 0x0,
+  0x0, 0x0, 0x50};
+  setMemory(mem, 6);
+  setRegisters(reg_file, 11);
+  agito(0);
+  return registers[3] == 0x7FFFFFFF;
+}
+
+bool generated_asl64_test()
+{
+  uint32 mem[5] = { 0x58040001, 0x28040220, 0x080c0004, 0x00000000,
+      0x00000020 };
+  uint32 reg_file[11] = {0x25, 0x4, 0x13, 0x0, 0x0, 0x0, 0x0, 0x0,
+  0x0, 0x0, 0x50};
+  setMemory(mem, 5);
+  setRegisters(reg_file, 11);
+  agito(0);
+  return registers[1] == 0x1C && registers[3] == 0x20;
+}
+
+bool generated_rem_test()
+{
+  uint32 mem[23] = { 0x08140022, 0x58180001, 0x081c0022, 0x08200022,
+      0x28201001, 0x58200008, 0x301c0e00, 0x78340005, 0x68300005,
+      0x28100801, 0x30000006, 0x98000007, 0x30100808, 0x08240022,
+      0x30241204, 0x301c0e08, 0x78500a07, 0x30100809, 0x28140a01,
+      0x98000010, 0x30100806, 0x00000000, 0x00000000 }
+;
+  uint32 reg_file[11] = {0x8, 0x2, 0x65, 0x10, 0x0, 0x0, 0x0, 0x0,
+  0x0, 0x0, 0x50};
+  setMemory(mem, 22);
+  setRegisters(reg_file, 11);
+  agito(0);
+  return registers[4] == 0x1E;
+}
+
+bool generated_copy_test()
+{
+  uint32 mem[5] = { 0x2840200c, 0x28100801, 0x58100004, 0x30040204,
+      0x00000000 };
+  uint32 reg_file[11] = {0x6, 0x7, 0x10, 0x50, 0x0, 0x0, 0x0, 0x0,
+  0x0, 0x0, 0x50};
+  setMemory(mem, 5);
+  setRegisters(reg_file, 11);
+  agito(0);
+  return registers[1] == 0x6;
+}
+
+bool generated_fprintf_test()
+{
+  uint32 mem[3] = { 0x28402008, 0x28040204, 0x00000000 };
+  uint32 reg_file[11] = {0x5, 0xB, 0xAAA, 0x00, 0x0, 0x0, 0x0, 0x0,
+  0x0, 0x0, 0x50};
+  setMemory(mem, 3);
+  setRegisters(reg_file, 11);
+  agito(0);
+  return registers[1] == 0xF;
+}
+
+bool generated_int64_eq_test()
+{
+  uint32 mem[6] = { 0x2828140c, 0x10081402, 0x00000000, 0x00001023,
+      0x00002233, 0x00000567 };
+  uint32 reg_file[11] = {0xA, 0xB, 0x0, 0x00, 0x0, 0x0, 0x0, 0x0,
+  0x0, 0x0, 0xFFFFFFF7};
+  setMemory(mem, 6);
+  setRegisters(reg_file, 11);
+  agito(0);
+  return registers[2] == 0x567;
+}
+
+bool generated_asr64_test()
+{
+  uint32 mem[6] = { 0x28281408, 0xa808043f, 0x08100005, 0x2810081f,
+      0x00000000, 0x00000000 };
+  uint32 reg_file[11] = {0x14, 0x22, 0x55, 0x750, 0x0, 0x0, 0x0, 0x0,
+  0x0, 0x0, 0x50};
+  setMemory(mem, 6);
+  setRegisters(reg_file, 11);
+  agito(0);
+  return registers[2] == 0x15 && registers[4] == 0x1F;
+}
+
+bool generated_utsa_va_args_test()
+{
+  uint32 mem[7] = { 0x58080000, 0x280c0604, 0x300c0602, 0x500c0602,
+      0x58100001, 0x300c0604, 0x00000000 };
+  uint32 reg_file[11] = {0x10, 0x20, 0x79, 0x0, 0x0, 0x0, 0x0, 0x0,
+  0x0, 0x0, 0x50};
+  setMemory(mem, 7);
+  setRegisters(reg_file, 11);
+  agito(0);
+  return registers[3] == 0xFFFFFFB0;
+}
+
+bool generated_add64_test()
+{
+  uint32 mem[17] = { 0x28281408, 0x300c0002, 0x400c0601, 0x40080401,
+      0x300c0602, 0x10101401, 0x2810081f, 0x30100803, 0x10181400, 0xb8180c20,
+      0x00000000, 0x00000300, 0x00000300 };
+  uint32 reg_file[11] = {0x50, 0x100, 0x200, 0x0, 0x0, 0x0, 0x0, 0x0,
+  0x0, 0x0, 0x3};
+  setMemory(mem, 17);
+  setRegisters(reg_file, 11);
+  agito(0);
+  return registers[4] == 0x547 && registers[6] == 0x320;
 }

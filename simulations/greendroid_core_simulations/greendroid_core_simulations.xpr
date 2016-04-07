@@ -186,11 +186,19 @@
     </FileSet>
     <FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
       <Filter Type="Constrs"/>
+      <File Path="$PSRCDIR/constrs_1/new/add_mp_timing_constraints.xdc">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+        </FileInfo>
+      </File>
       <Config>
+        <Option Name="TargetConstrsFile" Val="$PSRCDIR/constrs_1/new/add_mp_timing_constraints.xdc"/>
         <Option Name="ConstrsType" Val="XDC"/>
       </Config>
     </FileSet>
     <FileSet Name="greendroid_core_tests" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/greendroid_core_tests">
+      <Filter Type="Srcs"/>
       <File Path="$PPRDIR/sources/abs/abs_testbench.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>

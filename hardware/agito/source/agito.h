@@ -39,7 +39,7 @@ void not_register(uint27 operands);
 uint32 bit_serial_not(uint32 arg);
 
 // Defines
-#define MEM_SIZE 15
+#define MEM_SIZE 30
 #define REG_NUM 11
 
 // Globals

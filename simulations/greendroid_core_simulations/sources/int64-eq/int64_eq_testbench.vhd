@@ -76,7 +76,7 @@ begin
            );
      
      clock: process 
-     constant clock_period:time := 0.1ns;
+     constant clock_period:time := 40ns;
      begin   
         wait for 200ns;
         for I in 0 to 100 loop
@@ -97,7 +97,7 @@ begin
         sig_i00 <=              "00000000000000000000000000001010";
         sig_i01 <=              "00000000000000000000000000001011";
         sig_MDAT <=             "00000000000000000000010101100111";
-        sig_FP <=               "00000000000000000000000001000000";
+        sig_FP <=               "11111111111111111111111111110111";
         wait;
      end process test;
         
