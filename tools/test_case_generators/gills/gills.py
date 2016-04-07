@@ -14,7 +14,7 @@ class Gills(object):
         print("{ " + ", ".join(memory_contents) + " }")
 
     def create_memory_contents(self, program):
-        data_start = len(program.code)
+        data_start = len(program.code) + 1
         program.data = {name: [pair[0]+data_start, pair[1]] for name, pair in program.data.items()}
         for counter_1, code_line in enumerate(program.code):
             for counter_2, item in enumerate(code_line):
@@ -22,6 +22,7 @@ class Gills(object):
                     program.code[counter_1][counter_2] = "#" + str(program.data[item][0])
         data_vals = sorted(program.data.values(), key=lambda datum: datum[0])
         final_result = [self.assembler.parse(" ".join(x[:-1])).lower() for x in program.code]
+        final_result.extend(["0x00000000"])
         final_result.extend([format(x[1], '#010x') for x in data_vals])
         return final_result
 
