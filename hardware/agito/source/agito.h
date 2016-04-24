@@ -2,11 +2,13 @@
 #define __TOPLEVEL_H_
 
 // Includes
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ap_int.h>
 
 //Typedefs
+
 typedef ap_uint<32> uint32;
 typedef ap_uint<27> uint27;
 typedef ap_uint<18> uint18;
@@ -15,7 +17,8 @@ typedef ap_uint<9> uint9;
 typedef ap_uint<5> uint5;
 typedef ap_uint<1> uint1;
 
-// Prototypes
+// Function Prototypes
+
 uint32 agito(int output_loc);
 void load_direct(uint27 operands);
 void load_register_offset(uint27 operands);
@@ -38,12 +41,18 @@ void or_register(uint27 operands);
 void not_register(uint27 operands);
 uint32 bit_serial_not(uint32 arg);
 
-// Defines
+// Constants
+
+// Set the size of memory, implemented as a BRAM
 #define MEM_SIZE 30
+// Set the number of registers
 #define REG_NUM 11
 
 // Globals
+
+// Allow the memory array to be accessed inside testbenches
 extern uint32 memory[MEM_SIZE];
+// Allow the registers also to be accessed inside testbenches
 extern uint32 registers[REG_NUM];
 
 #endif
